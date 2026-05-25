@@ -92,34 +92,59 @@ export function throttle<T extends (...args: readonly unknown[]) => unknown>(
   };
 }
 
+export interface DebouncedCallback<T extends (...args: readonly unknown[]) => unknown> {
+  (...args: Parameters<T>): void;
+  /** Fire the pending call now (if any) and clear it. No-op if nothing pending. */
+  flush: () => void;
+  /** Drop the pending call (if any) without firing it. No-op if nothing pending. */
+  cancel: () => void;
+}
+
 export function useDebouncedCallback<T extends (...args: readonly unknown[]) => unknown>(
   callback: T,
   wait: number
-): (...args: Parameters<T>) => void {
+): DebouncedCallback<T> {
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const callbackRef = useRef(callback);
+  const pendingArgsRef = useRef<Parameters<T> | null>(null);
 
   // Update callback ref when callback changes
   useEffect(() => {
     callbackRef.current = callback;
   }, [callback]);
 
-  // Cleanup timeout on unmount
-  useEffect(() => {
-    return () => {
-      if (isValueDefined(timeoutRef.current)) 
-        clearTimeout(timeoutRef.current);
-      
-    };
+  const flush = useCallback((): void => {
+    if (!isValueDefined(timeoutRef.current) || !isValueDefined(pendingArgsRef.current)) return;
+    clearTimeout(timeoutRef.current);
+    const args = pendingArgsRef.current;
+    timeoutRef.current = null;
+    pendingArgsRef.current = null;
+    callbackRef.current(...args);
   }, []);
 
-  return useCallback((...args: Parameters<T>) => {
-    if (isValueDefined(timeoutRef.current)) 
-      clearTimeout(timeoutRef.current);
-    
+  const cancel = useCallback((): void => {
+    if (isValueDefined(timeoutRef.current)) clearTimeout(timeoutRef.current);
+    timeoutRef.current = null;
+    pendingArgsRef.current = null;
+  }, []);
+
+  // On unmount, fire any pending save synchronously so navigation away
+  // doesn't drop in-flight changes (e.g., an uploaded image whose autoSave
+  // debounce hadn't fired yet).
+  useEffect(() => () => { flush(); }, [flush]);
+
+  const debounced = useCallback((...args: Parameters<T>) => {
+    if (isValueDefined(timeoutRef.current)) clearTimeout(timeoutRef.current);
+    pendingArgsRef.current = args;
     timeoutRef.current = setTimeout(() => {
       callbackRef.current(...args);
       timeoutRef.current = null;
+      pendingArgsRef.current = null;
     }, wait);
   }, [wait]);
+
+  const result = debounced as DebouncedCallback<T>;
+  result.flush = flush;
+  result.cancel = cancel;
+  return result;
 }

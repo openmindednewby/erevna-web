@@ -10,8 +10,11 @@ import type { MenuContents } from '@/types/menuTypes';
 import { useDebouncedCallback } from '@/utils/debounce';
 import { isValueDefined } from '@/utils/is';
 
-/** Delay before auto-save triggers after the last change (ms). */
-export const AUTO_SAVE_DEBOUNCE_MS = 1500;
+/** Delay before auto-save triggers after the last change (ms).
+ * Kept short so an upload that completes just before the user navigates away
+ * still gets persisted — the previous 1500ms window meant the PUT often hadn't
+ * been queued yet when an SPA navigation aborted in-flight requests. */
+export const AUTO_SAVE_DEBOUNCE_MS = 250;
 
 /** How long the error status persists before resetting to idle (ms). */
 export const ERROR_CLEAR_DELAY_MS = 5000;
@@ -31,6 +34,8 @@ interface UseAutoSaveReturn {
   saveStatus: SaveStatus;
   lastSavedAt: Date | null;
   triggerSave: () => void;
+  /** Drop any pending debounced autoSave without firing it. Use before a manual save to avoid a redundant follow-up PUT that could overwrite with stale state. */
+  cancelPendingSave: () => void;
 }
 
 function buildRequest(id: string, name: string, desc: string, contents: MenuContents): { data: { externalId: string; name: string; description?: string; contents: MenuContents } } {
@@ -89,5 +94,5 @@ export function useAutoSave(params: UseAutoSaveParams): UseAutoSaveReturn {
     debouncedSave();
   }, [name, description, menuContents, externalId, debouncedSave]);
 
-  return { saveStatus, lastSavedAt, triggerSave: performSave };
+  return { saveStatus, lastSavedAt, triggerSave: performSave, cancelPendingSave: debouncedSave.cancel };
 }

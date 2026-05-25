@@ -55,18 +55,16 @@ const OnlineMenusPage = (): React.ReactElement => {
 
   const { startTour, hasSeenTour } = useTooltipTourContext();
 
-  const [editingItem, setEditingItem] = useState<TenantMenusDto | null>(null);
+  // Track the menu being edited by externalId rather than by snapshot. This
+  // lets `editingItem` re-derive from the latest `allItems` on every render,
+  // so when the list query refetches after a save the open editor sees the
+  // fresh contents (categories/items/imageContentIds) instead of holding a
+  // stale closure from the moment Edit was clicked.
+  const [editingItemId, setEditingItemId] = useState<string | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [activeTab, setActiveTab] = useState<MenuTabFilter>(MenuTabFilter.All);
   const [previewItem, setPreviewItem] = useState<TenantMenusDto | null>(null);
   const [isPreviewModalVisible, setIsPreviewModalVisible] = useState(false);
-
-  const handleCloseModal = useCallback(() => { setIsModalVisible(false); setEditingItem(null); }, []);
-  const handleDelete = useMenuDelete(useMemo(() => ({ deleteMutation: queries.deleteMutation, refetchMenusSoon, t: FM, analyticsTrack: track }), [queries.deleteMutation, refetchMenusSoon, track]));
-  const handleActivateToggle = useMenuActivateToggle(useMemo(() => ({ activateMutation, deactivateMutation, refetchMenusSoon, t: FM, analyticsTrack: track }), [activateMutation, deactivateMutation, refetchMenusSoon, track]));
-  const saveCallbacks = useMemo(() => ({ onCloseModal: handleCloseModal, refetchMenusSoon }), [handleCloseModal, refetchMenusSoon]);
-  const handleSave = useMenuSave(useMemo(() => ({ editingItem, createMutation, updateMutation, callbacks: saveCallbacks, t: FM, analyticsTrack: track }), [editingItem, createMutation, updateMutation, saveCallbacks, track]));
-  const handleOpenExternal = useMenuOpenExternal(FM);
 
   const allItems = useMemo((): TenantMenusDto[] => {
     const data = isMenuListData(listQuery.data) ? listQuery.data : undefined;
@@ -83,6 +81,18 @@ const OnlineMenusPage = (): React.ReactElement => {
     [allItems, activeTab],
   );
 
+  const editingItem = useMemo(
+    () => (isValueDefined(editingItemId) ? allItems.find((m) => m.externalId === editingItemId) ?? null : null),
+    [allItems, editingItemId],
+  );
+
+  const handleCloseModal = useCallback(() => { setIsModalVisible(false); setEditingItemId(null); }, []);
+  const handleDelete = useMenuDelete(useMemo(() => ({ deleteMutation: queries.deleteMutation, refetchMenusSoon, t: FM, analyticsTrack: track }), [queries.deleteMutation, refetchMenusSoon, track]));
+  const handleActivateToggle = useMenuActivateToggle(useMemo(() => ({ activateMutation, deactivateMutation, refetchMenusSoon, t: FM, analyticsTrack: track }), [activateMutation, deactivateMutation, refetchMenusSoon, track]));
+  const saveCallbacks = useMemo(() => ({ onCloseModal: handleCloseModal, refetchMenusSoon }), [handleCloseModal, refetchMenusSoon]);
+  const handleSave = useMenuSave(useMemo(() => ({ editingItem, createMutation, updateMutation, callbacks: saveCallbacks, t: FM, analyticsTrack: track }), [editingItem, createMutation, updateMutation, saveCallbacks, track]));
+  const handleOpenExternal = useMenuOpenExternal(FM);
+
   useEffect(() => {
     const isReadyForTour = !listQuery.isLoading && allItems.length > 0;
     const shouldStartTour = isReadyForTour && !hasSeenTour(TooltipTourId.PublicMenu);
@@ -98,10 +108,10 @@ const OnlineMenusPage = (): React.ReactElement => {
       notify('info', FM('settings.billing.featureGating.menuLimitReached'));
       return;
     }
-    setEditingItem(null);
+    setEditingItemId(null);
     setIsModalVisible(true);
   }, [allItems.length, limits.maxMenus, isSubscriptionLoading, isSubscriptionError]);
-  const handleEdit = useCallback((item: TenantMenusDto) => { setEditingItem(item); setIsModalVisible(true); }, []);
+  const handleEdit = useCallback((item: TenantMenusDto) => { setEditingItemId(item.externalId ?? null); setIsModalVisible(true); }, []);
 
   const handlePreview = useCallback(
     (externalId: string) => {

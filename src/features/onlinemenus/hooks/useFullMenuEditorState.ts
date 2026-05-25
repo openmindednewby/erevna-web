@@ -44,7 +44,7 @@ interface UseFullMenuEditorStateReturn {
 }
 
 /** Tab, name-error, and active-category local state. */
-function useTabState(visible: boolean, item: TenantMenusDto | null, reset: (s: EditorSnapshot) => void): {
+function useTabState(visible: boolean, item: TenantMenusDto | null, reset: (s: EditorSnapshot) => void, canUndo: boolean): {
   activeTab: EditorTab;
   setActiveTab: (tab: EditorTab) => void;
   nameError: string;
@@ -55,15 +55,37 @@ function useTabState(visible: boolean, item: TenantMenusDto | null, reset: (s: E
   const [activeTab, setActiveTab] = useState<EditorTab>(EditorTab.Metadata);
   const [nameError, setNameError] = useState('');
   const [activeCategoryId, setActiveCategoryId] = useState<string | null>(null);
+  const lastResetIdRef = useRef<string | undefined>();
 
+  // Snapshot reset: replace the editor's present state from `item` when (a)
+  // the user opens a different menu (externalId changes) or (b) the user hasn't
+  // started editing yet (canUndo === false). Skipping the reset once `canUndo`
+  // is true preserves in-flight edits when a background list refetch returns a
+  // new `item` reference for the same menu.
+  const externalId = item?.externalId;
+  useEffect(() => {
+    if (!visible) {
+      lastResetIdRef.current = undefined;
+      return;
+    }
+    const externalIdChanged = lastResetIdRef.current !== externalId;
+    if (externalIdChanged || !canUndo) {
+      lastResetIdRef.current = externalId;
+      reset(buildSnapshot(item));
+    }
+  }, [visible, item, externalId, reset, canUndo]);
+
+  // UI reset: only fires when the editor opens (visible false→true) or the user
+  // switches to a different menu (externalId changes). Doesn't snap the user
+  // back to the Details tab just because a background refetch returned an
+  // otherwise-equivalent item reference.
   useEffect(() => {
     if (visible) {
-      reset(buildSnapshot(item));
       setNameError('');
       setActiveTab(EditorTab.Metadata);
       setActiveCategoryId(null);
     }
-  }, [visible, item, reset]);
+  }, [visible, externalId]);
 
   return { activeTab, setActiveTab, nameError, setNameError, activeCategoryId, setActiveCategoryId };
 }
@@ -99,7 +121,7 @@ export function useFullMenuEditorState(
 ): UseFullMenuEditorStateReturn {
   const initialSnapshot = buildSnapshot(item);
   const { present, canUndo, canRedo, push, undo, redo, reset } = useUndoRedo(initialSnapshot);
-  const { activeTab, setActiveTab, nameError, setNameError, activeCategoryId, setActiveCategoryId } = useTabState(visible, item, reset);
+  const { activeTab, setActiveTab, nameError, setNameError, activeCategoryId, setActiveCategoryId } = useTabState(visible, item, reset, canUndo);
   const collapseAllRef = useRef<(() => void) | null>(null);
   const { handleNameChange, handleDescriptionChange, handleMenuContentsChange } = useFieldHandlers(present, push);
 
