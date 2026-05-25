@@ -1,0 +1,45 @@
+{
+  "$schema": "./brand.schema.json",
+  "product": "Erevna",
+  "productGreek": "Έρευνα",
+  "strategy": "inherit-defaults",
+  "rationale": "Tag Heuer continuity — see product-split-roadmap.md LOCKED DECISIONS for context. Erevna's app theme inherits BaseClient's current defaults verbatim. This brand config applies only to the marketing landing.",
+  "wordmark": {
+    "id": "W-01",
+    "fontFamily": "Outfit",
+    "fontFamilyClass": "Geometric Sans",
+    "fontProvider": "Google Fonts",
+    "fontUrl": "https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap",
+    "weights": [300, 500, 700],
+    "isVariable": true,
+    "supportsGreek": false,
+    "greekFallbackStrategy": "system",
+    "preferredWeight": 500,
+    "letterSpacing": "-0.02em",
+    "notes": "Linear / Vercel-style geometric. Modern indie SaaS standard. Pairs cleanly with the Greek portfolio (Morphe, EisaiPollis Games)."
+  },
+  "tagline": {
+    "id": "T-18",
+    "text": "From wondering to knowing.",
+    "voice": "evocative",
+    "angle": "transformation-journey",
+    "notes": "Three-beat rhythm, classic transformation framing. Pairs with the Outfit wordmark by setting up a cognitive arc — the curiosity in the lowercase 'wondering' resolves into the certainty of 'knowing'."
+  },
+  "palette": "inherit-from-baseclient",
+  "typography": {
+    "marketingHeading": "Outfit",
+    "marketingBody": "inherit-from-baseclient",
+    "appUi": "inherit-from-baseclient"
+  },
+  "appliesTo": [
+    "marketing-landing",
+    "browser-tab-title-non-app",
+    "marketing-emails-to-non-tenants"
+  ],
+  "doesNotApplyTo": [
+    "in-app-theme",
+    "login-screens",
+    "transactional-emails",
+    "tenant-themed-surfaces"
+  ]
+}

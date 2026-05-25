@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Erevna — Landing Hero Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #fafaf8;
+    --text: #14110f;
+    --muted: #5d5854;
+    --border: #e8e4dd;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Outfit', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 64px 24px;
+    text-align: center;
+  }
+
+  .wordmark {
+    font-size: 96px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 24px;
+  }
+
+  .tagline {
+    font-size: 24px;
+    font-weight: 300;
+    color: var(--muted);
+    letter-spacing: -0.01em;
+    max-width: 560px;
+  }
+
+  .cta-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 48px;
+  }
+  .cta {
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 12px 22px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--text);
+    color: var(--bg);
+    cursor: pointer;
+    letter-spacing: -0.01em;
+  }
+  .cta.secondary {
+    background: transparent;
+    color: var(--text);
+  }
+
+  /* Footer attribution preview */
+  .footer-attribution {
+    position: fixed;
+    bottom: 16px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 11px;
+    opacity: 0.6;
+    color: var(--muted);
+  }
+  .footer-attribution a { color: inherit; text-decoration: none; }
+  .footer-attribution a:hover { text-decoration: underline; }
+
+  /* Variant strip — show different sizes / weights */
+  .variants {
+    margin-top: 96px;
+    padding-top: 48px;
+    border-top: 1px solid var(--border);
+    width: 100%;
+    max-width: 720px;
+  }
+  .variants-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+  .variant {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .variant:last-child { border-bottom: none; }
+  .v-name { font-size: 11px; color: var(--muted); width: 140px; text-align: left; }
+  .v-mark {
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: -0.02em;
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="wordmark">Erevna</div>
+  <div class="tagline">From wondering to knowing.</div>
+  <div class="cta-row">
+    <button class="cta">Get started</button>
+    <button class="cta secondary">Sign in</button>
+  </div>
+
+  <div class="variants">
+    <div class="variants-label">Variant strip</div>
+    <div class="variant">
+      <div class="v-name">Hero (96px / 500)</div>
+      <div class="v-mark" style="font-size: 96px; font-weight: 500;">Erevna</div>
+    </div>
+    <div class="variant">
+      <div class="v-name">Section (48px / 500)</div>
+      <div class="v-mark" style="font-size: 48px; font-weight: 500;">Erevna</div>
+    </div>
+    <div class="variant">
+      <div class="v-name">Navbar (24px / 500)</div>
+      <div class="v-mark" style="font-size: 24px; font-weight: 500;">Erevna</div>
+    </div>
+    <div class="variant">
+      <div class="v-name">Inline (16px / 500)</div>
+      <div class="v-mark" style="font-size: 16px; font-weight: 500;">Erevna</div>
+    </div>
+    <div class="variant">
+      <div class="v-name">Bold weight (96px / 700)</div>
+      <div class="v-mark" style="font-size: 96px; font-weight: 700;">Erevna</div>
+    </div>
+    <div class="variant">
+      <div class="v-name">Light weight (96px / 300)</div>
+      <div class="v-mark" style="font-size: 96px; font-weight: 300;">Erevna</div>
+    </div>
+  </div>
+</section>
+
+<div class="footer-attribution">
+  built by <a href="https://dloizides.com" target="_blank" rel="noopener noreferrer">dloizides.com</a>
+</div>
+
+</body>
+</html>

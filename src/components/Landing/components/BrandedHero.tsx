@@ -1,0 +1,161 @@
+import type { ReactElement } from 'react';
+
+import { StyleSheet, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native';
+
+import { useRouter } from 'expo-router';
+
+import Wordmark from './Wordmark';
+import { FM } from '../../../localization/helpers';
+import { TABLET_BREAKPOINT_PX } from '../../../shared/constants';
+import { TestIds } from '../../../shared/testIds';
+import { useTheme } from '../../../theme/hooks/useTheme';
+import {
+  BUTTON_BORDER_RADIUS,
+  LANDING_MAX_WIDTH,
+  LANDING_SECTION_PADDING_HORIZONTAL,
+} from '../constants';
+
+interface Props {
+  wordmarkKey: string;
+  taglineKey: string;
+  subheadKey: string;
+  primaryCtaKey: string;
+  primaryCtaHintKey: string;
+  primaryCtaRoute: string;
+  secondaryCtaKey: string;
+  secondaryCtaHintKey: string;
+  secondaryCtaRoute: string;
+}
+
+const HERO_VERTICAL_PADDING_DESKTOP = 96;
+const HERO_VERTICAL_PADDING_MOBILE = 56;
+const WORDMARK_SIZE_DESKTOP = 96;
+const WORDMARK_SIZE_MOBILE = 60;
+const TAGLINE_SIZE_DESKTOP = 24;
+const TAGLINE_SIZE_MOBILE = 18;
+const SUBHEAD_SIZE_DESKTOP = 18;
+const SUBHEAD_SIZE_MOBILE = 16;
+const SUBHEAD_LINE_HEIGHT = 28;
+const SUBHEAD_MAX_WIDTH = 640;
+const TAGLINE_MARGIN_TOP = 28;
+const SUBHEAD_MARGIN_TOP = 16;
+const CTA_ROW_MARGIN_TOP = 36;
+const CTA_GAP = 12;
+const CTA_FONT_SIZE = 15;
+const CTA_PADDING_HORIZONTAL = 22;
+const CTA_PADDING_VERTICAL = 14;
+const DEFAULT_BORDER_WIDTH = 1;
+const TAGLINE_LETTER_SPACING = -0.24;
+
+const styles = StyleSheet.create({
+  outer: { width: '100%', alignItems: 'center' },
+  inner: {
+    width: '100%',
+    maxWidth: LANDING_MAX_WIDTH,
+    paddingHorizontal: LANDING_SECTION_PADDING_HORIZONTAL,
+    alignItems: 'center',
+  },
+  tagline: {
+    textAlign: 'center',
+    fontWeight: '300',
+    letterSpacing: TAGLINE_LETTER_SPACING,
+    marginTop: TAGLINE_MARGIN_TOP,
+    maxWidth: SUBHEAD_MAX_WIDTH,
+  },
+  subhead: {
+    textAlign: 'center',
+    fontWeight: '400',
+    lineHeight: SUBHEAD_LINE_HEIGHT,
+    marginTop: SUBHEAD_MARGIN_TOP,
+    maxWidth: SUBHEAD_MAX_WIDTH,
+  },
+  ctaRow: { flexDirection: 'row', gap: CTA_GAP, marginTop: CTA_ROW_MARGIN_TOP, flexWrap: 'wrap', justifyContent: 'center' },
+  ctaPrimary: {
+    paddingHorizontal: CTA_PADDING_HORIZONTAL,
+    paddingVertical: CTA_PADDING_VERTICAL,
+    borderRadius: BUTTON_BORDER_RADIUS,
+  },
+  ctaSecondary: {
+    paddingHorizontal: CTA_PADDING_HORIZONTAL,
+    paddingVertical: CTA_PADDING_VERTICAL,
+    borderRadius: BUTTON_BORDER_RADIUS,
+    borderWidth: DEFAULT_BORDER_WIDTH,
+  },
+  ctaText: { fontSize: CTA_FONT_SIZE, fontWeight: '600' },
+});
+
+/**
+ * Branded marketing hero for the landing page.
+ * Renders the locked Wordmark (Outfit / Manrope), tagline, supporting subhead, and two CTAs.
+ *
+ * The visual proportions match brand/landing-hero-preview.html (96px wordmark on desktop).
+ */
+const BrandedHero = (props: Props): ReactElement => {
+  const {
+    wordmarkKey,
+    taglineKey,
+    subheadKey,
+    primaryCtaKey,
+    primaryCtaHintKey,
+    primaryCtaRoute,
+    secondaryCtaKey,
+    secondaryCtaHintKey,
+    secondaryCtaRoute,
+  } = props;
+  const { theme } = useTheme();
+  const router = useRouter();
+  const { width } = useWindowDimensions();
+
+  const isMobile = width <= TABLET_BREAKPOINT_PX;
+  const colors = theme.colors;
+  const primaryColor = theme.palette.primary[500];
+  const wordmarkSize = isMobile ? WORDMARK_SIZE_MOBILE : WORDMARK_SIZE_DESKTOP;
+  const taglineSize = isMobile ? TAGLINE_SIZE_MOBILE : TAGLINE_SIZE_DESKTOP;
+  const subheadSize = isMobile ? SUBHEAD_SIZE_MOBILE : SUBHEAD_SIZE_DESKTOP;
+  const verticalPadding = isMobile ? HERO_VERTICAL_PADDING_MOBILE : HERO_VERTICAL_PADDING_DESKTOP;
+
+  function goToPrimary(): void {
+    router.push(primaryCtaRoute);
+  }
+
+  function goToSecondary(): void {
+    router.push(secondaryCtaRoute);
+  }
+
+  return (
+    <View style={[styles.outer, { paddingVertical: verticalPadding }]} testID={TestIds.LANDING_HERO}>
+      <View style={styles.inner}>
+        <Wordmark size={wordmarkSize} text={FM(wordmarkKey)} />
+        <Text style={[styles.tagline, { fontSize: taglineSize, color: colors.textSecondary }]}>
+          {FM(taglineKey)}
+        </Text>
+        <Text style={[styles.subhead, { fontSize: subheadSize, color: colors.textSecondary }]}>
+          {FM(subheadKey)}
+        </Text>
+        <View style={styles.ctaRow}>
+          <TouchableOpacity
+            accessibilityHint={FM(primaryCtaHintKey)}
+            accessibilityLabel={FM(primaryCtaKey)}
+            accessibilityRole="button"
+            style={[styles.ctaPrimary, { backgroundColor: primaryColor }]}
+            testID={TestIds.LANDING_NAV_REGISTER_BUTTON}
+            onPress={goToPrimary}
+          >
+            <Text style={[styles.ctaText, { color: colors.surface }]}>{FM(primaryCtaKey)}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            accessibilityHint={FM(secondaryCtaHintKey)}
+            accessibilityLabel={FM(secondaryCtaKey)}
+            accessibilityRole="button"
+            style={[styles.ctaSecondary, { borderColor: colors.border }]}
+            onPress={goToSecondary}
+          >
+            <Text style={[styles.ctaText, { color: colors.text }]}>{FM(secondaryCtaKey)}</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+export default BrandedHero;

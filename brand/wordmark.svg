@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 100" width="360" height="100" role="img" aria-label="Erevna">
+  <defs>
+    <style type="text/css">
+      @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500&amp;display=swap');
+      .erevna-wordmark {
+        font-family: 'Outfit', system-ui, sans-serif;
+        font-weight: 500;
+        font-size: 80px;
+        letter-spacing: -1.6px;
+        fill: currentColor;
+      }
+    </style>
+  </defs>
+  <text class="erevna-wordmark" x="0" y="78">Erevna</text>
+</svg>
