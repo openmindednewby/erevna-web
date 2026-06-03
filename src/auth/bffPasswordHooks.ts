@@ -21,7 +21,7 @@ import { bffAuthClient } from './bffAuthClient';
 
 import type { BffResetPasswordRequest } from '@dloizides/auth-client';
 
-export type UseBffResetPasswordOptions = Omit<
+type UseBffResetPasswordOptions = Omit<
   UseMutationOptions<undefined, Error, BffResetPasswordRequest>,
   'mutationFn'
 >;

@@ -21,7 +21,7 @@ interface ImagePreviewProps {
   displayFileName: string;
 }
 
-export const ImagePreviewContent = ({ displayUrl, displayFileName }: ImagePreviewProps): React.JSX.Element => (
+const ImagePreviewContent = ({ displayUrl, displayFileName }: ImagePreviewProps): React.JSX.Element => (
   <Image
     accessibilityIgnoresInvertColors
     accessibilityHint={FM('content.imagePreviewHint')}
@@ -39,7 +39,7 @@ interface VideoPreviewProps {
   themeStyles: ThemeStyles;
 }
 
-export const VideoPreviewContent = ({ displayUrl, displayFileName, themeStyles }: VideoPreviewProps): React.JSX.Element => {
+const VideoPreviewContent = ({ displayUrl, displayFileName, themeStyles }: VideoPreviewProps): React.JSX.Element => {
   if (isValueDefined(displayUrl))
     return (
       <Image
