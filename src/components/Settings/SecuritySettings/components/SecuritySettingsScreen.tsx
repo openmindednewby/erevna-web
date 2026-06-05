@@ -10,6 +10,7 @@ import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-nat
 import {
   DevicePinSettingsCard,
   PasskeySettingsCard,
+  PreferredMethodSettingsCard,
   useBffLoginConfig,
 } from '@dloizides/auth-web';
 import { useQueryClient } from '@tanstack/react-query';
@@ -19,10 +20,12 @@ import SessionItem from './SessionItem';
 import { mapAppThemeToAuthTheme } from '../../../../auth/authThemeMapping';
 import { bffAuthClient } from '../../../../auth/bffAuthClient';
 import { BffLoginMethod } from '../../../../auth/BffLoginMethod';
+import { preferencesClient } from '../../../../auth/preferencesClient';
 import {
   useDevicePinSettingsLabels,
   useDevicePinEnrollLabels,
   usePasskeySettingsLabels,
+  usePreferredMethodSettingsLabels,
 } from '../../../../auth/useAuthLabels';
 import { notifyError, notifySuccess } from '../../../../lib/notifications';
 import { FM } from '../../../../localization/helpers';
@@ -78,8 +81,11 @@ const SecuritySettingsScreen = (): React.ReactElement => {
   const devicePinSettingsLabels = useDevicePinSettingsLabels();
   const devicePinEnrollLabels = useDevicePinEnrollLabels();
   const passkeySettingsLabels = usePasskeySettingsLabels();
+  const preferredMethodSettingsLabels = usePreferredMethodSettingsLabels();
   const showPasskeySettings =
     !loginConfigLoading && loginConfig.methods.includes(BffLoginMethod.Passkey);
+  // The cross-device default-method picker only makes sense with >1 method.
+  const showPreferredMethod = !loginConfigLoading && loginConfig.methods.length > 1;
 
   const {
     data: sessionsData,
@@ -148,6 +154,20 @@ const SecuritySettingsScreen = (): React.ReactElement => {
             <Section>
               <PasskeySettingsCard
                 labels={passkeySettingsLabels}
+                testIdPrefix="erevna"
+                theme={authTheme}
+              />
+            </Section>
+          </View>
+        ) : null}
+
+        {showPreferredMethod ? (
+          <View style={styles.sectionGap}>
+            <Section>
+              <PreferredMethodSettingsCard
+                availableMethods={loginConfig.methods}
+                client={preferencesClient}
+                labels={preferredMethodSettingsLabels}
                 testIdPrefix="erevna"
                 theme={authTheme}
               />
