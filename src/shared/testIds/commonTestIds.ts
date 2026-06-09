@@ -92,6 +92,13 @@ export const CommonTestIds = {
   QUIZ_ACTIVE_PAGE: 'quiz-active-page',
   QUIZ_ANSWERS_PAGE: 'quiz-answers-page',
   QUIZ_TEMPLATES_PAGE: 'quiz-templates-page',
+  QUIZ_TEMPLATE_QR_CODE_BUTTON: 'quiz-template-qr-code-button',
+
+  // Public survey respondent page
+  PUBLIC_SURVEY_PAGE: 'public-survey-page',
+  PUBLIC_SURVEY_LOADING: 'public-survey-loading',
+  PUBLIC_SURVEY_UNAVAILABLE: 'public-survey-unavailable',
+  PUBLIC_SURVEY_ERROR: 'public-survey-error',
 
   // Shared UI Components
   TAB_CONTAINER: 'tab-container',

@@ -4,6 +4,7 @@ import { ActivityIndicator, FlatList, View } from 'react-native';
 
 import { useSelector } from 'react-redux';
 
+import { QrCodeModal } from '../../../src/components/OnlineMenus/QrCode';
 import EmptyListState from '../../../src/components/Shared/EmptyListState';
 import ErrorState from '../../../src/components/Shared/ErrorState';
 import { LoadingFallback } from '../../../src/components/Shared/Fallbacks';
@@ -12,6 +13,7 @@ import TenantListItem from '../../../src/components/Tenants/TenantListItem';
 import DeleteInactiveButton from '../../../src/features/questioner/components/DeleteInactiveButton';
 import TemplateForm from '../../../src/features/questioner/components/TemplateForm';
 import { useQuizTemplateActions } from '../../../src/hooks/useQuizTemplateActions';
+import { useQuizTemplateQrCode } from '../../../src/hooks/useQuizTemplateQrCode';
 import { FM } from '../../../src/localization/helpers';
 import ThemeMode from '../../../src/shared/enums/ThemeMode';
 import { TestIds } from '../../../src/shared/testIds';
@@ -44,6 +46,8 @@ const QuizTemplatesPage = (): React.ReactElement => {
     handleCreate,
     handleDeleteInactiveSuccess,
   } = useQuizTemplateActions();
+
+  const { qrCodeState, isQrCodeVisible, handleQrCode, handleCloseQrCode } = useQuizTemplateQrCode(items);
 
   const colorStyles = useMemo(
     () => ({
@@ -96,12 +100,14 @@ const QuizTemplatesPage = (): React.ReactElement => {
             <View style={[layoutStyles.listItem, colorStyles.listItemBorder]}>
               <TenantListItem
                 item={item}
+                qrCodeButtonTestID={TestIds.QUIZ_TEMPLATE_QR_CODE_BUTTON}
                 statusKey="isActive"
                 titleKey="name"
                 translationNs="quizTemplates"
                 onActivate={(id, current) => handleActivate(id, current)}
                 onDelete={(id) => handleDelete(id)}
                 onEdit={() => handleEdit(item)}
+                onQrCode={(id) => handleQrCode(id)}
               />
             </View>
           )}
@@ -121,6 +127,15 @@ const QuizTemplatesPage = (): React.ReactElement => {
           />
         </Suspense>
       ) : null}
+
+      <QrCodeModal
+        menuName={qrCodeState?.surveyName ?? ''}
+        note={FM('quizTemplates.share.note')}
+        publicUrl={qrCodeState?.publicUrl ?? ''}
+        title={FM('quizTemplates.share.modalTitle', qrCodeState?.surveyName ?? '')}
+        visible={isQrCodeVisible}
+        onClose={handleCloseQrCode}
+      />
     </View>
   );
 };

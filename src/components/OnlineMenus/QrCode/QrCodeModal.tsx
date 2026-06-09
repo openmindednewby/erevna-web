@@ -15,15 +15,20 @@ import { useAnalytics } from '../../../lib/analytics';
 import { notify, notifySuccess } from '../../../lib/notifications';
 import { TestIds } from '../../../shared/testIds';
 import { useTheme } from '../../../theme/hooks/useTheme';
+import { isValueDefined } from '../../../utils/is';
 
 interface Props {
   visible: boolean;
   menuName: string;
   publicUrl: string;
   onClose: () => void;
+  /** Optional title override (defaults to the menu QR title). */
+  title?: string;
+  /** Optional explanatory note rendered under the title. */
+  note?: string;
 }
 
-const QrCodeModal = ({ visible, menuName, publicUrl, onClose }: Props): React.ReactElement => {
+const QrCodeModal = ({ visible, menuName, publicUrl, onClose, title, note }: Props): React.ReactElement => {
   const { theme } = useTheme();
   const colors = theme.colors;
   const { track } = useAnalytics();
@@ -53,7 +58,8 @@ const QrCodeModal = ({ visible, menuName, publicUrl, onClose }: Props): React.Re
     else notify('error', FM('onlineMenus.qrCode.copyFailed'));
   }, [publicUrl]);
 
-  const modalTitle = FM('onlineMenus.qrCode.menuQrCode', menuName);
+  const modalTitle = isValueDefined(title) ? title : FM('onlineMenus.qrCode.menuQrCode', menuName);
+  const hasNote = isValueDefined(note) && note.length > 0;
 
   return (
     <Modal
@@ -88,6 +94,9 @@ const QrCodeModal = ({ visible, menuName, publicUrl, onClose }: Props): React.Re
             </TouchableOpacity>
           </View>
           <View style={modalStyles.body}>
+            {hasNote ? (
+              <Text style={[modalStyles.note, { color: colors.textSecondary }]}>{note}</Text>
+            ) : null}
             <QrCodeDisplay
               bgColor={bgColor}
               fgColor={fgColor}

@@ -462,7 +462,26 @@
     "skipAnswerInputLabel": "Skip condition answer input",
     "skipAnswerInputHint": "Enter the answer value that triggers skipping",
     "questionNameInputLabel": "Question name input",
-    "questionNameInputHint": "Enter the question name"
+    "questionNameInputHint": "Enter the question name",
+    "qrCode": {
+      "title": "Share",
+      "qrCodeHint": "Open the share dialog with a QR code and public link for this survey",
+      "qrCodeDisabledHint": "Activate this survey to share a public link"
+    },
+    "share": {
+      "modalTitle": "Share \"{{p1}}\"",
+      "note": "Anyone with this link can answer this survey."
+    }
+  },
+  "publicSurvey": {
+    "loading": "Loading survey...",
+    "submitThankYou": "Thank you for your response",
+    "unavailableTitle": "This survey isn't available",
+    "unavailableMessage": "The survey may have been closed or the link is incorrect.",
+    "errorTitle": "Something went wrong",
+    "errorMessage": "We couldn't load this survey. Please try again later.",
+    "retry": "Try again",
+    "retryHint": "Reload the survey"
   },
   "quizAnswers": {
     "title": "Quiz Answers",

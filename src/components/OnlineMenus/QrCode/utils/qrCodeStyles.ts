@@ -71,6 +71,11 @@ export const modalStyles = StyleSheet.create({
     marginTop: SMALL_SPACING,
     textAlign: 'center',
   },
+  note: {
+    fontSize: LABEL_FONT_SIZE,
+    marginBottom: SECTION_PADDING,
+    textAlign: 'center',
+  },
 });
 
 export const colorInputStyles = StyleSheet.create({
