@@ -34,6 +34,14 @@ export const questionerModule: Module = {
       order: 40,
     },
     {
+      key: 'quiz-analytics',
+      labelKey: 'menu.quizAnalytics',
+      route: '/quiz-analytics',
+      icon: 'barChart',
+      requiredRoles: ['admin', 'superUser'],
+      order: 45,
+    },
+    {
       key: 'quiz-active',
       labelKey: 'menu.quizActive',
       route: '/quiz-active',

@@ -293,6 +293,7 @@
     "users": "Users",
     "quizTemplates": "Quiz Templates",
     "quizAnswers": "Quiz Answers",
+    "quizAnalytics": "Quiz Analytics",
     "quizActive": "Active Quiz",
     "onlineMenus": "Online Menus",
     "notifications": "Notifications",
@@ -557,6 +558,24 @@
     "exportCount": "{{p1}} items",
     "searchPlaceholder": "Search answers...",
     "activate": "Activate"
+  },
+  "quizAnalytics": {
+    "title": "Quiz Analytics",
+    "refreshHint": "Reload the latest survey responses and recompute analytics",
+    "totalResponses": "Total Responses",
+    "totalResponsesHint": "The number of responses submitted for the active survey",
+    "responsesOverTime": "Responses Over Time",
+    "noChartData": "Not enough data to chart yet",
+    "textAnswers": "Text Answers",
+    "textAnswerCount": "{{p1}} answers",
+    "noTextAnswers": "No text answers yet",
+    "optionResult": "{{p1}}% ({{p2}})",
+    "dayCount": "{{p1}}: {{p2}}",
+    "empty": {
+      "title": "No responses to analyze yet",
+      "description": "Once respondents complete the active survey, their answers will appear here as charts and summaries.",
+      "noActiveTemplate": "There is no active survey. Activate a survey template to start collecting responses."
+    }
   },
   "quizActive": {
     "title": "Active Quiz",

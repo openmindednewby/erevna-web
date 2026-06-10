@@ -19,6 +19,7 @@ function preloadMainPages(): void {
   import('../../app/(protected)/users/index').catch(() => undefined);
   import('../../app/(protected)/quiz-templates/index').catch(() => undefined);
   import('../../app/(protected)/quiz-answers/index').catch(() => undefined);
+  import('../../app/(protected)/quiz-analytics/index').catch(() => undefined);
   import('../../app/(protected)/quiz-active/index').catch(() => undefined);
   import('../../app/(protected)/quiz-active/QuizContent').catch(() => undefined);
   import('../../app/(protected)/quiz-active/ThankYouOverlay').catch(() => undefined);

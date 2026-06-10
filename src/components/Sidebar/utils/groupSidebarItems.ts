@@ -10,6 +10,7 @@ const ITEM_TO_GROUP: Record<string, string> = {
   menus: 'nav-group-menus',
   'quiz-templates': 'nav-group-feedback',
   'quiz-answers': 'nav-group-feedback',
+  'quiz-analytics': 'nav-group-feedback',
   'quiz-active': 'nav-group-feedback',
   'tenant-themes': 'nav-group-settings',
   'nav-account-settings': 'nav-group-settings',

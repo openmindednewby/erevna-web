@@ -94,6 +94,15 @@ export const CommonTestIds = {
   QUIZ_TEMPLATES_PAGE: 'quiz-templates-page',
   QUIZ_TEMPLATE_QR_CODE_BUTTON: 'quiz-template-qr-code-button',
 
+  // Quiz analytics
+  QUIZ_ANALYTICS_PAGE: 'quiz-analytics-page',
+  QUIZ_ANALYTICS_LOADING: 'quiz-analytics-loading',
+  QUIZ_ANALYTICS_EMPTY: 'quiz-analytics-empty',
+  QUIZ_ANALYTICS_STAT_TOTAL: 'quiz-analytics-stat-total',
+  QUIZ_ANALYTICS_TIMELINE: 'quiz-analytics-timeline',
+  QUIZ_ANALYTICS_OPTION_CHART: 'quiz-analytics-option-chart',
+  QUIZ_ANALYTICS_TEXT_LIST: 'quiz-analytics-text-list',
+
   // Public survey respondent page
   PUBLIC_SURVEY_PAGE: 'public-survey-page',
   PUBLIC_SURVEY_LOADING: 'public-survey-loading',

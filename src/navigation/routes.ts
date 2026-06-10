@@ -4,6 +4,7 @@ export const enum Routes {
   USERS = '/users',
   QUIZ_TEMPLATES = '/quiz-templates',
   QUIZ_ANSWERS = '/quiz-answers',
+  QUIZ_ANALYTICS = '/quiz-analytics',
   QUIZ_ACTIVE = '/quiz-active',
   MENUS = '/menus',
   MENU_CREATE = '/menus/create',
