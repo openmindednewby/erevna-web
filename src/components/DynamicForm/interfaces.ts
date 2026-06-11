@@ -17,6 +17,29 @@ export interface Question {
   isRequired?: boolean;
   skipConditions?: SkipCondition[];
   order: number;
+  validationRules?: ValidationRules;
+  config?: QuestionConfig;
+}
+
+/** UI mirror of the backend ValidationRules contract (all optional). */
+export interface ValidationRules {
+  minLength?: number;
+  maxLength?: number;
+  pattern?: string;
+  patternMessage?: string;
+  min?: number;
+  max?: number;
+  minSelections?: number;
+  maxSelections?: number;
+}
+
+/** UI mirror of the backend QuestionConfig contract (all optional). */
+export interface QuestionConfig {
+  scaleMin?: number;
+  scaleMax?: number;
+  scaleStep?: number;
+  minLabel?: string;
+  maxLabel?: string;
 }
 
 export { default as QuestionType } from '../../shared/enums/QuestionType';

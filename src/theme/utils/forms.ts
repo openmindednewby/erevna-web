@@ -15,6 +15,7 @@ const TRANSPARENT_COLOR = 'transparent';
 const DARK_SELECTED_BACKGROUND_COLOR = '#073a2f';
 const LIGHT_SELECTED_BACKGROUND_COLOR = '#e6f4ef';
 const CHECKBOX_BORDER_COLOR = '#999';
+const SCALE_BUTTON_SIZE = 44;
 
 export function useDynamicFormStyles(): FormStyles {
   const { theme, mode } = useTheme();
@@ -43,6 +44,7 @@ export function useDynamicFormStyles(): FormStyles {
     ...createRadioStyles(config),
     ...createOptionStyles(config),
     ...createErrorStyles(errorColor),
+    ...createScaleStyles(config),
   };
 }
 
@@ -74,6 +76,13 @@ export interface FormStyles {
   requiredMark: TextStyle;
   helpText: TextStyle;
   optionText: TextStyle;
+  scaleRow: ViewStyle;
+  scaleButton: ViewStyle;
+  scaleButtonSelected: ViewStyle;
+  scaleButtonText: TextStyle;
+  scaleButtonTextSelected: TextStyle;
+  scaleLabelsRow: ViewStyle;
+  scaleLabelText: TextStyle;
 }
 
 /** Flattened color tokens resolved from the theme for form style builders. */
@@ -158,5 +167,22 @@ function createErrorStyles(errorColor: string): Pick<FormStyles, 'errorText' | '
     errorText: { color: errorColor, fontSize: 13, marginTop: 4 },
     requiredMark: { color: errorColor, fontSize: 18, fontWeight: '700' },
     errorBorder: { borderColor: errorColor },
+  };
+}
+
+function createScaleStyles(config: StylesConfig): Pick<
+  FormStyles,
+  | 'scaleRow' | 'scaleButton' | 'scaleButtonSelected' | 'scaleButtonText'
+  | 'scaleButtonTextSelected' | 'scaleLabelsRow' | 'scaleLabelText'
+> {
+  const { tokens, accentColor } = config;
+  return {
+    scaleRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 6 },
+    scaleButton: { minWidth: SCALE_BUTTON_SIZE, height: SCALE_BUTTON_SIZE, borderRadius: 8, borderWidth: 1, borderColor: tokens.border, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 10, backgroundColor: TRANSPARENT_COLOR },
+    scaleButtonSelected: { borderColor: accentColor, backgroundColor: accentColor },
+    scaleButtonText: { color: tokens.text, fontSize: 16, fontWeight: '600' },
+    scaleButtonTextSelected: { color: WHITE_COLOR, fontSize: 16, fontWeight: '600' },
+    scaleLabelsRow: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 6 },
+    scaleLabelText: { color: tokens.textSecondary, fontSize: 13 },
   };
 }

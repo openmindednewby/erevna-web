@@ -14,4 +14,11 @@ export const QuestionType = {
   Checkbox: 2,
   Radio: 3,
   Dropdown: 4,
+  // Hand-extended to match the backend contract (5 new types). A real Orval regen
+  // against the deployed API will reproduce these identically.
+  Rating: 5,
+  Nps: 6,
+  Number: 7,
+  Date: 8,
+  LinearScale: 9,
 } as const;

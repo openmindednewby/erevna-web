@@ -420,7 +420,12 @@
     "type.MultipleChoice": "Multiple Choice",
     "type.Checkbox": "Checkbox",
     "type.Radio": "Radio",
-    "type.Dropdown": "Dropdown"
+    "type.Dropdown": "Dropdown",
+    "type.Rating": "Rating",
+    "type.Nps": "NPS",
+    "type.Number": "Number",
+    "type.Date": "Date",
+    "type.LinearScale": "Linear Scale"
     ,
     "tab": {
       "form": "Form",
@@ -472,7 +477,48 @@
     "share": {
       "modalTitle": "Share \"{{p1}}\"",
       "note": "Anyone with this link can answer this survey."
-    }
+    },
+    "scaleConfig": "Scale configuration",
+    "scaleMin": "Scale minimum",
+    "scaleMax": "Scale maximum",
+    "scaleStep": "Scale step",
+    "minLabel": "Minimum label",
+    "maxLabel": "Maximum label",
+    "scaleMinInputLabel": "Scale minimum input",
+    "scaleMinInputHint": "Enter the lowest value on the scale",
+    "scaleMaxInputLabel": "Scale maximum input",
+    "scaleMaxInputHint": "Enter the highest value on the scale",
+    "scaleStepInputLabel": "Scale step input",
+    "scaleStepInputHint": "Enter the increment between scale values",
+    "minLabelInputLabel": "Minimum label input",
+    "minLabelInputHint": "Enter the text shown at the low end of the scale",
+    "maxLabelInputLabel": "Maximum label input",
+    "maxLabelInputHint": "Enter the text shown at the high end of the scale",
+    "validationRules": "Validation rules",
+    "ruleMinLength": "Minimum length",
+    "ruleMaxLength": "Maximum length",
+    "rulePattern": "Pattern (regex)",
+    "rulePatternMessage": "Pattern error message",
+    "ruleMin": "Minimum value",
+    "ruleMax": "Maximum value",
+    "ruleMinSelections": "Minimum selections",
+    "ruleMaxSelections": "Maximum selections",
+    "ruleMinLengthInputLabel": "Minimum length input",
+    "ruleMinLengthInputHint": "Require at least this many characters",
+    "ruleMaxLengthInputLabel": "Maximum length input",
+    "ruleMaxLengthInputHint": "Allow at most this many characters",
+    "rulePatternInputLabel": "Pattern input",
+    "rulePatternInputHint": "Enter a regular expression the answer must match",
+    "rulePatternMessageInputLabel": "Pattern message input",
+    "rulePatternMessageInputHint": "Message shown when the pattern does not match",
+    "ruleMinInputLabel": "Minimum value input",
+    "ruleMinInputHint": "Require a value at least this large",
+    "ruleMaxInputLabel": "Maximum value input",
+    "ruleMaxInputHint": "Allow a value at most this large",
+    "ruleMinSelectionsInputLabel": "Minimum selections input",
+    "ruleMinSelectionsInputHint": "Require at least this many selected options",
+    "ruleMaxSelectionsInputLabel": "Maximum selections input",
+    "ruleMaxSelectionsInputHint": "Allow at most this many selected options"
   },
   "publicSurvey": {
     "loading": "Loading survey...",
@@ -569,6 +615,12 @@
     "textAnswers": "Text Answers",
     "textAnswerCount": "{{p1}} answers",
     "noTextAnswers": "No text answers yet",
+    "average": "Average: {{p1}}",
+    "numericResponseCount": "{{p1}} responses",
+    "noNumericAnswers": "No numeric answers yet",
+    "numericBucket": "{{p1}}: {{p2}}",
+    "dateAnswerCount": "{{p1}} dates",
+    "noDateAnswers": "No date answers yet",
     "optionResult": "{{p1}}% ({{p2}})",
     "dayCount": "{{p1}}: {{p2}}",
     "empty": {
@@ -585,7 +637,16 @@
     "thankYou": "Thank you for your submission",
     "answerPlaceholder": "Enter your answer",
     "answerHint": "Enter your answer",
-    "answerInputLabel": "Answer input"
+    "answerInputLabel": "Answer input",
+    "numberPlaceholder": "Enter a number",
+    "numberHint": "Enter a numeric answer",
+    "numberInputLabel": "Number answer input",
+    "datePlaceholder": "yyyy-MM-dd",
+    "dateHint": "Enter a date in yyyy-MM-dd format",
+    "dateInputLabel": "Date answer input",
+    "scaleOptionHint": "Select this value on the scale",
+    "scaleOptionLabel": "Scale value {{p1}}",
+    "selectOption": "Select an option"
   },
   "common": {
     "refresh": "Refresh",
@@ -647,7 +708,17 @@
     "saveHint": "Save the current changes",
     "discardHint": "Discard unsaved changes",
     "statusBadgeHint": "Displays the current status",
-    "textInputLabel": "Text input field"
+    "textInputLabel": "Text input field",
+    "validation": {
+      "required": "This field is required",
+      "minLength": "Must be at least {{p1}} characters",
+      "maxLength": "Must be at most {{p1}} characters",
+      "pattern": "The value does not match the required format",
+      "min": "Must be at least {{p1}}",
+      "max": "Must be at most {{p1}}",
+      "minSelections": "Select at least {{p1}} option(s)",
+      "maxSelections": "Select at most {{p1}} option(s)"
+    }
   },
   "layout": {
     "closeSidebar": "Close sidebar",

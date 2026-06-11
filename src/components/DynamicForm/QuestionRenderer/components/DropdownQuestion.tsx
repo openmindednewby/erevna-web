@@ -18,7 +18,7 @@ interface Props {
 export const DropdownQuestion: React.FC<Props> = ({ value, errorMsg, updateAnswer, styles, options }) => (
   <>
     <View>
-      <Text style={styles.helpText}>{FM('Select an option')}</Text>
+      <Text style={styles.helpText}>{FM('quizActive.selectOption')}</Text>
       {options.map((option) => {
         const selected = value === option.value;
         return (

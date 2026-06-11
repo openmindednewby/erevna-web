@@ -31,6 +31,26 @@ describe('quizHelpers - Type Conversion', () => {
       expect(apiToUiType(ApiQuestionType.Text)).toBe('text');
     });
 
+    it('returns "rating" for Rating enum', () => {
+      expect(apiToUiType(ApiQuestionType.Rating)).toBe('rating');
+    });
+
+    it('returns "nps" for Nps enum', () => {
+      expect(apiToUiType(ApiQuestionType.Nps)).toBe('nps');
+    });
+
+    it('returns "number" for Number enum', () => {
+      expect(apiToUiType(ApiQuestionType.Number)).toBe('number');
+    });
+
+    it('returns "date" for Date enum', () => {
+      expect(apiToUiType(ApiQuestionType.Date)).toBe('date');
+    });
+
+    it('returns "linear-scale" for LinearScale enum', () => {
+      expect(apiToUiType(ApiQuestionType.LinearScale)).toBe('linear-scale');
+    });
+
     it('returns "text" for unknown values', () => {
       expect(apiToUiType(999)).toBe('text');
     });
@@ -55,6 +75,39 @@ describe('quizHelpers - Type Conversion', () => {
 
     it('returns Text for "text"', () => {
       expect(uiToApiType(QuestionType.Text)).toBe(ApiQuestionType.Text);
+    });
+
+    it('returns Rating for "rating"', () => {
+      expect(uiToApiType(QuestionType.Rating)).toBe(ApiQuestionType.Rating);
+    });
+
+    it('returns Nps for "nps"', () => {
+      expect(uiToApiType(QuestionType.Nps)).toBe(ApiQuestionType.Nps);
+    });
+
+    it('returns Number for "number"', () => {
+      expect(uiToApiType(QuestionType.Number)).toBe(ApiQuestionType.Number);
+    });
+
+    it('returns Date for "date"', () => {
+      expect(uiToApiType(QuestionType.Date)).toBe(ApiQuestionType.Date);
+    });
+
+    it('returns LinearScale for "linear-scale"', () => {
+      expect(uiToApiType(QuestionType.LinearScale)).toBe(ApiQuestionType.LinearScale);
+    });
+  });
+
+  describe('round-trip', () => {
+    it('preserves every UI type through api and back', () => {
+      const all = [
+        QuestionType.Text, QuestionType.MultipleChoice, QuestionType.Checkbox,
+        QuestionType.Radio, QuestionType.Dropdown, QuestionType.Rating,
+        QuestionType.Nps, QuestionType.Number, QuestionType.Date, QuestionType.LinearScale,
+      ];
+      all.forEach((uiType) => {
+        expect(apiToUiType(uiToApiType(uiType))).toBe(uiType);
+      });
     });
   });
 });

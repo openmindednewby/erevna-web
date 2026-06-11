@@ -247,4 +247,59 @@ describe('computeAnalytics', () => {
     expect(stats.choiceQuestions[0].options[0].label).toBe('only-value');
     expect(stats.choiceQuestions[0].options[0].count).toBe(1);
   });
+
+  describe('numeric and date aggregation', () => {
+    function ratingQuestion(): Question {
+      return { id: 'q-rate', name: 'Rate us', type: QuestionType.Rating };
+    }
+    function answeredRating(value: number): Question {
+      return { id: 'q-rate', type: QuestionType.Rating, answer: { numericValue: value } };
+    }
+    function dateQuestion(): Question {
+      return { id: 'q-date', name: 'When?', type: QuestionType.Date };
+    }
+    function answeredDate(value: string): Question {
+      return { id: 'q-date', type: QuestionType.Date, answer: { stringValue: value } };
+    }
+
+    it('aggregates numeric answers into count, average and ascending distribution', () => {
+      const responses = [
+        response([answeredRating(5)]),
+        response([answeredRating(3)]),
+        response([answeredRating(5)]),
+        response([answeredRating(1)]),
+      ];
+      const stats = computeAnalytics(template([ratingQuestion()]), responses);
+      expect(stats.numericQuestions).toHaveLength(1);
+      const numeric = stats.numericQuestions[0];
+      expect(numeric.count).toBe(4);
+      expect(numeric.average).toBe(3.5);
+      expect(numeric.distribution).toEqual([
+        { value: 1, count: 1 },
+        { value: 3, count: 1 },
+        { value: 5, count: 2 },
+      ]);
+      // numeric questions are NOT treated as choice/text
+      expect(stats.choiceQuestions).toHaveLength(0);
+      expect(stats.textQuestions).toHaveLength(0);
+    });
+
+    it('reports zero average and empty distribution when no numeric answers', () => {
+      const stats = computeAnalytics(template([ratingQuestion()]), []);
+      expect(stats.numericQuestions[0].count).toBe(0);
+      expect(stats.numericQuestions[0].average).toBe(0);
+      expect(stats.numericQuestions[0].distribution).toEqual([]);
+    });
+
+    it('collects non-empty date answers as a list', () => {
+      const responses = [
+        response([answeredDate('2026-06-01')]),
+        response([answeredDate('')]),
+        response([answeredDate('2026-06-03')]),
+      ];
+      const stats = computeAnalytics(template([dateQuestion()]), responses);
+      expect(stats.dateQuestions).toHaveLength(1);
+      expect(stats.dateQuestions[0].values).toEqual(['2026-06-01', '2026-06-03']);
+    });
+  });
 });

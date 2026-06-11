@@ -115,6 +115,27 @@ describe('quizHelpers - API Mapping', () => {
       const result = mapApiQuestionToUi(apiQuestion, 0);
       expect(result.skipConditions).toEqual([{ questionId: 'q0', questionAnswer: 'yes' }]);
     });
+
+    it('maps new types and strips null config/rules into compact UI shapes', () => {
+      const apiQuestion: ApiQuestionModel = {
+        id: 'q1',
+        name: 'Rate it',
+        type: ApiQuestionType.Rating,
+        config: { scaleMin: 1, scaleMax: 5, scaleStep: 1, minLabel: null, maxLabel: 'Great' },
+        validationRules: { min: 1, max: 5, minLength: null },
+      };
+      const result = mapApiQuestionToUi(apiQuestion, 0);
+      expect(result.type).toBe('rating');
+      expect(result.config).toEqual({ scaleMin: 1, scaleMax: 5, scaleStep: 1, maxLabel: 'Great' });
+      expect(result.validationRules).toEqual({ min: 1, max: 5 });
+    });
+
+    it('leaves config/validationRules undefined when absent', () => {
+      const apiQuestion: ApiQuestionModel = { id: 'q1', name: 'Q', type: ApiQuestionType.Number };
+      const result = mapApiQuestionToUi(apiQuestion, 0);
+      expect(result.config).toBeUndefined();
+      expect(result.validationRules).toBeUndefined();
+    });
   });
 
   describe('buildSubmissionPayload', () => {

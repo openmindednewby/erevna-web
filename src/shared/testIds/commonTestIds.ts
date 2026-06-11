@@ -102,6 +102,8 @@ export const CommonTestIds = {
   QUIZ_ANALYTICS_TIMELINE: 'quiz-analytics-timeline',
   QUIZ_ANALYTICS_OPTION_CHART: 'quiz-analytics-option-chart',
   QUIZ_ANALYTICS_TEXT_LIST: 'quiz-analytics-text-list',
+  QUIZ_ANALYTICS_NUMERIC_SUMMARY: 'quiz-analytics-numeric-summary',
+  QUIZ_ANALYTICS_DATE_LIST: 'quiz-analytics-date-list',
 
   // Public survey respondent page
   PUBLIC_SURVEY_PAGE: 'public-survey-page',

@@ -5,6 +5,11 @@ const enum QuestionType {
   Checkbox = 'checkbox',
   Radio = 'radio',
   Dropdown = 'dropdown',
+  Rating = 'rating',
+  Nps = 'nps',
+  Number = 'number',
+  Date = 'date',
+  LinearScale = 'linear-scale',
 }
 
 export default QuestionType;

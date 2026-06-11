@@ -8,6 +8,8 @@ import type { QuestionType } from './questionType';
 import type { Option } from './option';
 import type { QuestionAnswer } from './questionAnswer';
 import type { SkipCondition } from './skipCondition';
+import type { ValidationRules } from './validationRules';
+import type { QuestionConfig } from './questionConfig';
 
 export interface Question {
   id?: string;
@@ -22,4 +24,8 @@ export interface Question {
   /** @nullable */
   skipConditions?: SkipCondition[] | null;
   order?: number;
+  /** @nullable */
+  validationRules?: ValidationRules | null;
+  /** @nullable */
+  config?: QuestionConfig | null;
 }
