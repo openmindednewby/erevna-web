@@ -10,6 +10,7 @@
  */
 import React from 'react';
 
+import { MATRIX_ENTRY, RANKING_ENTRY } from './advancedEntries';
 import { API_QUESTION_TYPE } from './apiTypes';
 import { LINEAR_SCALE_MAX, LINEAR_SCALE_MIN, RATING_MAX, RATING_MIN, SCALE_STEP_DEFAULT } from './constants';
 import { asNumberOrNull, asString, defaultValidate, renderMultiEntry, renderOptionEntry } from './renderHelpers';
@@ -174,6 +175,8 @@ const ENTRIES: readonly QuestionTypeEntry[] = [
   NUMBER_ENTRY,
   DATE_ENTRY,
   LINEAR_SCALE_ENTRY,
+  RANKING_ENTRY,
+  MATRIX_ENTRY,
 ];
 
 const BY_UI_TYPE = new Map<QuestionType, QuestionTypeEntry>(ENTRIES.map((entry) => [entry.uiType, entry]));

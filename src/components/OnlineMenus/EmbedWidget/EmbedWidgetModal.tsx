@@ -9,6 +9,7 @@ import EmbedConfigPanel from './components/EmbedConfigPanel';
 import EmbedTabBar from './components/EmbedTabBar';
 import { useEmbedCode } from './hooks/useEmbedCode';
 import { DEFAULT_EMBED_HEIGHT, DEFAULT_EMBED_WIDTH } from './utils/embedCodeConstants';
+import { MENU_EMBED_KIND, type EmbedKind } from './utils/embedKind';
 import { modalStyles } from './utils/embedWidgetStyles';
 import EmbedTab from '../../../shared/enums/EmbedTab';
 import { TestIds } from '../../../shared/testIds';
@@ -18,13 +19,30 @@ import type { EmbedWidgetConfig } from './hooks/useEmbedCode';
 
 interface Props {
   visible: boolean;
+  /** Display name shown in the modal title (menu name / survey name). */
   menuName: string;
   publicUrl: string;
+  /** External id to embed (menu id / survey id). */
   menuId: string;
   onClose: () => void;
+  /** Embed kind — menu by default. Surveys pass SURVEY_EMBED_KIND. */
+  kind?: EmbedKind;
+  /** Title translation key — defaults to the menu modal title. */
+  titleKey?: string;
+  /** Modal testID — defaults to the menu embed modal id. */
+  modalTestID?: string;
 }
 
-const EmbedWidgetModal = ({ visible, menuName, publicUrl, menuId, onClose }: Props): React.ReactElement => {
+const EmbedWidgetModal = ({
+  visible,
+  menuName,
+  publicUrl,
+  menuId,
+  onClose,
+  kind = MENU_EMBED_KIND,
+  titleKey = 'onlineMenus.embedWidget.modalTitle',
+  modalTestID = TestIds.EMBED_WIDGET_MODAL,
+}: Props): React.ReactElement => {
   const { theme } = useTheme();
   const colors = theme.colors;
 
@@ -36,7 +54,7 @@ const EmbedWidgetModal = ({ visible, menuName, publicUrl, menuId, onClose }: Pro
     accentColor: null,
   });
 
-  const { iframeCode, jsCode } = useEmbedCode(config, publicUrl, menuId);
+  const { iframeCode, jsCode } = useEmbedCode(config, publicUrl, menuId, kind);
 
   const handleWidthChange = useCallback((width: string) => {
     setConfig((prev) => ({ ...prev, width }));
@@ -54,14 +72,14 @@ const EmbedWidgetModal = ({ visible, menuName, publicUrl, menuId, onClose }: Pro
     setConfig((prev) => ({ ...prev, accentColor }));
   }, []);
 
-  const modalTitle = FM('onlineMenus.embedWidget.modalTitle', menuName);
+  const modalTitle = FM(titleKey, menuName);
   const activeCode = activeTab === EmbedTab.Iframe ? iframeCode : jsCode;
 
   return (
     <Modal
       transparent
       animationType="fade"
-      testID={TestIds.EMBED_WIDGET_MODAL}
+      testID={modalTestID}
       visible={visible}
       onRequestClose={onClose}
     >

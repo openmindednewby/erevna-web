@@ -38,14 +38,23 @@ describe('registry - lookups', () => {
     expect(getEntryByApiType(undefined).uiType).toBe(QuestionType.Text);
   });
 
-  it('registers all 10 types', () => {
-    expect(getAllEntries()).toHaveLength(10);
+  it('registers all 12 types', () => {
+    expect(getAllEntries()).toHaveLength(12);
+  });
+
+  it('maps Ranking and Matrix to their API numeric types', () => {
+    expect(getEntryByUiType(QuestionType.Ranking).apiType).toBe(ApiQuestionType.Ranking);
+    expect(getEntryByUiType(QuestionType.Matrix).apiType).toBe(ApiQuestionType.Matrix);
+    expect(getEntryByApiType(ApiQuestionType.Ranking).uiType).toBe(QuestionType.Ranking);
+    expect(getEntryByApiType(ApiQuestionType.Matrix).uiType).toBe(QuestionType.Matrix);
   });
 
   it('reports option support correctly', () => {
     expect(uiTypeSupportsOptions(QuestionType.Radio)).toBe(true);
     expect(uiTypeSupportsOptions(QuestionType.Rating)).toBe(false);
     expect(uiTypeSupportsOptions(QuestionType.Number)).toBe(false);
+    expect(uiTypeSupportsOptions(QuestionType.Ranking)).toBe(true);
+    expect(uiTypeSupportsOptions(QuestionType.Matrix)).toBe(true);
   });
 });
 
@@ -86,5 +95,62 @@ describe('registry - validate', () => {
   it('returns undefined for a valid optional answer', () => {
     const entry = getEntryByUiType(QuestionType.Number);
     expect(entry.validate?.(5, numberQuestion({ min: 1, max: 10 }), MESSAGES)).toBeUndefined();
+  });
+});
+
+describe('registry - ranking validator', () => {
+  function rankingQuestion(required: boolean): Question {
+    return {
+      id: 'rk', name: 'Rank', type: QuestionType.Ranking, page: 1, order: 1, isRequired: required,
+      options: [
+        { label: 'A', value: 'a' },
+        { label: 'B', value: 'b' },
+        { label: 'C', value: 'c' },
+      ],
+    };
+  }
+
+  it('flags a required ranking that has not ranked every option', () => {
+    const entry = getEntryByUiType(QuestionType.Ranking);
+    expect(entry.validate?.(['a', 'b'], rankingQuestion(true), MESSAGES)).toBe('required');
+  });
+
+  it('passes a required ranking that ranks every option', () => {
+    const entry = getEntryByUiType(QuestionType.Ranking);
+    expect(entry.validate?.(['a', 'b', 'c'], rankingQuestion(true), MESSAGES)).toBeUndefined();
+  });
+
+  it('passes an optional ranking regardless of completeness', () => {
+    const entry = getEntryByUiType(QuestionType.Ranking);
+    expect(entry.validate?.(undefined, rankingQuestion(false), MESSAGES)).toBeUndefined();
+  });
+});
+
+describe('registry - matrix validator', () => {
+  function matrixQuestion(required: boolean): Question {
+    return {
+      id: 'mx', name: 'Grid', type: QuestionType.Matrix, page: 1, order: 1, isRequired: required,
+      options: [
+        { label: 'Speed', value: 'row:r1' },
+        { label: 'Price', value: 'row:r2' },
+        { label: 'Low', value: 'col:c1' },
+        { label: 'High', value: 'col:c2' },
+      ],
+    };
+  }
+
+  it('flags a required matrix with an unanswered row', () => {
+    const entry = getEntryByUiType(QuestionType.Matrix);
+    expect(entry.validate?.(['r1:c1'], matrixQuestion(true), MESSAGES)).toBe('required');
+  });
+
+  it('passes a required matrix with every row answered', () => {
+    const entry = getEntryByUiType(QuestionType.Matrix);
+    expect(entry.validate?.(['r1:c1', 'r2:c2'], matrixQuestion(true), MESSAGES)).toBeUndefined();
+  });
+
+  it('passes an optional matrix regardless of completeness', () => {
+    const entry = getEntryByUiType(QuestionType.Matrix);
+    expect(entry.validate?.([], matrixQuestion(false), MESSAGES)).toBeUndefined();
   });
 });

@@ -4,6 +4,7 @@ import { ActivityIndicator, FlatList, View } from 'react-native';
 
 import { useSelector } from 'react-redux';
 
+import { SurveyEmbedWidgetModal } from '../../../src/components/OnlineMenus/EmbedWidget';
 import { QrCodeModal } from '../../../src/components/OnlineMenus/QrCode';
 import EmptyListState from '../../../src/components/Shared/EmptyListState';
 import ErrorState from '../../../src/components/Shared/ErrorState';
@@ -13,6 +14,7 @@ import TenantListItem from '../../../src/components/Tenants/TenantListItem';
 import DeleteInactiveButton from '../../../src/features/questioner/components/DeleteInactiveButton';
 import TemplateForm from '../../../src/features/questioner/components/TemplateForm';
 import { useQuizTemplateActions } from '../../../src/hooks/useQuizTemplateActions';
+import { useQuizTemplateEmbed } from '../../../src/hooks/useQuizTemplateEmbed';
 import { useQuizTemplateQrCode } from '../../../src/hooks/useQuizTemplateQrCode';
 import { FM } from '../../../src/localization/helpers';
 import ThemeMode from '../../../src/shared/enums/ThemeMode';
@@ -48,6 +50,7 @@ const QuizTemplatesPage = (): React.ReactElement => {
   } = useQuizTemplateActions();
 
   const { qrCodeState, isQrCodeVisible, handleQrCode, handleCloseQrCode } = useQuizTemplateQrCode(items);
+  const { embedState, isEmbedVisible, handleEmbed, handleCloseEmbed } = useQuizTemplateEmbed(items);
 
   const colorStyles = useMemo(
     () => ({
@@ -55,6 +58,15 @@ const QuizTemplatesPage = (): React.ReactElement => {
       listItemBorder: { borderBottomColor: String(colors.border) },
     }),
     [colors.background, colors.border],
+  );
+
+  const embedProps = useMemo(
+    () => ({
+      publicUrl: embedState?.publicUrl ?? '',
+      surveyId: embedState?.surveyId ?? '',
+      surveyName: embedState?.surveyName ?? '',
+    }),
+    [embedState],
   );
 
   return (
@@ -99,6 +111,7 @@ const QuizTemplatesPage = (): React.ReactElement => {
           renderItem={({ item }) => (
             <View style={[layoutStyles.listItem, colorStyles.listItemBorder]}>
               <TenantListItem
+                embedButtonTestID={TestIds.SURVEY_EMBED_WIDGET_BUTTON}
                 item={item}
                 qrCodeButtonTestID={TestIds.QUIZ_TEMPLATE_QR_CODE_BUTTON}
                 statusKey="isActive"
@@ -107,6 +120,7 @@ const QuizTemplatesPage = (): React.ReactElement => {
                 onActivate={(id, current) => handleActivate(id, current)}
                 onDelete={(id) => handleDelete(id)}
                 onEdit={() => handleEdit(item)}
+                onEmbed={(id) => handleEmbed(id)}
                 onQrCode={(id) => handleQrCode(id)}
               />
             </View>
@@ -135,6 +149,14 @@ const QuizTemplatesPage = (): React.ReactElement => {
         title={FM('quizTemplates.share.modalTitle', qrCodeState?.surveyName ?? '')}
         visible={isQrCodeVisible}
         onClose={handleCloseQrCode}
+      />
+
+      <SurveyEmbedWidgetModal
+        publicUrl={embedProps.publicUrl}
+        surveyId={embedProps.surveyId}
+        surveyName={embedProps.surveyName}
+        visible={isEmbedVisible}
+        onClose={handleCloseEmbed}
       />
     </View>
   );

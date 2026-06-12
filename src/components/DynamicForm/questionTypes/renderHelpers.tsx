@@ -5,6 +5,7 @@
  */
 import React from 'react';
 
+import { getMatrixRows, selectedColumnForRow } from './matrixEncoding';
 import { isRequiredAnswerMissing, validateByShape, type ValidationMessages } from './validation';
 import { isValueDefined } from '../../../utils/is';
 import { CheckboxQuestion } from '../QuestionRenderer/components/CheckboxQuestion';
@@ -34,7 +35,7 @@ function asScalar(value: Answer): string | number {
   return typeof value === 'string' || typeof value === 'number' ? value : '';
 }
 
-function asArray(value: Answer): Array<string | number> {
+export function asArray(value: Answer): Array<string | number> {
   return Array.isArray(value) ? value : [];
 }
 
@@ -84,4 +85,33 @@ export function defaultValidate(
     return messages.required;
   if (!isValueDefined(answer)) return undefined;
   return validateByShape(answer, question.validationRules, messages);
+}
+
+/**
+ * Ranking validator: a required ranking must rank EVERY option exactly once.
+ * (The renderer always materializes a full permutation, so a present answer is
+ * complete; this guards against a missing/short stored answer.)
+ */
+export function rankingValidate(
+  answer: Answer | undefined,
+  question: Question,
+  messages: ValidationMessages,
+): string | undefined {
+  if (question.isRequired !== true) return undefined;
+  const optionCount = (question.options ?? []).length;
+  const rankedCount = Array.isArray(answer) ? answer.length : 0;
+  return rankedCount < optionCount ? messages.required : undefined;
+}
+
+/** Matrix validator: every row must be answered when the question is required. */
+export function matrixValidate(
+  answer: Answer | undefined,
+  question: Question,
+  messages: ValidationMessages,
+): string | undefined {
+  if (question.isRequired !== true) return undefined;
+  const rows = getMatrixRows(question.options);
+  const values = Array.isArray(answer) ? answer : [];
+  const everyRowAnswered = rows.every((row) => isValueDefined(selectedColumnForRow(values, row.id)));
+  return rows.length > 0 && everyRowAnswered ? undefined : messages.required;
 }

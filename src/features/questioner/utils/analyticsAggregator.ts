@@ -11,6 +11,7 @@ import {
   computeResponsesByDay,
   getQuestions,
   tallyChoiceQuestion,
+  tallyMatrixQuestion,
   tallyNumericQuestion,
 } from './analyticsTally';
 
@@ -21,9 +22,13 @@ const CHOICE_TYPES: ReadonlySet<number> = new Set<number>([
   QuestionType.Checkbox,
   QuestionType.Radio,
   QuestionType.Dropdown,
+  // Ranking's options ARE its answer values, so the choice tally counts how often each
+  // option was ranked — a sensible aggregation alongside the other choice types.
+  QuestionType.Ranking,
 ]);
 
 const DATE_API_TYPE = QuestionType.Date;
+const MATRIX_API_TYPE = QuestionType.Matrix;
 
 const EMPTY_STATS: AnalyticsStats = {
   totalResponses: 0,
@@ -44,7 +49,9 @@ function splitQuestionStats(
 
   for (const question of questions) {
     const type = question.type ?? QuestionType.Text;
-    if (CHOICE_TYPES.has(type))
+    if (type === MATRIX_API_TYPE)
+      split.choiceQuestions.push(tallyMatrixQuestion(question, matching, totalResponses));
+    else if (CHOICE_TYPES.has(type))
       split.choiceQuestions.push(tallyChoiceQuestion(question, matching, totalResponses));
     else if (NUMERIC_API_TYPES.has(type))
       split.numericQuestions.push(tallyNumericQuestion(question, matching));

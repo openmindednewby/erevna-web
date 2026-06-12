@@ -6,9 +6,10 @@
  * error. Lives outside the (protected) group; nothing here triggers the auth
  * gate.
  */
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Platform, StyleSheet, Text, View } from 'react-native';
+import type { LayoutChangeEvent } from 'react-native';
 
 import QuizContent from '../../../../app/(protected)/quiz-active/QuizContent';
 import ThankYouOverlay from '../../../../app/(protected)/quiz-active/ThankYouOverlay';
@@ -20,9 +21,12 @@ import { TestIds } from '../../../shared/testIds';
 import { useTheme } from '../../../theme/hooks/useTheme';
 import { layoutStyles, useDynamicFormStyles } from '../../../theme/utils/styles';
 import { isValueDefined } from '../../../utils/is';
+import { logger } from '../../../utils/logger';
 
 const SPACING = 8;
 const PADDING = 16;
+const SURVEY_RESIZE_MESSAGE = 'survey-widget-resize';
+const WILDCARD_ORIGIN = '*';
 
 const screenStyles = StyleSheet.create({
   stateContainer: { flex: 1, padding: PADDING, justifyContent: 'center', alignItems: 'center' },
@@ -31,15 +35,37 @@ const screenStyles = StyleSheet.create({
   loadingText: { marginTop: SPACING, fontSize: 16 },
 });
 
-interface Props {
-  externalId: string;
+/** Posts the current content height to the parent window for embed auto-resize. */
+function postSurveyResize(height: number, targetOrigin: string): void {
+  if (Platform.OS !== 'web' || typeof window === 'undefined') return;
+  try {
+    window.parent.postMessage({ type: SURVEY_RESIZE_MESSAGE, height }, targetOrigin);
+  } catch (error) {
+    logger.warn('PublicSurveyScreen', 'Failed to post resize message', error);
+  }
 }
 
-const PublicSurveyScreen = ({ externalId }: Props): React.ReactElement => {
+interface Props {
+  externalId: string;
+  /** When true, renders for iframe embedding and posts resize messages to the parent. */
+  embedMode?: boolean;
+  /** Target origin for postMessage resize (embed mode only). Defaults to wildcard. */
+  targetOrigin?: string;
+}
+
+const PublicSurveyScreen = ({ externalId, embedMode = false, targetOrigin = WILDCARD_ORIGIN }: Props): React.ReactElement => {
   const { theme } = useTheme();
   const colors = theme.colors;
   const styles = useDynamicFormStyles();
   const { state, quizForm } = usePublicSurvey(externalId);
+
+  const handleLayout = useCallback(
+    (event: LayoutChangeEvent) => {
+      if (!embedMode) return;
+      postSurveyResize(Math.ceil(event.nativeEvent.layout.height), targetOrigin);
+    },
+    [embedMode, targetOrigin],
+  );
 
   const colorStyles = useMemo(
     () => ({
@@ -56,7 +82,8 @@ const PublicSurveyScreen = ({ externalId }: Props): React.ReactElement => {
   return (
     <View
       style={[layoutStyles.container, colorStyles.container]}
-      testID={TestIds.PUBLIC_SURVEY_PAGE}
+      testID={embedMode ? TestIds.SURVEY_EMBED_PAGE : TestIds.PUBLIC_SURVEY_PAGE}
+      onLayout={handleLayout}
     >
       {state === PublicSurveyState.Loading ? (
         <View style={screenStyles.stateContainer} testID={TestIds.PUBLIC_SURVEY_LOADING}>

@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 
 import { isValueDefined } from '../../../../utils/is';
 import { EMBED_SANDBOX_ATTRS } from '../utils/embedCodeConstants';
+import { MENU_EMBED_KIND, type EmbedKind } from '../utils/embedKind';
 import { buildEmbedUrl } from '../utils/embedUrlBuilder';
 
 export interface EmbedWidgetConfig {
@@ -17,7 +18,7 @@ interface EmbedCodeResult {
   embedUrl: string;
 }
 
-function buildIframeCode(embedUrl: string, config: EmbedWidgetConfig): string {
+function buildIframeCode(embedUrl: string, config: EmbedWidgetConfig, kind: EmbedKind): string {
   return [
     `<iframe`,
     `  src="${embedUrl}"`,
@@ -26,16 +27,16 @@ function buildIframeCode(embedUrl: string, config: EmbedWidgetConfig): string {
     `  frameborder="0"`,
     `  scrolling="no"`,
     `  loading="lazy"`,
-    `  title="Embedded Menu"`,
+    `  title="Embedded ${kind.titleNoun}"`,
     `  sandbox="${EMBED_SANDBOX_ATTRS}"`,
     `></iframe>`,
   ].join('\n');
 }
 
-function buildJsCode(config: EmbedWidgetConfig, publicUrl: string, menuId: string): string {
+function buildJsCode(config: EmbedWidgetConfig, publicUrl: string, id: string, kind: EmbedKind): string {
   const dataAttrs = [
-    `data-menu-widget`,
-    `data-menu-id="${menuId}"`,
+    kind.dataAttr,
+    `${kind.idAttr}="${id}"`,
     `data-origin="${publicUrl}"`,
     `data-width="${config.width}"`,
     `data-height="${String(config.height)}"`,
@@ -49,33 +50,44 @@ function buildJsCode(config: EmbedWidgetConfig, publicUrl: string, menuId: strin
 
   return [
     `<div ${dataAttrs.join(' ')}></div>`,
-    `<script src="${publicUrl}/widget.js"></script>`,
+    `<script src="${publicUrl}/${kind.widgetFile}"></script>`,
   ].join('\n');
 }
 
 /**
  * Generates iframe and JS widget embed code snippets from the given configuration.
- * Pure computation, no side effects.
+ * Pure computation, no side effects. The embed kind selects the route/widget/data-attrs.
  */
-export function generateEmbedCode(config: EmbedWidgetConfig, publicUrl: string, menuId: string): EmbedCodeResult {
+export function generateEmbedCode(
+  config: EmbedWidgetConfig,
+  publicUrl: string,
+  id: string,
+  kind: EmbedKind = MENU_EMBED_KIND,
+): EmbedCodeResult {
   const origin = typeof window !== 'undefined' ? window.location.origin : '';
-  const embedUrl = buildEmbedUrl(publicUrl, menuId, {
+  const embedUrl = buildEmbedUrl(publicUrl, id, {
     themeOverride: config.themeOverride,
     accentColor: config.accentColor,
     origin,
+    kind,
   });
 
   return {
-    iframeCode: buildIframeCode(embedUrl, config),
-    jsCode: buildJsCode(config, publicUrl, menuId),
+    iframeCode: buildIframeCode(embedUrl, config, kind),
+    jsCode: buildJsCode(config, publicUrl, id, kind),
     embedUrl,
   };
 }
 
 /** React hook wrapper around generateEmbedCode with memoization. */
-export function useEmbedCode(config: EmbedWidgetConfig, publicUrl: string, menuId: string): EmbedCodeResult {
+export function useEmbedCode(
+  config: EmbedWidgetConfig,
+  publicUrl: string,
+  id: string,
+  kind: EmbedKind = MENU_EMBED_KIND,
+): EmbedCodeResult {
   return useMemo(
-    () => generateEmbedCode(config, publicUrl, menuId),
-    [config, publicUrl, menuId],
+    () => generateEmbedCode(config, publicUrl, id, kind),
+    [config, publicUrl, id, kind],
   );
 }

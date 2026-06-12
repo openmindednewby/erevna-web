@@ -45,6 +45,7 @@ import { NutritionTestIds } from './testIds/nutritionTestIds';
 import { PrivacyTestIds } from './testIds/privacyTestIds';
 import { ProfileTestIds } from './testIds/profileTestIds';
 import { PublicMenuTestIds } from './testIds/publicMenuTestIds';
+import { QuestionTypeTestIds } from './testIds/questionTypeTestIds';
 import { ScheduleTestIds } from './testIds/scheduleTestIds';
 import { ShowcaseTestIds } from './testIds/showcaseTestIds';
 import { StatusPageTestIds } from './testIds/statusPageTestIds';
@@ -82,6 +83,7 @@ export const TestIds = {
   ...PrivacyTestIds,
   ...ProfileTestIds,
   ...PublicMenuTestIds,
+  ...QuestionTypeTestIds,
   ...ScheduleTestIds,
   ...ShowcaseTestIds,
   ...StatusPageTestIds,

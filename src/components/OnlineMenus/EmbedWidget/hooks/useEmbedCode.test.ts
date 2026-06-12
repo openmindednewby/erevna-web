@@ -1,4 +1,5 @@
 import { generateEmbedCode } from './useEmbedCode';
+import { SURVEY_EMBED_KIND } from '../utils/embedKind';
 
 import type { EmbedWidgetConfig } from './useEmbedCode';
 
@@ -70,5 +71,25 @@ describe('generateEmbedCode', () => {
     expect(iframeCode).toContain('height="800"');
     expect(jsCode).toContain('data-width="500px"');
     expect(jsCode).toContain('data-height="800"');
+  });
+
+  it('defaults to the menu kind (route, title, data-attrs, widget file)', () => {
+    const { iframeCode, jsCode } = generateEmbedCode(baseConfig, publicUrl, menuId);
+    expect(iframeCode).toContain('/public/menu/embed/');
+    expect(iframeCode).toContain('title="Embedded Menu"');
+    expect(jsCode).toContain('data-menu-widget');
+    expect(jsCode).toContain(`data-menu-id="${menuId}"`);
+    expect(jsCode).toContain(`<script src="${publicUrl}/widget.js"></script>`);
+  });
+
+  it('generates survey embed code for the survey kind', () => {
+    const surveyId = 'survey-7';
+    const { iframeCode, jsCode } = generateEmbedCode(baseConfig, publicUrl, surveyId, SURVEY_EMBED_KIND);
+    expect(iframeCode).toContain(`/public/survey/embed/${surveyId}?embed=1`);
+    expect(iframeCode).toContain('title="Embedded Survey"');
+    expect(jsCode).toContain('data-survey-widget');
+    expect(jsCode).toContain(`data-survey-id="${surveyId}"`);
+    expect(jsCode).toContain(`<script src="${publicUrl}/survey-widget.js"></script>`);
+    expect(jsCode).not.toContain('data-menu-widget');
   });
 });

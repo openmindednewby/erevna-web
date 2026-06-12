@@ -10,6 +10,8 @@ const enum QuestionType {
   Number = 'number',
   Date = 'date',
   LinearScale = 'linear-scale',
+  Ranking = 'ranking',
+  Matrix = 'matrix',
 }
 
 export default QuestionType;

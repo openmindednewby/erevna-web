@@ -425,15 +425,12 @@
     "type.Nps": "NPS",
     "type.Number": "Number",
     "type.Date": "Date",
-    "type.LinearScale": "Linear Scale"
-    ,
+    "type.LinearScale": "Linear Scale",
     "tab": {
       "form": "Form",
       "json": "JSON"
-    }
-    ,
-    "questions": "Questions"
-    ,
+    },
+    "questions": "Questions",
     "label": {
       "name": "Name",
       "description": "Description",
@@ -518,7 +515,57 @@
     "ruleMinSelectionsInputLabel": "Minimum selections input",
     "ruleMinSelectionsInputHint": "Require at least this many selected options",
     "ruleMaxSelectionsInputLabel": "Maximum selections input",
-    "ruleMaxSelectionsInputHint": "Allow at most this many selected options"
+    "ruleMaxSelectionsInputHint": "Allow at most this many selected options",
+    "type.Ranking": "Ranking",
+    "type.Matrix": "Matrix",
+    "matrixOptions": "Rows & Columns",
+    "matrixRows": "Rows",
+    "matrixColumns": "Columns",
+    "matrixRow": "Row",
+    "matrixColumn": "Column",
+    "matrixAddRow": "Add Row",
+    "matrixAddRowHint": "Add a new matrix row",
+    "matrixAddColumn": "Add Column",
+    "matrixAddColumnHint": "Add a new matrix column",
+    "matrixRemoveRow": "Remove",
+    "matrixRemoveRowHint": "Remove this matrix row",
+    "matrixRemoveColumn": "Remove",
+    "matrixRemoveColumnHint": "Remove this matrix column",
+    "matrixRowInputLabel": "Matrix row label",
+    "matrixRowInputHint": "Enter a label for this matrix row",
+    "matrixColumnInputLabel": "Matrix column label",
+    "matrixColumnInputHint": "Enter a label for this matrix column",
+    "embedWidget": {
+      "title": "Embed Widget",
+      "modalTitle": "Embed Survey: {{p1}}",
+      "closeBtnHint": "Close embed widget modal",
+      "tabIframe": "iFrame Code",
+      "tabJavascript": "JavaScript Widget",
+      "widthLabel": "Width",
+      "widthHint": "Set the embed width",
+      "widthPresetFull": "Full Width",
+      "widthPresetFixed": "Fixed",
+      "heightLabel": "Height",
+      "heightHint": "Set the embed height in pixels",
+      "themeLabel": "Theme Override",
+      "themeHint": "Override the menu theme",
+      "themeNone": "None",
+      "themeLight": "Light",
+      "themeDark": "Dark",
+      "accentColorLabel": "Accent Color",
+      "accentColorHint": "Set a custom accent color",
+      "accentColorPlaceholder": "#000000",
+      "tabIframeHint": "Switch to iFrame embed code",
+      "tabJavascriptHint": "Switch to JavaScript widget embed code",
+      "copyCode": "Copy Code",
+      "copyCodeHint": "Copy embed code to clipboard",
+      "codeCopied": "Code copied to clipboard!",
+      "copyFailed": "Failed to copy code",
+      "embedHint": "Generate embed code for this survey",
+      "embedDisabledHint": "Survey must be active to generate embed code",
+      "previewLabel": "Preview",
+      "codeLabel": "Code"
+    }
   },
   "publicSurvey": {
     "loading": "Loading survey...",
@@ -597,7 +644,7 @@
       "status": "Status"
     },
     "questionsLabelHelp": "Manage answers and their associated question values",
-  "view": "View",
+    "view": "View",
     "export": "Export",
     "exportJson": "Export JSON",
     "exportCsv": "Export CSV",
@@ -671,7 +718,17 @@
     "dateInputLabel": "Date answer input",
     "scaleOptionHint": "Select this value on the scale",
     "scaleOptionLabel": "Scale value {{p1}}",
-    "selectOption": "Select an option"
+    "selectOption": "Select an option",
+    "rankingHelp": "Use the arrows to rank these options in order of preference (top = most preferred).",
+    "rankingMoveUp": "Move {{p1}} up",
+    "rankingMoveUpHint": "Move {{p1}} one position higher in the ranking",
+    "rankingMoveDown": "Move {{p1}} down",
+    "rankingMoveDownHint": "Move {{p1}} one position lower in the ranking",
+    "rankingUpArrow": "▲",
+    "rankingDownArrow": "▼",
+    "matrixHelp": "Pick one column for each row.",
+    "matrixCell": "{{p1}}: {{p2}}",
+    "matrixCellHint": "Select {{p2}} for {{p1}}"
   },
   "common": {
     "refresh": "Refresh",
@@ -1416,7 +1473,7 @@
   "breadcrumb": {
     "navigateToHint": "Go back to {{p1}}",
     "currentPageHint": "Current page: {{p1}}",
-    "separator": "\u203a"
+    "separator": "›"
   },
   "users": {
     "selectTenant": "Select Tenant",
@@ -1847,7 +1904,6 @@
     "modalClose": "Close",
     "modalDismiss": "Dismiss"
   },
- 
   "topbar": {
     "dark": "Dark",
     "menu": "Menu",
@@ -2082,8 +2138,8 @@
     "categoryDescriptionLabel": "Category description input",
     "categoryDescriptionInputHint": "Enter an optional description for this category",
     "addItemHint": "Add a new menu item to this category",
-    "moveUpArrow": "\u25B2",
-    "moveDownArrow": "\u25BC",
+    "moveUpArrow": "▲",
+    "moveDownArrow": "▼",
     "moveCategoryUpHint": "Move this category up in the list",
     "moveCategoryDownHint": "Move this category down in the list",
     "moveCategoryUpLabel": "Move category {{p1}} up",
@@ -2347,7 +2403,7 @@
       "menuNameHint": "Go to menu details",
       "contentHint": "Go back to content overview",
       "currentPageHint": "Current page: {{p1}}",
-      "ellipsis": "\u2026"
+      "ellipsis": "…"
     },
     "categoryIcon": {
       "label": "Category Icon",
@@ -2793,17 +2849,17 @@
       "pricingLinkHint": "Navigate to pricing",
       "faqLink": "FAQ",
       "faqLinkHint": "Jump to frequently asked questions",
-      "copyright": "\u00a9 2026 Erevna. All rights reserved."
+      "copyright": "© 2026 Erevna. All rights reserved."
     }
   },
   "dashboard": {
     "welcomeBack": "Welcome back, {{p1}}",
     "welcomeNew": "Welcome to MenuFlow",
     "subtitleActive": "Here's what's happening with your business",
-    "subtitleEmpty": "Let's get you started \u2014 create your first menu or survey in minutes",
+    "subtitleEmpty": "Let's get you started — create your first menu or survey in minutes",
     "menus": {
       "guidedTitle": "Create Your First Menu",
-      "guidedDescription": "Build a beautiful digital menu for your restaurant. Add categories, items, and prices \u2014 then share it with a QR code.",
+      "guidedDescription": "Build a beautiful digital menu for your restaurant. Add categories, items, and prices — then share it with a QR code.",
       "guidedCta": "Create Menu",
       "guidedCtaHint": "Navigate to create your first menu",
       "overviewTitle": "Online Menus",
@@ -2815,7 +2871,7 @@
     },
     "templates": {
       "guidedTitle": "Create Your First Survey",
-      "guidedDescription": "Build a customer feedback form or quiz. Choose from templates or start from scratch \u2014 share via link or QR code.",
+      "guidedDescription": "Build a customer feedback form or quiz. Choose from templates or start from scratch — share via link or QR code.",
       "guidedCta": "Create Survey",
       "guidedCtaHint": "Navigate to create your first survey template",
       "overviewTitle": "Questionnaires",

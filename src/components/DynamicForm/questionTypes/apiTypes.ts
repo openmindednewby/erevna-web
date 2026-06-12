@@ -16,9 +16,11 @@ export const API_QUESTION_TYPE = {
   Number: 7,
   Date: 8,
   LinearScale: 9,
+  Ranking: 10,
+  Matrix: 11,
 } as const;
 
-/** The literal union of valid numeric API question-type values (0…9). */
+/** The literal union of valid numeric API question-type values (0…11). */
 export type ApiQuestionTypeValue = (typeof API_QUESTION_TYPE)[keyof typeof API_QUESTION_TYPE];
 
 /** Numeric API types treated as numeric for analytics/aggregation. */

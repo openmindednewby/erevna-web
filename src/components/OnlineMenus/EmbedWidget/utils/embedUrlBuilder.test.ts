@@ -1,3 +1,4 @@
+import { SURVEY_EMBED_KIND } from './embedKind';
 import { buildEmbedUrl } from './embedUrlBuilder';
 
 describe('buildEmbedUrl', () => {
@@ -35,5 +36,19 @@ describe('buildEmbedUrl', () => {
     const specialId = 'menu with spaces';
     const url = buildEmbedUrl(baseUrl, specialId, { themeOverride: null, accentColor: null });
     expect(url).toContain('menu%20with%20spaces');
+  });
+
+  it('defaults to the menu route segment', () => {
+    const url = buildEmbedUrl(baseUrl, menuId, { themeOverride: null, accentColor: null });
+    expect(url).toContain('/public/menu/embed/');
+  });
+
+  it('uses the survey route segment for the survey kind', () => {
+    const url = buildEmbedUrl(baseUrl, 'survey-1', {
+      themeOverride: null,
+      accentColor: null,
+      kind: SURVEY_EMBED_KIND,
+    });
+    expect(url).toBe(`${baseUrl}/public/survey/embed/survey-1?embed=1`);
   });
 });
