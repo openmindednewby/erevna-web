@@ -623,6 +623,31 @@
     "noDateAnswers": "No date answers yet",
     "optionResult": "{{p1}}% ({{p2}})",
     "dayCount": "{{p1}}: {{p2}}",
+    "funnel": {
+      "title": "Completion funnel",
+      "caveat": "This is a completion / answered-rate funnel, not abandonment drop-off. Only completed submissions are stored, so it shows how often each question was answered — not where people left off.",
+      "byPage": "Reach by page",
+      "byQuestion": "Answered rate by question",
+      "pageLabel": "Page {{p1}}",
+      "pageResult": "{{p1}}% reached ({{p2}} of {{p3}})",
+      "questionResult": "{{p1}}% answered ({{p2}} of {{p3}})",
+      "empty": "Not enough data to chart the funnel yet"
+    },
+    "crosstab": {
+      "title": "Crosstab",
+      "subtitle": "Cross any two questions to see how their answers relate.",
+      "rowPicker": "Rows",
+      "colPicker": "Columns",
+      "rowPickerHint": "Choose the question whose answers form the rows of the crosstab",
+      "colPickerHint": "Choose the question whose answers form the columns of the crosstab",
+      "selectRowOption": "Use \"{{p1}}\" as the crosstab rows",
+      "selectColOption": "Use \"{{p1}}\" as the crosstab columns",
+      "totalHeader": "Total",
+      "matchedResponses": "{{p1}} responses answered both questions",
+      "pickPrompt": "Pick a row question and a column question to build the crosstab.",
+      "samePicked": "Pick two different questions to cross.",
+      "noData": "No responses answered both of the selected questions yet."
+    },
     "empty": {
       "title": "No responses to analyze yet",
       "description": "Once respondents complete the active survey, their answers will appear here as charts and summaries.",

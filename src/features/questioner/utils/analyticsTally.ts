@@ -29,13 +29,13 @@ export function getQuestions(record: { contents?: { questions?: Question[] } }):
   return Array.isArray(questions) ? questions : [];
 }
 
-function getQuestionId(question: Question): string {
+export function getQuestionId(question: Question): string {
   if (isNotEmptyString(question.id)) return question.id;
   if (isNotEmptyString(question.name)) return question.name;
   return '';
 }
 
-function getQuestionName(question: Question): string {
+export function getQuestionName(question: Question): string {
   if (isNotEmptyString(question.name)) return question.name;
   if (isNotEmptyString(question.id)) return question.id;
   return '';
@@ -57,6 +57,32 @@ function getSelectedValues(answer: Answer | null | undefined, isMultiValue: bool
     return Array.isArray(multi) ? multi.filter(isNotEmptyString) : [];
   }
   return isNotEmptyString(answer.stringValue) ? [answer.stringValue] : [];
+}
+
+/** True when the question carries multiple selected values per answer (checkbox / multi-choice). */
+function isMultiValueType(type: number | undefined): boolean {
+  return MULTI_VALUE_TYPES.has(type ?? QuestionType.Text);
+}
+
+/**
+ * Bucket a single answer into one or more value strings, used for crosstab joins.
+ *
+ * - Multi-value answers (checkbox / multiple-choice) yield EACH selected value.
+ * - Numeric answers yield the numeric value rendered as a string.
+ * - Choice / text / date answers yield the (non-empty) stringValue.
+ * Returns an empty array when the answer is absent or empty.
+ */
+export function getAnswerBuckets(answer: Answer | null | undefined, type: number | undefined): string[] {
+  if (!isValueDefined(answer)) return [];
+  if (isMultiValueType(type)) return getSelectedValues(answer, true);
+  const numeric = answer.numericValue;
+  if (typeof numeric === 'number' && !Number.isNaN(numeric)) return [String(numeric)];
+  return isNotEmptyString(answer.stringValue) ? [answer.stringValue] : [];
+}
+
+/** True when a response has a meaningful (non-null, non-empty) answer for the given question id. */
+export function hasAnswer(answer: Answer | null | undefined, type: number | undefined): boolean {
+  return getAnswerBuckets(answer, type).length > 0;
 }
 
 function buildOptionDistributions(

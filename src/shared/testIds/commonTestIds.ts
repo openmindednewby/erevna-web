@@ -104,6 +104,12 @@ export const CommonTestIds = {
   QUIZ_ANALYTICS_TEXT_LIST: 'quiz-analytics-text-list',
   QUIZ_ANALYTICS_NUMERIC_SUMMARY: 'quiz-analytics-numeric-summary',
   QUIZ_ANALYTICS_DATE_LIST: 'quiz-analytics-date-list',
+  QUIZ_ANALYTICS_FUNNEL: 'quiz-analytics-funnel',
+  QUIZ_ANALYTICS_CROSSTAB: 'quiz-analytics-crosstab',
+  QUIZ_ANALYTICS_CROSSTAB_ROW_PICKER: 'quiz-analytics-crosstab-row-picker',
+  QUIZ_ANALYTICS_CROSSTAB_COL_PICKER: 'quiz-analytics-crosstab-col-picker',
+  QUIZ_ANALYTICS_CROSSTAB_ROW_OPTION: 'quiz-analytics-crosstab-row-option',
+  QUIZ_ANALYTICS_CROSSTAB_COL_OPTION: 'quiz-analytics-crosstab-col-option',
 
   // Public survey respondent page
   PUBLIC_SURVEY_PAGE: 'public-survey-page',
