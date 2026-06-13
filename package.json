@@ -23,6 +23,7 @@
     "test:watch": "jest --watch --maxWorkers=4 --workerIdleMemoryLimit=512MB",
     "test:coverage": "jest --coverage --maxWorkers=4 --workerIdleMemoryLimit=512MB",
     "test:ci": "jest --ci --coverage --maxWorkers=2",
+    "generate:sw": "node ../NpmPackages/packages/pwa-sw/dist/cli.js ./pwa-sw.config.js ./public",
     "generate:api": "node ./scripts/generate-api.js",
     "generate:hooks": "powershell ./scripts/Generate-ApiHooks.ps1",
     "generate:hooks:skip-download": "powershell ./scripts/Generate-ApiHooks.ps1 -SkipDownload",

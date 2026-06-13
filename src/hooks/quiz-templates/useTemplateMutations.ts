@@ -2,6 +2,7 @@ import { useCallback, useMemo } from 'react';
 
 import { notify, notifySuccess } from '../../lib/notifications';
 import { FM } from '../../localization/helpers';
+import { purgePublicCache } from '../../pwa/purgePublicCache';
 import {
   useQuestionerWebQuestionerTemplatesCreate,
   useQuestionerWebQuestionerTemplatesDelete,
@@ -44,11 +45,15 @@ function showSuccessNotification(messageKey: string): void {
 
 /** Create success handler for save edit operation */
 function createSaveEditSuccessHandler(
+  externalId: string,
   refetchTemplatesSoon: () => void,
   setIsModalVisible: (visible: boolean) => void,
   setEditingItem: (item: QuestionerTemplateDto | null) => void,
 ): () => void {
   return () => {
+    // Evict the public cache so the editor's own preview reflects the edit
+    // immediately (cross-visitor freshness is already covered by network-first).
+    purgePublicCache(externalId);
     refetchTemplatesSoon();
     setIsModalVisible(false);
     setEditingItem(null);
@@ -70,9 +75,11 @@ interface ActivateHandlers {
   onError: (err: unknown) => void;
 }
 
-function createActivateHandlers(refetchTemplatesSoon: () => void): ActivateHandlers {
+function createActivateHandlers(externalId: string, refetchTemplatesSoon: () => void): ActivateHandlers {
   return {
     onSuccess: () => {
+      // Activation flips public visibility — purge so the change shows at once.
+      purgePublicCache(externalId);
       refetchTemplatesSoon();
       showSuccessNotification('quizTemplates.messages.activateSuccess');
     },
@@ -124,7 +131,7 @@ function useSaveAndCreateHandlers(
     (payload: UpdateQuestionerTemplateRequest): void => {
       const externalId = editingItem?.externalId;
       if (!isValueDefined(externalId) || externalId.length === 0) return;
-      const onSuccess = createSaveEditSuccessHandler(refetchTemplatesSoon, setIsModalVisible, setEditingItem);
+      const onSuccess = createSaveEditSuccessHandler(externalId, refetchTemplatesSoon, setIsModalVisible, setEditingItem);
       updateMutation.mutate({ externalId, data: payload }, { onSuccess });
     },
     [editingItem?.externalId, refetchTemplatesSoon, setEditingItem, setIsModalVisible, updateMutation],
@@ -175,7 +182,7 @@ function useDeleteAndActivateHandlers(
       const item = items.find((i) => i.externalId === id);
       if (!isValueDefined(item)) return;
       const mutationData = buildActivateMutationData(id, item, !currentBool);
-      updateMutation.mutate(mutationData, createActivateHandlers(refetchTemplatesSoon));
+      updateMutation.mutate(mutationData, createActivateHandlers(id, refetchTemplatesSoon));
     },
     [items, refetchTemplatesSoon, updateMutation],
   );

@@ -2,7 +2,10 @@
   "name": "Tag Heuer Quiz",
   "short_name": "THQuiz",
   "description": "Install Tag Heuer Quiz to create, manage, and answer quizzes even when offline.",
-  "categories": ["productivity", "utilities"],
+  "categories": [
+    "productivity",
+    "utilities"
+  ],
   "start_url": "/?source=pwa",
   "scope": "/",
   "display": "standalone",
