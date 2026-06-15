@@ -1,53 +1,62 @@
 {
-    "expo":  {
-                 "name":  "Erevna",
-                 "slug":  "erevna",
-                 "version":  "1.0.0",
-                 "extra":  {
-                               "env":  "dev"
-                           },
-                 "orientation":  "portrait",
-                 "icon":  "./assets/logo-192-no-background.png",
-                 "userInterfaceStyle":  "light",
-                 "newArchEnabled":  true,
-                 "splash":  {
-                                "image":  "./assets/logo-192-no-background.png",
-                                "resizeMode":  "contain",
-                                "backgroundColor":  "#ffffff"
-                            },
-                 "ios":  {
-                             "supportsTablet":  true
-                         },
-                 "android":  {
-                                 "package":  "com.dloizides.erevna",
-                                 "versionCode":  1,
-                                 "adaptiveIcon":  {
-                                                      "foregroundImage":  "./assets/logo-192-no-background.png",
-                                                      "backgroundColor":  "#ffffff"
-                                                  },
-                                 "edgeToEdgeEnabled":  true,
-                                 "predictiveBackGestureEnabled":  false
-                             },
-                 "web":  {
-                             "favicon":  "./assets/logo-50-no-background.png",
-                             "name":  "Erevna — From wondering to knowing",
-                             "shortName":  "Erevna",
-                             "description":  "Build forms, surveys, and quizzes your audience actually wants to fill out — and turn what they say into decisions you can act on.",
-                             "lang":  "en",
-                             "themeColor":  "#008d5c",
-                             "backgroundColor":  "#ffffff"
-                         },
-                 "scheme":  "erevna",
-                 "plugins":  [
-                                 [
-                                     "expo-router",
-                                     {
-                                         "asyncRoutes":  {
-                                                             "web":  true
-                                                         }
-                                     }
-                                 ],
-                                 "expo-secure-store"
-                             ]
-             }
+  "expo": {
+    "name": "Erevna",
+    "slug": "erevna",
+    "version": "1.0.0",
+    "extra": {
+      "env": "dev",
+      "router": {
+        "asyncRoutes": {
+          "web": true
+        }
+      },
+      "eas": {
+        "projectId": "6a451df4-3fcf-40ed-92c2-d3ab1e69cb31"
+      }
+    },
+    "orientation": "portrait",
+    "icon": "./assets/logo-192-no-background.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/logo-192-no-background.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.dloizides.erevna",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/logo-192-no-background.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/logo-50-no-background.png",
+      "name": "Erevna — From wondering to knowing",
+      "shortName": "Erevna",
+      "description": "Build forms, surveys, and quizzes your audience actually wants to fill out — and turn what they say into decisions you can act on.",
+      "lang": "en",
+      "themeColor": "#008d5c",
+      "backgroundColor": "#ffffff"
+    },
+    "scheme": "erevna",
+    "plugins": [
+      [
+        "expo-router",
+        {
+          "asyncRoutes": {
+            "web": true
+          }
+        }
+      ],
+      "expo-secure-store"
+    ],
+    "owner": "dloizides"
+  }
 }
