@@ -143,6 +143,14 @@ const RootHtml = ({ children }: PropsWithChildren): ReactElement => {
         <script defer dangerouslySetInnerHTML={{ __html: swRegistrationScript }} />
         {/* Debug: probe manifest availability (dev only, deferred) */}
         <script defer dangerouslySetInnerHTML={{ __html: manifestDebugScript }} />
+        {/* Umami privacy-first analytics (web-app-standards). data-domains keeps
+            staging/localhost traffic out of the prod dataset. */}
+        <script
+          defer
+          data-domains="erevna.dloizides.com"
+          data-website-id="2ecad02e-fd6e-4ded-9c2c-47ff8e0b6a4b"
+          src="https://analytics.dloizides.com/script.js"
+        />
       </head>
       <body>
         {/* Loading placeholder for LCP - shows immediately while JS loads */}
