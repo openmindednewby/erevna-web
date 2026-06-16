@@ -16,27 +16,31 @@ interface VapidPublicKeyResponse {
 }
 
 /** Requests permission, subscribes, and registers the browser for web push. Returns true on success. */
-// ts-prune-ignore-next -- public web-push opt-in API; wired from the notifications opt-in control.
 export async function enableWebPush(): Promise<boolean> {
-  const keyResponse = await notificationInstance<VapidPublicKeyResponse>({
-    url: '/api/v1/web-push/vapid-public-key',
-    method: 'GET',
-  });
+  try {
+    const keyResponse = await notificationInstance<VapidPublicKeyResponse>({
+      url: '/api/v1/web-push/vapid-public-key',
+      method: 'GET',
+    });
 
-  const result = await subscribeToWebPush({
-    vapidPublicKey: keyResponse.publicKey,
-    registerSubscription: async (subscription) => {
-      await notificationInstance({
-        url: '/api/v1/web-push/subscriptions',
-        method: 'POST',
-        data: subscription,
-      });
-    },
-    onError: (error) => logger.warn('webPush', 'subscribe failed', error),
-  });
+    const result = await subscribeToWebPush({
+      vapidPublicKey: keyResponse.publicKey,
+      registerSubscription: async (subscription) => {
+        await notificationInstance({
+          url: '/api/v1/web-push/subscriptions',
+          method: 'POST',
+          data: subscription,
+        });
+      },
+      onError: (error) => logger.warn('webPush', 'subscribe failed', error),
+    });
 
-  logger.info('webPush', `enableWebPush: ${result.status}`);
-  return result.status === 'subscribed';
+    logger.info('webPush', `enableWebPush: ${result.status}`);
+    return result.status === 'subscribed';
+  } catch (error) {
+    logger.warn('webPush', 'enableWebPush failed', error);
+    return false;
+  }
 }
 
 /** Unsubscribes the browser and unregisters the endpoint server-side. Returns true on success. */
