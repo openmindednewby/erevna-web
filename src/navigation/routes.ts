@@ -34,4 +34,5 @@ export const enum Routes {
   ANALYTICS = '/analytics',
   MENU_ANALYTICS = '/analytics/menu',
   EXPERIMENTS = '/experiments',
+  MARKETING = '/marketing',
 }

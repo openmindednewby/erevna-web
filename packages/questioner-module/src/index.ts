@@ -49,6 +49,14 @@ export const questionerModule: Module = {
       requiredRoles: ['admin', 'superUser'],
       order: 50,
     },
+    {
+      key: 'marketing',
+      labelKey: 'menu.campaigns',
+      route: '/marketing',
+      icon: 'memo',
+      requiredRoles: ['admin', 'superUser'],
+      order: 55,
+    },
   ],
   routes: [],
 };

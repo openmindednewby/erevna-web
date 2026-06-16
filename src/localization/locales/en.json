@@ -316,7 +316,9 @@
     "settingsGroup": "Settings",
     "adminGroup": "Admin",
     "analytics": "Analytics",
-    "team": "Team"
+    "team": "Team",
+    "campaigns": "Campaigns",
+    "campaignsHint": "Manage email subscribers and marketing campaigns"
   },
   "darkModeToggle": {
     "label": "Appearance",
@@ -3814,6 +3816,61 @@
       "variantBWinning": "Variant B is winning",
       "noClearWinner": "No clear winner",
       "variantAWinning": "Variant A is winning"
+    }
+  },
+  "marketing": {
+    "title": "Campaigns",
+    "description": "Manage your email subscribers and send marketing campaigns.",
+    "refreshHint": "Reload subscribers and campaigns",
+    "errors": {
+      "loadFailed": "Failed to load campaigns."
+    },
+    "subscribers": {
+      "title": "Subscribers",
+      "empty": "No subscribers yet. Add your first subscriber below.",
+      "emailPlaceholder": "Email address",
+      "namePlaceholder": "Name (optional)",
+      "addButton": "Add subscriber",
+      "addButtonHint": "Add this email to your subscriber list",
+      "removeHint": "Remove this subscriber",
+      "removeLabel": "Remove subscriber",
+      "addSuccess": "Subscriber added.",
+      "addError": "Failed to add subscriber.",
+      "removeSuccess": "Subscriber removed.",
+      "removeError": "Failed to remove subscriber.",
+      "invalidEmail": "Enter a valid email address.",
+      "status": {
+        "subscribed": "Subscribed",
+        "unsubscribed": "Unsubscribed"
+      }
+    },
+    "campaigns": {
+      "title": "Campaigns",
+      "empty": "No campaigns yet. Create your first campaign below.",
+      "namePlaceholder": "Campaign name",
+      "subjectPlaceholder": "Email subject",
+      "bodyPlaceholder": "Email body (HTML or plain text)",
+      "createButton": "Create campaign",
+      "createButtonHint": "Create a new draft campaign",
+      "createSuccess": "Campaign created.",
+      "createError": "Failed to create campaign.",
+      "subjectLabel": "Subject",
+      "sendButton": "Send",
+      "sendButtonHint": "Send this campaign to all subscribers",
+      "sendConfirmPrompt": "Send this campaign to all subscribers?",
+      "sendConfirmButton": "Confirm send",
+      "sendConfirmHint": "Confirm sending this campaign",
+      "sendCancelButton": "Cancel",
+      "sendCancelHint": "Cancel sending this campaign",
+      "sendSuccess": "Campaign sent.",
+      "sendError": "Failed to send campaign.",
+      "resultSummary": "sent {{p1}}/{{p2}}, {{p3}} failed",
+      "status": {
+        "draft": "Draft",
+        "sending": "Sending",
+        "sent": "Sent",
+        "failed": "Failed"
+      }
     }
   }
 }

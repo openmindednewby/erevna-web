@@ -30,6 +30,7 @@ function preloadMainPages(): void {
   import('../../app/(protected)/showcase/native-forms').catch(() => undefined);
   import('../../app/(protected)/showcase/components').catch(() => undefined);
   import('../../app/(protected)/experiments/index').catch(() => undefined);
+  import('../../app/(protected)/marketing/index').catch(() => undefined);
 }
 
 /** Preload settings and auxiliary pages. */

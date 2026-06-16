@@ -35,6 +35,7 @@ import { LandingTestIds } from './testIds/landingTestIds';
 import { LegalTestIds } from './testIds/legalTestIds';
 import { LocationOverrideTestIds } from './testIds/locationOverrideTestIds';
 import { LocationSettingsTestIds } from './testIds/locationSettingsTestIds';
+import { MarketingTestIds } from './testIds/marketingTestIds';
 import { MenuEditorTestIds } from './testIds/menuEditorTestIds';
 import { MenuExportTestIds } from './testIds/menuExportTestIds';
 import { MenuExtrasTestIds } from './testIds/menuExtrasTestIds';
@@ -73,6 +74,7 @@ export const TestIds = {
   ...LegalTestIds,
   ...LocationOverrideTestIds,
   ...LocationSettingsTestIds,
+  ...MarketingTestIds,
   ...MenuEditorTestIds,
   ...MenuExportTestIds,
   ...MenuExtrasTestIds,
