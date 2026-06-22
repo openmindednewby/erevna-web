@@ -13,6 +13,9 @@ export const CommonTestIds = {
   TEMPLATE_STATUS_INACTIVE_BUTTON: 'template-status-inactive-button',
   TEMPLATE_CLOSING_DATE_INPUT: 'template-closing-date-input',
   TEMPLATE_MAX_RESPONSES_INPUT: 'template-max-responses-input',
+  TEMPLATE_CONTACT_MODE_ANONYMOUS: 'template-contact-mode-anonymous',
+  TEMPLATE_CONTACT_MODE_OPTIONAL: 'template-contact-mode-optional',
+  TEMPLATE_CONTACT_MODE_REQUIRED: 'template-contact-mode-required',
 
   // Generic list item (used by TenantListItem for various entity types)
   TENANT_LIST_ITEM: 'tenant-list-item',
@@ -119,6 +122,8 @@ export const CommonTestIds = {
   PUBLIC_SURVEY_UNAVAILABLE: 'public-survey-unavailable',
   PUBLIC_SURVEY_CLOSED: 'public-survey-closed',
   PUBLIC_SURVEY_ERROR: 'public-survey-error',
+  PUBLIC_SURVEY_RESPONDENT_NAME: 'public-survey-respondent-name',
+  PUBLIC_SURVEY_RESPONDENT_EMAIL: 'public-survey-respondent-email',
 
   // Shared UI Components
   TAB_CONTAINER: 'tab-container',

@@ -438,8 +438,16 @@
       "description": "Description",
       "status": "Status",
       "closingDate": "Closing date",
-      "maxResponses": "Response limit"
+      "maxResponses": "Response limit",
+      "respondentContact": "Respondent contact"
     },
+    "contactMode": {
+      "anonymous": "Anonymous",
+      "optional": "Ask (optional)",
+      "required": "Require"
+    },
+    "contactModeHint": "Choose whether respondents provide their name and email",
+    "respondentContactHelp": "Anonymous collects no identity. Ask shows optional name/email fields. Require makes them mandatory.",
     "closingDateHint": "Enter the date the survey stops accepting responses",
     "closingDatePlaceholder": "YYYY-MM-DD",
     "closingDateHelp": "Optional. The survey stops accepting responses at the end of this day (UTC).",
@@ -584,6 +592,14 @@
     "unavailableMessage": "The survey may have been closed or the link is incorrect.",
     "closedTitle": "This survey is closed",
     "closedMessage": "Thanks for your interest — this survey is no longer accepting responses.",
+    "respondentName": "Your name",
+    "respondentNameHint": "Enter your name",
+    "respondentNamePlaceholder": "Your name",
+    "respondentNameRequired": "Please enter your name.",
+    "respondentEmail": "Your email",
+    "respondentEmailHint": "Enter your email address",
+    "respondentEmailPlaceholder": "you@example.com",
+    "respondentEmailInvalid": "Please enter a valid email address.",
     "errorTitle": "Something went wrong",
     "errorMessage": "We couldn't load this survey. Please try again later.",
     "retry": "Try again",

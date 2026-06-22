@@ -17,4 +17,6 @@ export type QuestionerTemplateDtoAllOf = {
   closingDate?: string | null;
   /** @nullable Response quota; null = unlimited. */
   maxResponses?: number | null;
+  /** Respondent identity collection mode: 0=Anonymous, 1=Optional, 2=Required. */
+  respondentContactMode?: number;
 };

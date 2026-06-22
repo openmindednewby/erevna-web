@@ -14,6 +14,7 @@ import { useMutation } from '@tanstack/react-query';
 
 import env from '../../config/environment';
 import { post } from '../../lib/http/utils/methods';
+import { isValueDefined } from '../../utils/is';
 
 import type {
   CreateCompletedQuestionerRequest,
@@ -25,22 +26,37 @@ export interface PublicSubmitResponseResult {
   externalId?: string;
 }
 
+/** Optional respondent identity collected per the template's contact mode. */
+export interface RespondentContact {
+  name?: string;
+  email?: string;
+}
+
 /** Public response body — the answers, minus `questionerTemplateExternalId`. */
 export interface PublicResponseBody {
   name?: string;
   description?: string | null;
   contents?: QuestionerContents;
+  respondentEmail?: string;
 }
 
 /**
  * Pure mapper: strips `questionerTemplateExternalId` from the payload that
  * `buildSubmissionPayload` produces, leaving the public response body shape.
+ * When a respondent contact is supplied (Optional/Required modes) it overrides
+ * the response name and carries the respondent email.
  */
-export function toPublicResponseBody(data: CreateCompletedQuestionerRequest): PublicResponseBody {
+export function toPublicResponseBody(
+  data: CreateCompletedQuestionerRequest,
+  respondent?: RespondentContact,
+): PublicResponseBody {
+  const trimmedName = respondent?.name?.trim();
+  const trimmedEmail = respondent?.email?.trim();
   return {
-    name: data.name,
+    name: isValueDefined(trimmedName) && trimmedName !== '' ? trimmedName : data.name,
     description: data.description,
     contents: data.contents,
+    respondentEmail: isValueDefined(trimmedEmail) && trimmedEmail !== '' ? trimmedEmail : undefined,
   };
 }
 
@@ -48,10 +64,11 @@ export function toPublicResponseBody(data: CreateCompletedQuestionerRequest): Pu
 async function submitPublicResponse(
   externalId: string,
   data: CreateCompletedQuestionerRequest,
+  respondent?: RespondentContact,
 ): Promise<PublicSubmitResponseResult> {
   return post<PublicResponseBody, PublicSubmitResponseResult>(
     `/api/v1/public/questionerTemplates/${externalId}/responses`,
-    toPublicResponseBody(data),
+    toPublicResponseBody(data, respondent),
     {
       withToken: false,
       withCredentials: false,
@@ -68,13 +85,17 @@ export interface UsePublicSubmitResponseResult {
  * Hook for submitting a public survey response.
  * Mirrors the `useQuestionerWebCompletedQuestionersCreate()` mutation interface
  * (a `mutateAsync` taking `{ data }`) so it can be passed straight to
- * `useQuizForm`.
+ * `useQuizForm`. `getRespondent` is read at submit time so the latest contact
+ * inputs (name/email) are included for Optional/Required templates.
  */
-export function usePublicSubmitResponse(externalId: string): UsePublicSubmitResponseResult {
+export function usePublicSubmitResponse(
+  externalId: string,
+  getRespondent?: () => RespondentContact | undefined,
+): UsePublicSubmitResponseResult {
   const mutation = useMutation({
     mutationKey: ['publicSubmitResponse', externalId],
     mutationFn: async (variables: { data: CreateCompletedQuestionerRequest }) =>
-      submitPublicResponse(externalId, variables.data),
+      submitPublicResponse(externalId, variables.data, getRespondent?.()),
   });
 
   return { mutateAsync: mutation.mutateAsync };

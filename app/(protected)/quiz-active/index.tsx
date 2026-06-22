@@ -30,7 +30,8 @@ const QuizActivePage = (): React.ReactElement => {
   const { data, isLoading, isError, refetch } = useQuestionerWebQuestionerTemplatesGetActiveTemplate();
   const createCompleted = useQuestionerWebCompletedQuestionersCreate();
 
-  const quizForm = useQuizForm(data, createCompleted, refetch, FM);
+  const quizOptions = useMemo(() => ({ t: FM }), []);
+  const quizForm = useQuizForm(data, createCompleted, refetch, quizOptions);
 
   const colorStyles = useMemo(
     () => ({

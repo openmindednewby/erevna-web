@@ -36,11 +36,20 @@ interface SubmitDeps {
   tRef: React.RefObject<(k: string, d?: string) => string>;
   setSubmitting: (v: boolean) => void;
   setShowThankYou: (v: boolean) => void;
+  validateExtraRef: React.RefObject<(() => boolean) | undefined>;
 }
 
 interface ResetDeps { s: ReturnType<typeof useQuizFormState>; formRef: React.RefObject<DynamicQuiz | null>; refetch: () => Promise<unknown> }
 
-export function useQuizForm(data: TemplateData | undefined, createCompleted: MutationArg, refetch: () => Promise<unknown>, t: (k: string, d?: string) => string): UseQuizFormReturn {
+interface QuizFormOptions {
+  /** Localization function. */
+  t: (k: string, d?: string) => string;
+  /** Optional caller gate run after page validation; return false to block submit. */
+  validateExtra?: () => boolean;
+}
+
+export function useQuizForm(data: TemplateData | undefined, createCompleted: MutationArg, refetch: () => Promise<unknown>, options: QuizFormOptions): UseQuizFormReturn {
+  const { t, validateExtra } = options;
   const s = useQuizFormState(data, t);
   const [submitting, setSubmitting] = useState(false);
   const [showThankYou, setShowThankYou] = useState(false);
@@ -48,7 +57,8 @@ export function useQuizForm(data: TemplateData | undefined, createCompleted: Mut
   const pageRef = useRef(s.currentPage); pageRef.current = s.currentPage;
   const dataRef = useRef(data); dataRef.current = data;
   const tRef = useRef(t); tRef.current = t;
-  const submitDeps = useMemo(() => ({ s, createCompleted, formRef, dataRef, tRef, setSubmitting, setShowThankYou }), [s, createCompleted]);
+  const validateExtraRef = useRef(validateExtra); validateExtraRef.current = validateExtra;
+  const submitDeps = useMemo(() => ({ s, createCompleted, formRef, dataRef, tRef, setSubmitting, setShowThankYou, validateExtraRef }), [s, createCompleted]);
   const handleSubmit = useSubmit(submitDeps);
   const resetDeps = useMemo(() => ({ s, formRef, refetch }), [s, refetch]);
   const resetQuiz = useReset(resetDeps);
@@ -69,15 +79,17 @@ export function useQuizForm(data: TemplateData | undefined, createCompleted: Mut
   return { form: s.form, errors: s.errors, currentPage: s.currentPage, totalPages: s.totalPages, currentQuestions: s.currentQuestions, submitting, showThankYou, scrollRef: s.scrollRef, pageOpacity: s.pageOpacity, shouldSkip: s.shouldSkip, updateAnswer: s.updateAnswer, validatePage: s.validatePage, handleNext, handleBack, handleSubmit, resetQuiz, onThankYouComplete };
 }
 
-function useSubmit({ s, createCompleted, formRef, dataRef, tRef, setSubmitting, setShowThankYou }: SubmitDeps): () => Promise<void> {
+function useSubmit({ s, createCompleted, formRef, dataRef, tRef, setSubmitting, setShowThankYou, validateExtraRef }: SubmitDeps): () => Promise<void> {
   return useCallback(async (): Promise<void> => {
     const form = formRef.current; const currentData = dataRef.current;
     if (!isValueDefined(form) || !isValueDefined(currentData)) return;
     if (!s.validateAllPages()) { Alert.alert(tRef.current('Validation Error'), tRef.current('Please fill in all required fields.')); return; }
+    const extra = validateExtraRef.current;
+    if (typeof extra === 'function' && !extra()) return; // caller surfaces its own message
     try { setSubmitting(true); await createCompleted.mutateAsync({ data: buildSubmissionPayload(form, currentData) }); setShowThankYou(true); }
     catch (_) { Alert.alert(tRef.current('Error'), tRef.current('Something went wrong during submission.')); }
     finally { setSubmitting(false); }
-  }, [s, createCompleted, formRef, dataRef, tRef, setSubmitting, setShowThankYou]);
+  }, [s, createCompleted, formRef, dataRef, tRef, setSubmitting, setShowThankYou, validateExtraRef]);
 }
 
 function useReset({ s, formRef, refetch }: ResetDeps): () => void {

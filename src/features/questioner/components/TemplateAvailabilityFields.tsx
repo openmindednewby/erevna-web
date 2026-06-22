@@ -1,23 +1,44 @@
 import React from 'react';
 
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 import { FM } from '@/localization/helpers';
+import RespondentContactMode from '@/shared/enums/RespondentContactMode';
 import { TestIds } from '@/shared/testIds';
 import { useTheme } from '@/theme/hooks/useTheme';
 import { layoutStyles } from '@/theme/utils/styles';
 
+const TRANSPARENT_COLOR = 'transparent';
+const WHITE_COLOR = '#fff';
+
 const styles = StyleSheet.create({
   helpText: { fontSize: 12, marginTop: 2 },
+  pillRow: { flexDirection: 'row', flexWrap: 'wrap', marginTop: 4 },
+  pill: { paddingHorizontal: 12, paddingVertical: 6, borderRadius: 20, marginRight: 8, marginBottom: 4 },
 });
+
+interface ContactModeOption {
+  mode: RespondentContactMode;
+  labelKey: string;
+  testID: string;
+}
+
+const CONTACT_MODE_OPTIONS: ContactModeOption[] = [
+  { mode: RespondentContactMode.Anonymous, labelKey: 'quizTemplates.contactMode.anonymous', testID: TestIds.TEMPLATE_CONTACT_MODE_ANONYMOUS },
+  { mode: RespondentContactMode.Optional, labelKey: 'quizTemplates.contactMode.optional', testID: TestIds.TEMPLATE_CONTACT_MODE_OPTIONAL },
+  { mode: RespondentContactMode.Required, labelKey: 'quizTemplates.contactMode.required', testID: TestIds.TEMPLATE_CONTACT_MODE_REQUIRED },
+];
 
 interface Props {
   /** Date-only (YYYY-MM-DD) raw input value for the soft-closing date. */
   closingDate: string;
   /** Raw numeric-text input value for the response quota. */
   maxResponses: string;
+  /** Respondent identity collection mode. */
+  respondentContactMode: RespondentContactMode;
   onClosingDateChange: (value: string) => void;
   onMaxResponsesChange: (value: string) => void;
+  onRespondentContactModeChange: (mode: RespondentContactMode) => void;
   readOnly?: boolean;
 }
 
@@ -29,12 +50,15 @@ interface Props {
 const TemplateAvailabilityFields = ({
   closingDate,
   maxResponses,
+  respondentContactMode,
   onClosingDateChange,
   onMaxResponsesChange,
+  onRespondentContactModeChange,
   readOnly = false,
 }: Props): React.ReactElement => {
   const { theme } = useTheme();
   const colors = theme.colors;
+  const primary = theme.palette.primary['500'];
 
   const inputStyle = React.useMemo(
     () => [layoutStyles.input, { backgroundColor: colors.surface, color: colors.text }],
@@ -71,6 +95,28 @@ const TemplateAvailabilityFields = ({
         onChangeText={onMaxResponsesChange}
       />
       <Text style={helpStyle}>{FM('quizTemplates.maxResponsesHelp')}</Text>
+
+      <Text style={[labelStyle, layoutStyles.inputSpacing]}>{FM('quizTemplates.label.respondentContact')}</Text>
+      <View style={styles.pillRow}>
+        {CONTACT_MODE_OPTIONS.map((option) => {
+          const selected = respondentContactMode === option.mode;
+          return (
+            <TouchableOpacity
+              key={option.testID}
+              accessibilityHint={FM('quizTemplates.contactModeHint')}
+              accessibilityLabel={FM(option.labelKey)}
+              accessibilityRole="button"
+              disabled={readOnly}
+              style={[styles.pill, { backgroundColor: selected ? primary : TRANSPARENT_COLOR }]}
+              testID={option.testID}
+              onPress={() => onRespondentContactModeChange(option.mode)}
+            >
+              <Text style={{ color: selected ? WHITE_COLOR : colors.textSecondary }}>{FM(option.labelKey)}</Text>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+      <Text style={helpStyle}>{FM('quizTemplates.respondentContactHelp')}</Text>
     </View>
   );
 };

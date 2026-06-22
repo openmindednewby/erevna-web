@@ -41,6 +41,8 @@ export interface PublicQuestionerTemplateDto {
    * true when the field is absent (older API).
    */
   acceptingResponses?: boolean | null;
+  /** Respondent identity collection mode: 0=Anonymous, 1=Optional, 2=Required. */
+  respondentContactMode?: number | null;
 }
 
 /** Query key for the public survey query. */

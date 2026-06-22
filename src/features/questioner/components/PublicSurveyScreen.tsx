@@ -11,6 +11,7 @@ import React, { useCallback, useMemo } from 'react';
 import { ActivityIndicator, Platform, StyleSheet, Text, View } from 'react-native';
 import type { LayoutChangeEvent } from 'react-native';
 
+import RespondentContactFields from './RespondentContactFields';
 import QuizContent from '../../../../app/(protected)/quiz-active/QuizContent';
 import ThankYouOverlay from '../../../../app/(protected)/quiz-active/ThankYouOverlay';
 import ErrorState from '../../../components/Shared/ErrorState';
@@ -57,7 +58,7 @@ const PublicSurveyScreen = ({ externalId, embedMode = false, targetOrigin = WILD
   const { theme } = useTheme();
   const colors = theme.colors;
   const styles = useDynamicFormStyles();
-  const { state, quizForm } = usePublicSurvey(externalId);
+  const { state, quizForm, contact } = usePublicSurvey(externalId);
 
   const handleLayout = useCallback(
     (event: LayoutChangeEvent) => {
@@ -123,6 +124,17 @@ const PublicSurveyScreen = ({ externalId, embedMode = false, targetOrigin = WILD
           onRetry={() => {
             quizForm.resetQuiz();
           }}
+        />
+      ) : null}
+
+      {shouldShowForm && contact.collects ? (
+        <RespondentContactFields
+          email={contact.email}
+          error={contact.error}
+          mode={contact.mode}
+          name={contact.name}
+          onEmailChange={contact.setEmail}
+          onNameChange={contact.setName}
         />
       ) : null}
 

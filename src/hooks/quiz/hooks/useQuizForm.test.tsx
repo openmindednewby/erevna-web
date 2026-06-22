@@ -44,7 +44,7 @@ describe('useQuizForm', () => {
         { id: 'q1', name: 'Q1', type: QuestionType.Text, page: 1, order: 1, isRequired: true },
       ]);
       const mutation = createMockMutation();
-      const { result } = renderHook(() => useQuizForm(data, mutation, mockRefetch, mockT));
+      const { result } = renderHook(() => useQuizForm(data, mutation, mockRefetch, { t: mockT }));
 
       // Update answer then submit -- the latest answer should be in the payload
       act(() => { result.current.updateAnswer('q1', 'latest-answer'); });
@@ -64,7 +64,7 @@ describe('useQuizForm', () => {
         { id: 'q2', name: 'Q2', type: QuestionType.Text, page: 2, order: 2, isRequired: true },
       ]);
       const mutation = createMockMutation();
-      const { result } = renderHook(() => useQuizForm(data, mutation, mockRefetch, mockT));
+      const { result } = renderHook(() => useQuizForm(data, mutation, mockRefetch, { t: mockT }));
 
       act(() => { result.current.updateAnswer('q2', 'answered'); });
 
@@ -78,7 +78,7 @@ describe('useQuizForm', () => {
         { id: 'q1', name: 'Q1', type: QuestionType.Text, page: 1, order: 1, isRequired: true },
       ]);
       const mutation = createMockMutation();
-      const { result } = renderHook(() => useQuizForm(data, mutation, mockRefetch, mockT));
+      const { result } = renderHook(() => useQuizForm(data, mutation, mockRefetch, { t: mockT }));
 
       act(() => { result.current.updateAnswer('q1', 'answered'); });
 
@@ -94,7 +94,7 @@ describe('useQuizForm', () => {
         { id: 'q1', name: 'Q1', type: QuestionType.Text, page: 1, order: 1, isRequired: false },
       ]);
       const mutation = { mutateAsync: jest.fn(async () => Promise.reject(new Error('Network error'))) };
-      const { result } = renderHook(() => useQuizForm(data, mutation, mockRefetch, mockT));
+      const { result } = renderHook(() => useQuizForm(data, mutation, mockRefetch, { t: mockT }));
 
       await act(async () => { await result.current.handleSubmit(); });
       expect(alertSpy).toHaveBeenCalledWith('Error', 'Something went wrong during submission.');
@@ -108,7 +108,7 @@ describe('useQuizForm', () => {
         { id: 'q1', name: 'Q1', type: QuestionType.Text, page: 1, order: 1, isRequired: false },
       ]);
       const mutation = createMockMutation();
-      const { result } = renderHook(() => useQuizForm(data, mutation, mockRefetch, mockT));
+      const { result } = renderHook(() => useQuizForm(data, mutation, mockRefetch, { t: mockT }));
 
       act(() => { result.current.updateAnswer('q1', 'test'); });
       expect(result.current.form?.questions[0]?.answer).toBe('test');
