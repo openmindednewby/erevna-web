@@ -8,13 +8,15 @@
  */
 import React, { useCallback, useMemo } from 'react';
 
-import { ActivityIndicator, Platform, StyleSheet, Text, View } from 'react-native';
+import { Platform, View } from 'react-native';
 import type { LayoutChangeEvent } from 'react-native';
 
 import RespondentContactFields from './RespondentContactFields';
+import SurveyDraftRow from './SurveyDraftRow';
+import SurveyStateMessage from './SurveyStateMessage';
 import QuizContent from '../../../../app/(protected)/quiz-active/QuizContent';
 import ThankYouOverlay from '../../../../app/(protected)/quiz-active/ThankYouOverlay';
-import ErrorState from '../../../components/Shared/ErrorState';
+import { buildSubmissionPayload } from '../../../hooks/quiz/utils/quizHelpers';
 import { usePublicSurvey } from '../../../hooks/usePublicSurvey';
 import { FM } from '../../../localization/helpers';
 import PublicSurveyState from '../../../shared/enums/PublicSurveyState';
@@ -24,17 +26,8 @@ import { layoutStyles, useDynamicFormStyles } from '../../../theme/utils/styles'
 import { isValueDefined } from '../../../utils/is';
 import { logger } from '../../../utils/logger';
 
-const SPACING = 8;
-const PADDING = 16;
 const SURVEY_RESIZE_MESSAGE = 'survey-widget-resize';
 const WILDCARD_ORIGIN = '*';
-
-const screenStyles = StyleSheet.create({
-  stateContainer: { flex: 1, padding: PADDING, justifyContent: 'center', alignItems: 'center' },
-  stateTitle: { fontSize: 20, fontWeight: '600', textAlign: 'center', marginBottom: SPACING },
-  stateMessage: { fontSize: 16, textAlign: 'center' },
-  loadingText: { marginTop: SPACING, fontSize: 16 },
-});
 
 /** Posts the current content height to the parent window for embed auto-resize. */
 function postSurveyResize(height: number, targetOrigin: string): void {
@@ -52,13 +45,23 @@ interface Props {
   embedMode?: boolean;
   /** Target origin for postMessage resize (embed mode only). Defaults to wildcard. */
   targetOrigin?: string;
+  /** Resume token from the `?draft=` link; prefills saved answers when present. */
+  draftToken?: string;
 }
 
-const PublicSurveyScreen = ({ externalId, embedMode = false, targetOrigin = WILDCARD_ORIGIN }: Props): React.ReactElement => {
+const PublicSurveyScreen = ({ externalId, embedMode = false, targetOrigin = WILDCARD_ORIGIN, draftToken = '' }: Props): React.ReactElement => {
   const { theme } = useTheme();
   const colors = theme.colors;
   const styles = useDynamicFormStyles();
-  const { state, quizForm, contact } = usePublicSurvey(externalId);
+  const { state, quizForm, contact, draftSave } = usePublicSurvey(externalId, draftToken);
+
+  const handleSaveDraft = useCallback(() => {
+    const form = quizForm.form;
+    if (!isValueDefined(form)) return;
+    const payload = buildSubmissionPayload(form, { externalId });
+    const email = contact.email.trim() === '' ? undefined : contact.email.trim();
+    draftSave.save(payload.contents ?? { questions: [] }, email).catch(() => {});
+  }, [quizForm.form, draftSave, contact.email, externalId]);
 
   const handleLayout = useCallback(
     (event: LayoutChangeEvent) => {
@@ -68,13 +71,9 @@ const PublicSurveyScreen = ({ externalId, embedMode = false, targetOrigin = WILD
     [embedMode, targetOrigin],
   );
 
-  const colorStyles = useMemo(
-    () => ({
-      container: { backgroundColor: String(colors.background) },
-      title: { color: String(colors.text) },
-      message: { color: String(colors.textSecondary) },
-    }),
-    [colors.background, colors.text, colors.textSecondary],
+  const containerStyle = useMemo(
+    () => ({ backgroundColor: String(colors.background) }),
+    [colors.background],
   );
 
   const hasFormWithQuestions = isValueDefined(quizForm.form) && quizForm.form.questions.length > 0;
@@ -82,50 +81,11 @@ const PublicSurveyScreen = ({ externalId, embedMode = false, targetOrigin = WILD
 
   return (
     <View
-      style={[layoutStyles.container, colorStyles.container]}
+      style={[layoutStyles.container, containerStyle]}
       testID={embedMode ? TestIds.SURVEY_EMBED_PAGE : TestIds.PUBLIC_SURVEY_PAGE}
       onLayout={handleLayout}
     >
-      {state === PublicSurveyState.Loading ? (
-        <View style={screenStyles.stateContainer} testID={TestIds.PUBLIC_SURVEY_LOADING}>
-          <ActivityIndicator />
-          <Text style={[screenStyles.loadingText, colorStyles.message]}>
-            {FM('publicSurvey.loading')}
-          </Text>
-        </View>
-      ) : null}
-
-      {state === PublicSurveyState.NotFound ? (
-        <View style={screenStyles.stateContainer} testID={TestIds.PUBLIC_SURVEY_UNAVAILABLE}>
-          <Text style={[screenStyles.stateTitle, colorStyles.title]}>
-            {FM('publicSurvey.unavailableTitle')}
-          </Text>
-          <Text style={[screenStyles.stateMessage, colorStyles.message]}>
-            {FM('publicSurvey.unavailableMessage')}
-          </Text>
-        </View>
-      ) : null}
-
-      {state === PublicSurveyState.Closed ? (
-        <View style={screenStyles.stateContainer} testID={TestIds.PUBLIC_SURVEY_CLOSED}>
-          <Text style={[screenStyles.stateTitle, colorStyles.title]}>
-            {FM('publicSurvey.closedTitle')}
-          </Text>
-          <Text style={[screenStyles.stateMessage, colorStyles.message]}>
-            {FM('publicSurvey.closedMessage')}
-          </Text>
-        </View>
-      ) : null}
-
-      {state === PublicSurveyState.Error ? (
-        <ErrorState
-          message={FM('publicSurvey.errorMessage')}
-          testID={TestIds.PUBLIC_SURVEY_ERROR}
-          onRetry={() => {
-            quizForm.resetQuiz();
-          }}
-        />
-      ) : null}
+      <SurveyStateMessage state={state} onRetry={quizForm.resetQuiz} />
 
       {shouldShowForm && contact.collects ? (
         <RespondentContactFields
@@ -154,6 +114,10 @@ const PublicSurveyScreen = ({ externalId, embedMode = false, targetOrigin = WILD
           totalPages={quizForm.totalPages}
           updateAnswer={quizForm.updateAnswer}
         />
+      ) : null}
+
+      {shouldShowForm && !embedMode ? (
+        <SurveyDraftRow isSaving={draftSave.isSaving} resumeUrl={draftSave.resumeUrl} onSave={handleSaveDraft} />
       ) : null}
 
       <ThankYouOverlay

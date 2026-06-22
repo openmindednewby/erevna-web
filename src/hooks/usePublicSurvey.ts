@@ -10,18 +10,22 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
 
 import { useQuizForm } from './quiz';
+import { useSurveyDraftSave } from './useSurveyDraftSave';
+import { mergeDraftIntoTemplate } from '../features/questioner/utils/mergeDraftAnswers';
 import {
   collectsRespondentContact,
   toRespondentContactMode,
   validateRespondentContact,
 } from '../features/questioner/utils/respondentContact';
 import { FM } from '../localization/helpers';
+import { useGetDraft } from '../server/customHooks/useGetDraft';
 import { usePublicQuestionerTemplate } from '../server/customHooks/usePublicQuestionerTemplate';
 import { usePublicSubmitResponse } from '../server/customHooks/usePublicSubmitResponse';
 import PublicSurveyState from '../shared/enums/PublicSurveyState';
 import { isValueDefined } from '../utils/is';
 import { isNotFoundError } from '../utils/isNotFoundError';
 
+import type { SurveyDraftSave } from './useSurveyDraftSave';
 import type { RespondentContactError } from '../features/questioner/utils/respondentContact';
 import type { RespondentContact } from '../server/customHooks/usePublicSubmitResponse';
 import type RespondentContactMode from '../shared/enums/RespondentContactMode';
@@ -41,6 +45,7 @@ interface UsePublicSurveyResult {
   quizForm: ReturnType<typeof useQuizForm>;
   refetch: () => Promise<unknown>;
   contact: RespondentContactState;
+  draftSave: SurveyDraftSave;
 }
 
 /** Inputs for deriving the public survey screen state. */
@@ -97,14 +102,20 @@ function useRespondentContact(mode: RespondentContactMode): RespondentContactHoo
   return { contact, getRespondent, validateExtra };
 }
 
-export function usePublicSurvey(externalId: string): UsePublicSurveyResult {
+export function usePublicSurvey(externalId: string, draftToken = ''): UsePublicSurveyResult {
   const { data, isLoading, isError, error, refetch } = usePublicQuestionerTemplate(externalId);
+  const draft = useGetDraft(draftToken);
+  const mergedData = useMemo(
+    () => mergeDraftIntoTemplate(data, draft.data?.contents?.questions),
+    [data, draft.data],
+  );
   const mode = toRespondentContactMode(data?.respondentContactMode);
   const { contact, getRespondent, validateExtra } = useRespondentContact(mode);
 
   const submitResponse = usePublicSubmitResponse(externalId, getRespondent);
   const quizOptions = useMemo(() => ({ t: FM, validateExtra }), [validateExtra]);
-  const quizForm = useQuizForm(data ?? undefined, submitResponse, refetch, quizOptions);
+  const quizForm = useQuizForm(mergedData ?? undefined, submitResponse, refetch, quizOptions);
+  const draftSave = useSurveyDraftSave(externalId, draftToken);
 
   const isClosed = isValueDefined(data) && data.acceptingResponses === false;
   const state = useMemo(
@@ -112,5 +123,5 @@ export function usePublicSurvey(externalId: string): UsePublicSurveyResult {
     [isLoading, isError, error, data, isClosed],
   );
 
-  return { state, quizForm, refetch, contact };
+  return { state, quizForm, refetch, contact, draftSave };
 }

@@ -124,6 +124,8 @@ export const CommonTestIds = {
   PUBLIC_SURVEY_ERROR: 'public-survey-error',
   PUBLIC_SURVEY_RESPONDENT_NAME: 'public-survey-respondent-name',
   PUBLIC_SURVEY_RESPONDENT_EMAIL: 'public-survey-respondent-email',
+  PUBLIC_SURVEY_SAVE_DRAFT_BUTTON: 'public-survey-save-draft-button',
+  PUBLIC_SURVEY_RESUME_LINK: 'public-survey-resume-link',
 
   // Shared UI Components
   TAB_CONTAINER: 'tab-container',
