@@ -13,6 +13,7 @@ import { useTheme } from '@/theme/hooks/useTheme';
 import { layoutStyles } from '@/theme/utils/styles';
 
 import QuestionList from './Editor/QuestionList';
+import TemplateAvailabilityFields from './TemplateAvailabilityFields';
 import TemplateForm from './TemplateForm';
 
 interface Props {
@@ -29,6 +30,12 @@ interface Props {
   readOnly?: boolean;
   /** Unique key to force TemplateForm remount when editing a different item */
   itemKey?: string;
+  /** Date-only (YYYY-MM-DD) raw input for the soft-closing date. */
+  closingDate: string;
+  /** Raw numeric-text input for the response quota. */
+  maxResponses: string;
+  onClosingDateChange: (value: string) => void;
+  onMaxResponsesChange: (value: string) => void;
 }
 
 const TemplateEditorForm = ({
@@ -44,6 +51,10 @@ const TemplateEditorForm = ({
   enableAnswerSection,
   readOnly = false,
   itemKey,
+  closingDate,
+  maxResponses,
+  onClosingDateChange,
+  onMaxResponsesChange,
 }: Props): React.ReactElement => {
   const { theme } = useTheme();
   const colors = theme.colors;
@@ -66,6 +77,14 @@ const TemplateEditorForm = ({
         onCancel={onCancel}
         onChange={({ name: n, description: d, isActive: a }) => onChange({ name: n, description: d, isActive: a })}
         onSave={onSave}
+      />
+
+      <TemplateAvailabilityFields
+        closingDate={closingDate}
+        maxResponses={maxResponses}
+        readOnly={readOnly}
+        onClosingDateChange={onClosingDateChange}
+        onMaxResponsesChange={onMaxResponsesChange}
       />
 
       <View style={layoutStyles.questionsWrapper}>

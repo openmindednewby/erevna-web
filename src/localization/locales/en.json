@@ -436,8 +436,16 @@
     "label": {
       "name": "Name",
       "description": "Description",
-      "status": "Status"
+      "status": "Status",
+      "closingDate": "Closing date",
+      "maxResponses": "Response limit"
     },
+    "closingDateHint": "Enter the date the survey stops accepting responses",
+    "closingDatePlaceholder": "YYYY-MM-DD",
+    "closingDateHelp": "Optional. The survey stops accepting responses at the end of this day (UTC).",
+    "maxResponsesHint": "Enter the maximum number of responses to accept",
+    "maxResponsesPlaceholder": "No limit",
+    "maxResponsesHelp": "Optional. The survey stops accepting responses once this many are collected.",
     "questionsLabelHelp": "Manage question values and displayed text",
     "contentsHint": "Paste template JSON content",
     "contentsLabel": "Template JSON content",
@@ -574,6 +582,8 @@
     "submitThankYou": "Thank you for your response",
     "unavailableTitle": "This survey isn't available",
     "unavailableMessage": "The survey may have been closed or the link is incorrect.",
+    "closedTitle": "This survey is closed",
+    "closedMessage": "Thanks for your interest — this survey is no longer accepting responses.",
     "errorTitle": "Something went wrong",
     "errorMessage": "We couldn't load this survey. Please try again later.",
     "retry": "Try again",

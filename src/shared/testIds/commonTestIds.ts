@@ -11,6 +11,8 @@ export const CommonTestIds = {
   TEMPLATE_NAME_INPUT: 'template-name-input',
   TEMPLATE_STATUS_ACTIVE_BUTTON: 'template-status-active-button',
   TEMPLATE_STATUS_INACTIVE_BUTTON: 'template-status-inactive-button',
+  TEMPLATE_CLOSING_DATE_INPUT: 'template-closing-date-input',
+  TEMPLATE_MAX_RESPONSES_INPUT: 'template-max-responses-input',
 
   // Generic list item (used by TenantListItem for various entity types)
   TENANT_LIST_ITEM: 'tenant-list-item',
@@ -115,6 +117,7 @@ export const CommonTestIds = {
   PUBLIC_SURVEY_PAGE: 'public-survey-page',
   PUBLIC_SURVEY_LOADING: 'public-survey-loading',
   PUBLIC_SURVEY_UNAVAILABLE: 'public-survey-unavailable',
+  PUBLIC_SURVEY_CLOSED: 'public-survey-closed',
   PUBLIC_SURVEY_ERROR: 'public-survey-error',
 
   // Shared UI Components

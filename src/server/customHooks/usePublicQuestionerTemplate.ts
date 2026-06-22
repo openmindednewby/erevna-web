@@ -35,6 +35,12 @@ export interface PublicQuestionerTemplateDto {
   name?: string | null;
   description?: string | null;
   contents?: { questions?: ApiQuestionModel[] } | null;
+  /**
+   * False when the (still active) survey has passed its closing date or reached
+   * its response quota — the respondent UI shows a "closed" state. Defaults to
+   * true when the field is absent (older API).
+   */
+  acceptingResponses?: boolean | null;
 }
 
 /** Query key for the public survey query. */

@@ -13,4 +13,8 @@ export interface UpdateQuestionerTemplateRequest {
   /** @nullable */
   contents?: UpdateQuestionerTemplateRequestContents;
   isActive?: boolean;
+  /** @nullable Soft-closing date (UTC ISO); null = no closing date. */
+  closingDate?: string | null;
+  /** @nullable Response quota; null = unlimited. */
+  maxResponses?: number | null;
 }

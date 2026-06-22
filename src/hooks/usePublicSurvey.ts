@@ -20,17 +20,23 @@ interface UsePublicSurveyResult {
   refetch: () => Promise<unknown>;
 }
 
+/** Inputs for deriving the public survey screen state. */
+interface DeriveStateParams {
+  isLoading: boolean;
+  isError: boolean;
+  error: unknown;
+  hasData: boolean;
+  /** Survey exists and is active but no longer accepting responses (date/quota). */
+  isClosed?: boolean;
+}
+
 /** Derives the screen state from the template query result. */
 // ts-prune-ignore-next -- exported for unit testing the screen-state logic
-export function deriveState(
-  isLoading: boolean,
-  isError: boolean,
-  error: unknown,
-  hasData: boolean,
-): PublicSurveyState {
+export function deriveState({ isLoading, isError, error, hasData, isClosed = false }: DeriveStateParams): PublicSurveyState {
   if (isLoading) return PublicSurveyState.Loading;
   if (isError) return isNotFoundError(error) ? PublicSurveyState.NotFound : PublicSurveyState.Error;
   if (!hasData) return PublicSurveyState.NotFound;
+  if (isClosed) return PublicSurveyState.Closed;
   return PublicSurveyState.Ready;
 }
 
@@ -40,9 +46,10 @@ export function usePublicSurvey(externalId: string): UsePublicSurveyResult {
 
   const quizForm = useQuizForm(data ?? undefined, submitResponse, refetch, FM);
 
+  const isClosed = isValueDefined(data) && data.acceptingResponses === false;
   const state = useMemo(
-    () => deriveState(isLoading, isError, error, isValueDefined(data)),
-    [isLoading, isError, error, data],
+    () => deriveState({ isLoading, isError, error, hasData: isValueDefined(data), isClosed }),
+    [isLoading, isError, error, data, isClosed],
   );
 
   return { state, quizForm, refetch };

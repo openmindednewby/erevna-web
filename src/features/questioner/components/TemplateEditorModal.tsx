@@ -13,6 +13,12 @@ import { isValueDefined } from '@/utils/is';
 
 import TemplateEditorForm from './TemplateEditorForm';
 import TemplateJsonEditor from './TemplateJsonEditor';
+import {
+  toClosingDateInput,
+  toClosingDateIso,
+  toMaxResponses,
+  toMaxResponsesInput,
+} from '../utils/availabilityHelpers';
 
 const JSON_PARSE_DEBOUNCE_MS = 300;
 
@@ -45,18 +51,25 @@ interface UpdatePayloadParams {
   isActive: boolean;
   contents: QuestionerContents | null;
   itemContents: QuestionerContents | null | undefined;
+  /** Raw date-only (YYYY-MM-DD) closing-date input. */
+  closingDate: string;
+  /** Raw numeric-text response-quota input. */
+  maxResponses: string;
 }
 
 /**
- * Creates the update payload from current state.
+ * Creates the update payload from current state. The raw availability inputs are
+ * normalised here (date -> end-of-day UTC ISO, quota -> positive int or null).
  */
-function createUpdatePayload({ name, description, isActive, contents, itemContents }: UpdatePayloadParams): UpdateQuestionerTemplateRequest {
+function createUpdatePayload({ name, description, isActive, contents, itemContents, closingDate, maxResponses }: UpdatePayloadParams): UpdateQuestionerTemplateRequest {
   const trimmedDescription = description.trim();
   return {
     name,
     description: trimmedDescription === '' ? null : description,
     isActive,
     contents: contents ?? itemContents ?? null,
+    closingDate: toClosingDateIso(closingDate),
+    maxResponses: toMaxResponses(maxResponses),
   };
 }
 
@@ -74,6 +87,8 @@ const TemplateEditorModal = ({ visible, item, onCancel, onSave, enableAnswerSect
   const [name, setName] = useState<string>(() => item?.name ?? '');
   const [description, setDescription] = useState<string>(() => item?.description ?? '');
   const [isActive, setIsActive] = useState<boolean>(() => Boolean(item?.isActive));
+  const [closingDate, setClosingDate] = useState<string>(() => toClosingDateInput(item?.closingDate));
+  const [maxResponses, setMaxResponses] = useState<string>(() => toMaxResponsesInput(item?.maxResponses));
 
   // BUG-QUIZ-006: Track whether we just switched to the JSON tab
   const justSwitchedToJsonRef = useRef(false);
@@ -94,6 +109,8 @@ const TemplateEditorModal = ({ visible, item, onCancel, onSave, enableAnswerSect
       setName('');
       setDescription('');
       setIsActive(false);
+      setClosingDate('');
+      setMaxResponses('');
       return;
     }
 
@@ -103,6 +120,8 @@ const TemplateEditorModal = ({ visible, item, onCancel, onSave, enableAnswerSect
     setName(item.name ?? '');
     setDescription(item.description ?? '');
     setIsActive(Boolean(item.isActive));
+    setClosingDate(toClosingDateInput(item.closingDate));
+    setMaxResponses(toMaxResponsesInput(item.maxResponses));
     setActiveTab('form');
   }, [item, visible]);
 
@@ -140,7 +159,7 @@ const TemplateEditorModal = ({ visible, item, onCancel, onSave, enableAnswerSect
   }
 
   function handleSaveFromForm(): void {
-    const payload = createUpdatePayload({ name, description, isActive, contents, itemContents: item?.contents });
+    const payload = createUpdatePayload({ name, description, isActive, contents, itemContents: item?.contents, closingDate, maxResponses });
     onSave(payload);
   }
 
@@ -153,7 +172,7 @@ const TemplateEditorModal = ({ visible, item, onCancel, onSave, enableAnswerSect
       );
       return;
     }
-    const payload = createUpdatePayload({ name, description, isActive, contents: parsed, itemContents: item?.contents });
+    const payload = createUpdatePayload({ name, description, isActive, contents: parsed, itemContents: item?.contents, closingDate, maxResponses });
     onSave(payload);
   }
 
@@ -184,16 +203,20 @@ const TemplateEditorModal = ({ visible, item, onCancel, onSave, enableAnswerSect
 
       {activeTab === 'form' ? (
         <TemplateEditorForm
+          closingDate={closingDate}
           description={description}
           enableAnswerSection={enableAnswerSection}
           isActive={isActive}
           itemKey={item?.externalId}
+          maxResponses={maxResponses}
           name={name}
           questions={questions}
           readOnly={readOnly}
           saving={false}
           onCancel={onCancel}
           onChange={handleFormChange}
+          onClosingDateChange={setClosingDate}
+          onMaxResponsesChange={setMaxResponses}
           onQuestionsChange={handleQuestionsChange}
           onSave={handleSaveFromForm}
         />

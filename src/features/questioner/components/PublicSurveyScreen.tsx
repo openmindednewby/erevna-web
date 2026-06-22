@@ -105,6 +105,17 @@ const PublicSurveyScreen = ({ externalId, embedMode = false, targetOrigin = WILD
         </View>
       ) : null}
 
+      {state === PublicSurveyState.Closed ? (
+        <View style={screenStyles.stateContainer} testID={TestIds.PUBLIC_SURVEY_CLOSED}>
+          <Text style={[screenStyles.stateTitle, colorStyles.title]}>
+            {FM('publicSurvey.closedTitle')}
+          </Text>
+          <Text style={[screenStyles.stateMessage, colorStyles.message]}>
+            {FM('publicSurvey.closedMessage')}
+          </Text>
+        </View>
+      ) : null}
+
       {state === PublicSurveyState.Error ? (
         <ErrorState
           message={FM('publicSurvey.errorMessage')}
