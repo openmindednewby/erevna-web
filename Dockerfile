@@ -25,6 +25,16 @@ RUN find dist -name '*.html' -exec sed -i 's#</head>#<script defer src="https://
 # strips these from app/+html.tsx, same as it strips <script>.
 RUN find dist -name '*.html' -exec sed -i 's#</head>#<meta property="og:title" content="Erevna - From wondering to knowing"><meta property="og:description" content="Build forms, surveys, and quizzes your audience actually wants to fill out, and turn what they say into decisions you can act on."><meta property="og:type" content="website"><meta property="og:url" content="https://erevna.dloizides.com"><meta property="og:image" content="https://erevna.dloizides.com/icons/logo-512.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Erevna - From wondering to knowing"><meta name="twitter:description" content="Build forms, surveys, and quizzes your audience actually wants to fill out."><link rel="canonical" href="https://erevna.dloizides.com"><meta name="robots" content="index, follow">#' {} +
 
+# Self-heal returning users stuck on an immutable-cached OLD entry bundle (task
+# #257). Expo keeps the bootstrap bundle filenames (entry-/__expo-metro-runtime-/
+# __common-) STABLE across builds, so a browser that cached them `immutable` in
+# the past keeps serving a stale chunk map → 404 on deleted route chunks → blank
+# app, with no self-service recovery (hard-refresh can't evict `immutable`). This
+# appends a content-hash `?v=` to those three script refs in the exported HTML:
+# index.html is served no-cache, so the next visit points at a URL the stale
+# immutable cache can't match → forced fresh fetch → working app, zero user action.
+RUN node scripts/append-bundle-cache-buster.mjs dist
+
 # Stage 2: Serve with Nginx
 FROM nginx:alpine AS production
 LABEL org.opencontainers.image.authors="dloizides.com"
