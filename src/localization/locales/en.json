@@ -536,6 +536,21 @@
     "ruleMaxSelectionsInputHint": "Allow at most this many selected options",
     "type.Ranking": "Ranking",
     "type.Matrix": "Matrix",
+    "type.FileUpload": "File Upload",
+    "fileUpload": {
+      "allowedTypes": "Allowed file types",
+      "type.jpeg": "JPEG image",
+      "type.png": "PNG image",
+      "type.gif": "GIF image",
+      "type.webp": "WebP image",
+      "type.pdf": "PDF document",
+      "maxSize": "Maximum file size (MB)",
+      "maxSizeLabel": "Maximum file size in megabytes",
+      "maxSizeHint": "Enter the largest allowed size per file, in megabytes",
+      "maxFiles": "Maximum number of files",
+      "maxFilesLabel": "Maximum number of files",
+      "maxFilesHint": "Enter how many files a respondent may attach"
+    },
     "matrixOptions": "Rows & Columns",
     "matrixRows": "Rows",
     "matrixColumns": "Columns",
@@ -759,7 +774,28 @@
     "rankingDownArrow": "▼",
     "matrixHelp": "Pick one column for each row.",
     "matrixCell": "{{p1}}: {{p2}}",
-    "matrixCellHint": "Select {{p2}} for {{p1}}"
+    "matrixCellHint": "Select {{p2}} for {{p1}}",
+    "fileUpload": {
+      "pick": "Choose file",
+      "pickLabel": "Choose a file to upload",
+      "pickHint": "Opens the file picker to attach a file as your answer",
+      "uploading": "Uploading…",
+      "progress": "Uploading {{p1}}%",
+      "help": "You can attach up to {{p1}} file(s).",
+      "fileSize": "{{p1}} MB",
+      "remove": "Remove",
+      "removeLabel": "Remove {{p1}}",
+      "removeHint": "Removes this file from your answer",
+      "error": {
+        "fileType": "This file type is not allowed.",
+        "fileTooLarge": "This file is too large.",
+        "fileTooMany": "You have reached the maximum number of files.",
+        "fileReference": "The uploaded file could not be referenced. Please try again.",
+        "surveyClosed": "This survey is no longer accepting responses.",
+        "notFound": "This survey or question could not be found.",
+        "unknown": "The file could not be uploaded. Please try again."
+      }
+    }
   },
   "common": {
     "refresh": "Refresh",
@@ -1586,7 +1622,12 @@
     "message": "An unexpected error occurred. Please try again.",
     "errorDetails": "Error Details:",
     "tryAgain": "Try Again",
-    "tryAgainHint": "Reloads the component that crashed"
+    "tryAgainHint": "Reloads the component that crashed",
+    "reload": "Reload",
+    "reloadHint": "Reloads the page to get the latest version",
+    "updating": "A new version is available — updating…",
+    "updateTitle": "Update available",
+    "updateMessage": "The app was updated. Reload to get the latest version."
   },
   "notificationBanner": {
     "title": "Enable Notifications",

@@ -24,9 +24,9 @@ module.exports = {
     purgeMessageType: 'PURGE_PUBLIC_CACHE',
   },
   manifest: {
-    name: 'Tag Heuer Quiz',
-    shortName: 'THQuiz',
-    description: 'Install Tag Heuer Quiz to create, manage, and answer quizzes even when offline.',
+    name: 'Erevna',
+    shortName: 'Erevna',
+    description: 'Install Erevna to create, manage, and answer surveys even when offline.',
     themeColor: '#008d5c',
     backgroundColor: '#ffffff',
     categories: ['productivity', 'utilities'],

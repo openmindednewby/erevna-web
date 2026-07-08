@@ -64,6 +64,7 @@ const QuizContent: React.FC<QuizContentProps> = ({
               question={q}
               shouldSkip={shouldSkip}
               styles={styles}
+              surveyExternalId={form.id}
               updateAnswer={updateAnswer}
               value={q.answer ?? ''}
             />

@@ -35,8 +35,9 @@ function asScalar(value: Answer): string | number {
   return typeof value === 'string' || typeof value === 'number' ? value : '';
 }
 
-export function asArray(value: Answer): Array<string | number> {
-  return Array.isArray(value) ? value : [];
+export function asArray(value: Answer | undefined): Array<string | number> {
+  if (!Array.isArray(value)) return [];
+  return value.filter((v): v is string | number => typeof v === 'string' || typeof v === 'number');
 }
 
 /** Render a single-select (radio / dropdown) entry, or null when it has no options. */
@@ -111,7 +112,7 @@ export function matrixValidate(
 ): string | undefined {
   if (question.isRequired !== true) return undefined;
   const rows = getMatrixRows(question.options);
-  const values = Array.isArray(answer) ? answer : [];
+  const values = asArray(answer);
   const everyRowAnswered = rows.every((row) => isValueDefined(selectedColumnForRow(values, row.id)));
   return rows.length > 0 && everyRowAnswered ? undefined : messages.required;
 }

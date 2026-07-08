@@ -98,6 +98,9 @@ function validateSelections(values: Array<string | number>, rules: Question['val
 export function validateByShape(answer: Answer, rules: Question['validationRules'], messages: ValidationMessages): string | undefined {
   if (typeof answer === 'string') return validateText(answer, rules, messages);
   if (typeof answer === 'number') return validateNumeric(answer, rules, messages);
-  if (Array.isArray(answer)) return validateSelections(answer, rules, messages);
+  if (Array.isArray(answer)) {
+    const selections = answer.filter((v): v is string | number => typeof v === 'string' || typeof v === 'number');
+    return validateSelections(selections, rules, messages);
+  }
   return undefined;
 }

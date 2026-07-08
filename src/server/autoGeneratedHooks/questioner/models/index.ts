@@ -13,6 +13,7 @@ export * from './completedQuestionerDtoAllOf';
 export * from './createCompletedQuestionerRequest';
 export * from './createCompletedQuestionerResponse';
 export * from './createQuestionerTemplateRequest';
+export * from './fileReference';
 export * from './createQuestionerTemplateResponse';
 export * from './deleteCompletedQuestionerRequest';
 export * from './deleteInactiveQuestionerTemplatesResponse';

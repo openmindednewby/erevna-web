@@ -18,4 +18,10 @@ export interface QuestionConfig {
   minLabel?: string | null;
   /** @nullable */
   maxLabel?: string | null;
+  /** File-upload: allowed MIME types (empty/absent = server default allowlist). @nullable */
+  allowedContentTypes?: string[] | null;
+  /** File-upload: maximum size per file, in bytes. @nullable */
+  maxSizeBytes?: number | null;
+  /** File-upload: maximum number of files a respondent may attach. @nullable */
+  maxFiles?: number | null;
 }

@@ -12,6 +12,7 @@ const enum QuestionType {
   LinearScale = 'linear-scale',
   Ranking = 'ranking',
   Matrix = 'matrix',
+  FileUpload = 'file-upload',
 }
 
 export default QuestionType;

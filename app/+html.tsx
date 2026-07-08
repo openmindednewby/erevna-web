@@ -128,7 +128,7 @@ const RootHtml = ({ children }: PropsWithChildren): ReactElement => {
         <link href="/manifest.json" rel="manifest" />
 
         {/* iOS add-to-home support */}
-        <link href="/icons/logo-192.jpg" rel="apple-touch-icon" />
+        <link href="/icons/logo-192.png" rel="apple-touch-icon" />
         <meta content="yes" name="apple-mobile-web-app-capable" />
         <meta content="default" name="apple-mobile-web-app-status-bar-style" />
         <meta content={SEO_CONFIG.siteName} name="application-name" />

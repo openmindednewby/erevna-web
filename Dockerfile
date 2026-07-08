@@ -14,7 +14,14 @@ COPY . .
 # Allow selecting environment at build time (dev|test|prod)
 ARG APP_ENV=prod
 ENV EXPO_PUBLIC_ENV=$APP_ENV
-RUN echo "Building Erevna Web for ENV=$EXPO_PUBLIC_ENV" && npx expo export --platform web
+# Cap build memory so the export fits a resource-tight Docker VM (~4 GB). Metro
+# spawns one worker process per CPU by default; on a many-core host mapped into a
+# small VM the combined heap OOM-kills buildkit mid-export (the connection drops
+# as `rpc error: Unavailable ... EOF`), which took down Docker Desktop entirely
+# on 2026-07-05. `--max-workers 2` + a per-process heap cap keeps peak RAM bounded
+# (slower, but reliable). Raise on a box with more RAM if build time matters.
+ENV NODE_OPTIONS=--max-old-space-size=2048
+RUN echo "Building Erevna Web for ENV=$EXPO_PUBLIC_ENV" && npx expo export --platform web --max-workers 2
 
 # Inject the Umami analytics tag into every exported HTML page.
 # Expo's static export strips <script> elements from app/+html.tsx, so the

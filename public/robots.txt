@@ -12,4 +12,4 @@ Disallow: /(auth)/
 Allow: /public/menu/
 Allow: /public/menus/
 
-Sitemap: https://app.menuflow.com/sitemap.xml
+Sitemap: https://erevna.dloizides.com/sitemap.xml

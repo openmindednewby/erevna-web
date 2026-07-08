@@ -23,4 +23,5 @@ export const QuestionType = {
   LinearScale: 9,
   Ranking: 10,
   Matrix: 11,
+  FileUpload: 12,
 } as const;

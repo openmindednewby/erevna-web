@@ -17,9 +17,11 @@ interface Props {
   updateAnswer: (questionId: string, value: Answer) => void;
   shouldSkip: (q: Question) => boolean;
   styles: FormStyles;
+  /** Survey external id, threaded to the file-upload renderer for its public upload call. */
+  surveyExternalId?: string;
 }
 
-const QuestionRenderer: React.FC<Props> = ({ question, value, errorMsg, updateAnswer, shouldSkip, styles }) => {
+const QuestionRenderer: React.FC<Props> = ({ question, value, errorMsg, updateAnswer, shouldSkip, styles, surveyExternalId }) => {
   if (shouldSkip(question)) return null;
 
   const entry = getEntryByUiType(question.type);
@@ -27,6 +29,7 @@ const QuestionRenderer: React.FC<Props> = ({ question, value, errorMsg, updateAn
     errorMsg,
     question,
     styles,
+    surveyExternalId,
     updateAnswer: (v: Answer) => updateAnswer(question.id, v),
     value,
   });

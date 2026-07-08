@@ -13,11 +13,13 @@ import React from 'react';
 import { MATRIX_ENTRY, RANKING_ENTRY } from './advancedEntries';
 import { API_QUESTION_TYPE } from './apiTypes';
 import { LINEAR_SCALE_MAX, LINEAR_SCALE_MIN, RATING_MAX, RATING_MIN, SCALE_STEP_DEFAULT } from './constants';
+import { FILE_UPLOAD_DEFAULT_CONFIG, fileUploadValidate } from './fileUploadHelpers';
 import { asNumberOrNull, asString, defaultValidate, renderMultiEntry, renderOptionEntry } from './renderHelpers';
 import QuestionType from '../../../shared/enums/QuestionType';
 import { isValueDefined } from '../../../utils/is';
 import { DateQuestion } from '../QuestionRenderer/components/DateQuestion';
 import { DropdownQuestion } from '../QuestionRenderer/components/DropdownQuestion';
+import { FileUploadQuestion } from '../QuestionRenderer/components/FileUploadQuestion';
 import { LinearScaleQuestion } from '../QuestionRenderer/components/LinearScaleQuestion';
 import { NpsQuestion } from '../QuestionRenderer/components/NpsQuestion';
 import { NumberQuestion } from '../QuestionRenderer/components/NumberQuestion';
@@ -164,6 +166,16 @@ const LINEAR_SCALE_ENTRY: QuestionTypeEntry = {
   ),
 };
 
+const FILE_UPLOAD_ENTRY: QuestionTypeEntry = {
+  uiType: QuestionType.FileUpload,
+  apiType: API_QUESTION_TYPE.FileUpload,
+  labelKey: 'FileUpload',
+  supportsOptions: false,
+  defaultConfig: FILE_UPLOAD_DEFAULT_CONFIG,
+  validate: fileUploadValidate,
+  render: (props) => <FileUploadQuestion {...props} />,
+};
+
 const ENTRIES: readonly QuestionTypeEntry[] = [
   TEXT_ENTRY,
   MULTIPLE_CHOICE_ENTRY,
@@ -177,6 +189,7 @@ const ENTRIES: readonly QuestionTypeEntry[] = [
   LINEAR_SCALE_ENTRY,
   RANKING_ENTRY,
   MATRIX_ENTRY,
+  FILE_UPLOAD_ENTRY,
 ];
 
 const BY_UI_TYPE = new Map<QuestionType, QuestionTypeEntry>(ENTRIES.map((entry) => [entry.uiType, entry]));

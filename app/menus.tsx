@@ -25,7 +25,7 @@ const MenusLandingPage = (): React.ReactElement => {
       <SEOHead
         description={FM('landing.menus.seoDescription')}
         title={FM('landing.menus.seoTitle')}
-        url="https://app.menuflow.com/menus"
+        url="https://erevna.dloizides.com/menus"
       />
       <HeroSection
         ctaHintKey="landing.menus.heroCtaHint"

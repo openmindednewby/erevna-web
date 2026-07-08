@@ -28,6 +28,7 @@ const NAVBAR_WORDMARK_SIZE = 22;
 const HOME_ROUTE = '/';
 const PRICING_ROUTE = '/pricing';
 const LOGIN_ROUTE = '/(auth)/login';
+const REGISTER_ROUTE = '/(auth)/register';
 const DASHBOARD_ROUTE = '/(protected)';
 
 const styles = StyleSheet.create({
@@ -91,7 +92,7 @@ const LandingNavbar = (): React.ReactElement => {
       <TouchableOpacity accessibilityHint={FM('landing.nav.loginHint')} accessibilityLabel={FM('landing.nav.login')} accessibilityRole="button" style={[styles.loginBtn, { borderColor: colors.border }]} testID={TestIds.LANDING_NAV_LOGIN_BUTTON} onPress={() => handleNavigate(LOGIN_ROUTE)}>
         <Text style={[styles.loginText, { color: colors.text }]}>{FM('landing.nav.login')}</Text>
       </TouchableOpacity>
-      <TouchableOpacity accessibilityHint={FM('landing.nav.registerHint')} accessibilityLabel={FM('landing.nav.register')} accessibilityRole="button" style={[styles.registerBtn, { backgroundColor: primaryColor }]} testID={TestIds.LANDING_NAV_REGISTER_BUTTON} onPress={() => handleNavigate(LOGIN_ROUTE)}>
+      <TouchableOpacity accessibilityHint={FM('landing.nav.registerHint')} accessibilityLabel={FM('landing.nav.register')} accessibilityRole="button" style={[styles.registerBtn, { backgroundColor: primaryColor }]} testID={TestIds.LANDING_NAV_REGISTER_BUTTON} onPress={() => handleNavigate(REGISTER_ROUTE)}>
         <Text style={[styles.registerText, { color: colors.surface }]}>{FM('landing.nav.register')}</Text>
       </TouchableOpacity>
     </>

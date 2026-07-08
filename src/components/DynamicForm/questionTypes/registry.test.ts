@@ -38,8 +38,22 @@ describe('registry - lookups', () => {
     expect(getEntryByApiType(undefined).uiType).toBe(QuestionType.Text);
   });
 
-  it('registers all 12 types', () => {
-    expect(getAllEntries()).toHaveLength(12);
+  it('registers all 13 types', () => {
+    expect(getAllEntries()).toHaveLength(13);
+  });
+
+  it('maps FileUpload between UI and API numeric type (12)', () => {
+    expect(getEntryByUiType(QuestionType.FileUpload).apiType).toBe(ApiQuestionType.FileUpload);
+    expect(getEntryByApiType(ApiQuestionType.FileUpload).uiType).toBe(QuestionType.FileUpload);
+    expect(getEntryByApiType(12).uiType).toBe(QuestionType.FileUpload);
+  });
+
+  it('marks FileUpload as not supporting options and seeds a default config', () => {
+    const entry = getEntryByUiType(QuestionType.FileUpload);
+    expect(entry.supportsOptions).toBe(false);
+    expect(entry.defaultConfig?.maxFiles).toBe(1);
+    expect(entry.defaultConfig?.maxSizeBytes).toBe(10485760);
+    expect(entry.defaultConfig?.allowedContentTypes).toContain('application/pdf');
   });
 
   it('maps Ranking and Matrix to their API numeric types', () => {
@@ -123,6 +137,30 @@ describe('registry - ranking validator', () => {
   it('passes an optional ranking regardless of completeness', () => {
     const entry = getEntryByUiType(QuestionType.Ranking);
     expect(entry.validate?.(undefined, rankingQuestion(false), MESSAGES)).toBeUndefined();
+  });
+});
+
+describe('registry - file-upload validator', () => {
+  function fileQuestion(required: boolean): Question {
+    return { id: 'fu', name: 'Attach', type: QuestionType.FileUpload, page: 1, order: 1, isRequired: required };
+  }
+
+  const fileRef = { objectKey: 'k1', fileName: 'a.pdf', contentType: 'application/pdf', sizeBytes: 10 };
+
+  it('flags a required file-upload with no files', () => {
+    const entry = getEntryByUiType(QuestionType.FileUpload);
+    expect(entry.validate?.(undefined, fileQuestion(true), MESSAGES)).toBe('required');
+    expect(entry.validate?.([], fileQuestion(true), MESSAGES)).toBe('required');
+  });
+
+  it('passes a required file-upload with at least one file', () => {
+    const entry = getEntryByUiType(QuestionType.FileUpload);
+    expect(entry.validate?.([fileRef], fileQuestion(true), MESSAGES)).toBeUndefined();
+  });
+
+  it('passes an optional file-upload regardless of files', () => {
+    const entry = getEntryByUiType(QuestionType.FileUpload);
+    expect(entry.validate?.(undefined, fileQuestion(false), MESSAGES)).toBeUndefined();
   });
 });
 

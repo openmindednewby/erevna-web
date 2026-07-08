@@ -108,7 +108,7 @@ const ENV = {
     FEATURE_ENABLE_INSTALL_PROMPT: true,    // PWA install prompt
     FEATURE_ANALYTICS_ENABLED: true,       // Analytics tracking
     // Theme Editor URL
-    THEME_EDITOR_URL: 'https://theme-studio.menuflow.com/',
+    THEME_EDITOR_URL: 'https://theme-studio.dloizides.com/',
     // Analytics - Provider Configuration
     ANALYTICS_UMAMI_URL: '',
     ANALYTICS_UMAMI_WEBSITE_ID: '',

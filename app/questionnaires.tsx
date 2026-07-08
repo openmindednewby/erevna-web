@@ -25,7 +25,7 @@ const QuestionnairesLandingPage = (): React.ReactElement => {
       <SEOHead
         description={FM('landing.questionnaires.seoDescription')}
         title={FM('landing.questionnaires.seoTitle')}
-        url="https://app.menuflow.com/questionnaires"
+        url="https://erevna.dloizides.com/questionnaires"
       />
       <HeroSection
         ctaHintKey="landing.questionnaires.heroCtaHint"

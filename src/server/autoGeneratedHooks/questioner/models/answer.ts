@@ -5,6 +5,8 @@
  * OpenAPI spec version: 1.0.0
  */
 
+import type { FileReference } from './fileReference';
+
 export interface Answer {
   /** @nullable */
   boolValue?: boolean | null;
@@ -14,4 +16,6 @@ export interface Answer {
   numericValue?: number | null;
   /** @nullable */
   multiValues?: string[] | null;
+  /** File-upload answer: references to uploaded files (not the bytes). @nullable */
+  files?: FileReference[] | null;
 }

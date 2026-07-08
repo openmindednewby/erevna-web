@@ -51,6 +51,15 @@ describe('quizHelpers - Type Conversion', () => {
       expect(apiToUiType(ApiQuestionType.LinearScale)).toBe('linear-scale');
     });
 
+    it('returns "file-upload" for FileUpload enum', () => {
+      expect(apiToUiType(ApiQuestionType.FileUpload)).toBe('file-upload');
+    });
+
+    it('maps the FileUpload numeric value 12', () => {
+      expect(ApiQuestionType.FileUpload).toBe(12);
+      expect(apiToUiType(12)).toBe('file-upload');
+    });
+
     it('returns "text" for unknown values', () => {
       expect(apiToUiType(999)).toBe('text');
     });
@@ -96,6 +105,10 @@ describe('quizHelpers - Type Conversion', () => {
     it('returns LinearScale for "linear-scale"', () => {
       expect(uiToApiType(QuestionType.LinearScale)).toBe(ApiQuestionType.LinearScale);
     });
+
+    it('returns FileUpload for "file-upload"', () => {
+      expect(uiToApiType(QuestionType.FileUpload)).toBe(ApiQuestionType.FileUpload);
+    });
   });
 
   describe('round-trip', () => {
@@ -104,6 +117,7 @@ describe('quizHelpers - Type Conversion', () => {
         QuestionType.Text, QuestionType.MultipleChoice, QuestionType.Checkbox,
         QuestionType.Radio, QuestionType.Dropdown, QuestionType.Rating,
         QuestionType.Nps, QuestionType.Number, QuestionType.Date, QuestionType.LinearScale,
+        QuestionType.Ranking, QuestionType.Matrix, QuestionType.FileUpload,
       ];
       all.forEach((uiType) => {
         expect(apiToUiType(uiToApiType(uiType))).toBe(uiType);

@@ -144,6 +144,7 @@ function useSaveAndCreateHandlers(
         onSuccess: () => {
           onSuccess();
           analyticsTrack?.(AnalyticsEventName.QuizTemplateCreated);
+          analyticsTrack?.(AnalyticsEventName.FirstValue, { product: 'erevna' });
         },
       });
     },

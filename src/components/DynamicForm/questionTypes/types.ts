@@ -13,6 +13,8 @@ export interface QuestionRenderProps {
   errorMsg?: string;
   updateAnswer: (value: Answer) => void;
   styles: FormStyles;
+  /** Survey external id — required by the file-upload renderer's public upload call. */
+  surveyExternalId?: string;
 }
 
 /** A single question-type definition. */

@@ -68,6 +68,7 @@ export const LoginCredentialForms = ({
 
       {otpActive ? (
         <OtpForm
+          chromeless
           client={bffAuthClient}
           labels={otpLabels}
           testIdPrefix="erevna"
@@ -76,6 +77,7 @@ export const LoginCredentialForms = ({
         />
       ) : (
         <LoginForm
+          chromeless
           client={bffAuthClient}
           theme={theme}
           onForgotPassword={onForgotPassword}

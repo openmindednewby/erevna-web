@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 
@@ -9,8 +9,10 @@ import {
   LANDING_SECTION_PADDING_VERTICAL,
 } from '../src/components/Landing/constants';
 import { SEOHead } from '../src/components/Shared/SEOHead';
+import { useAnalytics } from '../src/lib/analytics';
 import { FM } from '../src/localization/helpers';
 import { TABLET_BREAKPOINT_PX, DESKTOP_BREAKPOINT_PX } from '../src/shared/constants';
+import AnalyticsEventName from '../src/shared/enums/AnalyticsEventName';
 import { TestIds } from '../src/shared/testIds';
 import { useTheme } from '../src/theme/hooks/useTheme';
 
@@ -77,6 +79,11 @@ const ENTERPRISE_FEATURE_KEYS = [
 const PricingPage = (): React.ReactElement => {
   const { theme } = useTheme();
   const { width } = useWindowDimensions();
+  const { track } = useAnalytics();
+
+  useEffect(() => {
+    track(AnalyticsEventName.UpgradeViewed, { product: 'erevna' });
+  }, [track]);
 
   const isDesktop = width > DESKTOP_BREAKPOINT_PX;
   const isMobile = width <= TABLET_BREAKPOINT_PX;

@@ -40,10 +40,21 @@ export interface QuestionConfig {
   scaleStep?: number;
   minLabel?: string;
   maxLabel?: string;
+  allowedContentTypes?: string[];
+  maxSizeBytes?: number;
+  maxFiles?: number;
+}
+
+/** A stored-file reference (not the bytes) that a file-upload answer holds. */
+export interface FileReference {
+  objectKey: string;
+  fileName: string;
+  contentType: string;
+  sizeBytes: number;
 }
 
 export { default as QuestionType } from '../../shared/enums/QuestionType';
-export type Answer = boolean | string | number | Array<string | number>;
+export type Answer = boolean | string | number | Array<string | number> | FileReference[];
 
 export interface Option {
   value: string | number;

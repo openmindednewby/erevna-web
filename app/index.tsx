@@ -35,9 +35,8 @@ const FAQ_ENTRIES = [
  * Web visitors see the full marketing landing (hero + features + FAQ + footer).
  * Mobile platforms skip the marketing surface and route into auth or dashboard.
  *
- * Brand identity: locked Outfit wordmark + T-18 tagline ("From wondering to knowing.").
- * Per Strategy 1, the marketing landing is the ONLY surface that gets the new identity —
- * in-app screens continue to inherit BaseClient defaults for Tag Heuer continuity.
+ * Brand identity: one Erevna identity across marketing -> auth -> app — locked Outfit
+ * wordmark + tagline ("From wondering to knowing.") and the single Erevna green.
  */
 const RootPage = (): React.ReactElement | null => {
   const router = useRouter();
@@ -64,7 +63,7 @@ const RootPage = (): React.ReactElement | null => {
       <BrandedHero
         primaryCtaHintKey="landing.hero.primaryCtaHint"
         primaryCtaKey="landing.hero.primaryCta"
-        primaryCtaRoute={LOGIN_ROUTE}
+        primaryCtaRoute={isLoggedIn ? PROTECTED_ROUTE : LOGIN_ROUTE}
         secondaryCtaHintKey="landing.hero.secondaryCtaHint"
         secondaryCtaKey="landing.hero.secondaryCta"
         secondaryCtaRoute="/pricing"

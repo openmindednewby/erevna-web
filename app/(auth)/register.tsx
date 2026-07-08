@@ -9,7 +9,9 @@ import { useRegisterForm, type RegisterFormState } from '../../src/auth/useRegis
 import { AuthFooterMode } from '../../src/components/Auth/AuthFooterMode';
 import LoginFooterLinks from '../../src/components/Auth/LoginFooterLinks';
 import SaveButton from '../../src/components/Buttons/SaveButton';
+import { useAnalytics } from '../../src/lib/analytics';
 import { FM } from '../../src/localization/helpers';
+import AnalyticsEventName from '../../src/shared/enums/AnalyticsEventName';
 import { TestIds } from '../../src/shared/testIds';
 import { useTheme } from '../../src/theme/hooks/useTheme';
 import { showAlert } from '../../src/utils/showAlert';
@@ -98,13 +100,16 @@ const RegisterScreen = (): React.ReactElement => {
   const { colors } = theme;
   const primaryColor = theme.palette.primary['500'];
 
+  const { track } = useAnalytics();
   const { state, isSubmitting, setField, submit } = useRegisterForm();
   const tenantNameLabel = resolveTenantNameLabel();
   const fieldDefs = buildFieldDefs(tenantNameLabel);
 
   const handleSubmit = async (): Promise<void> => {
+    track(AnalyticsEventName.SignupStarted, { product: 'erevna' });
     const result = await submit();
     if (result.ok) {
+      track(AnalyticsEventName.SignupCompleted, { product: 'erevna' });
       router.replace('/(protected)');
       return;
     }
