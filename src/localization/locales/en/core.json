@@ -236,7 +236,7 @@
     "modalDismiss": "Dismiss"
   },
   "landing": {
-    "brand": "MenuFlow",
+    "brand": "Erevna",
     "tagline": "Smart tools for modern businesses",
     "nav": {
       "menus": "Online Menus",
@@ -255,7 +255,7 @@
       "homeHint": "Navigate to the home page"
     },
     "hub": {
-      "seoTitle": "MenuFlow",
+      "seoTitle": "Erevna",
       "seoDescription": "Create digital menus with QR codes and customizable questionnaires. Two powerful tools to engage your customers.",
       "title": "Everything your business needs",
       "subtitle": "Two powerful tools to engage your customers — online menus with QR codes and customizable questionnaires.",
@@ -292,7 +292,7 @@
       },
       "cta": {
         "title": "Ready to go digital?",
-        "subtitle": "Join hundreds of restaurants already using MenuFlow to serve their customers better.",
+        "subtitle": "Join teams already using Erevna to collect responses and turn feedback into better decisions.",
         "button": "Create Your Menu",
         "buttonHint": "Navigate to registration to create your menu"
       }
@@ -330,7 +330,7 @@
       "title": "Simple, transparent pricing",
       "subtitle": "Start free, upgrade when you need more.",
       "seoTitle": "Pricing",
-      "seoDescription": "Simple, transparent pricing for MenuFlow. Start free, upgrade when you need more.",
+      "seoDescription": "Simple, transparent pricing for Erevna. Start free, upgrade when you need more.",
       "free": {
         "name": "Free",
         "price": "0",
@@ -381,12 +381,12 @@
       "privacyPolicyHint": "Read our privacy policy",
       "termsOfService": "Terms of Service",
       "termsOfServiceHint": "Read our terms of service",
-      "copyright": "\u00a9 2026 MenuFlow. All rights reserved."
+      "copyright": "\u00a9 2026 Erevna. All rights reserved."
     }
   },
   "dashboard": {
     "welcomeBack": "Welcome back, {{p1}}",
-    "welcomeNew": "Welcome to MenuFlow",
+    "welcomeNew": "Welcome to Erevna",
     "subtitleActive": "Here's what's happening with your business",
     "subtitleEmpty": "Let's get you started — create your first menu or survey in minutes",
     "menus": {

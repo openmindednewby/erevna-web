@@ -1220,9 +1220,9 @@
         "dismissHint": "Dismiss the upgrade prompt"
       },
       "watermark": {
-        "text": "Powered by MenuFlow",
-        "label": "MenuFlow watermark",
-        "hint": "Indicates this site is powered by the free tier of MenuFlow"
+        "text": "Powered by Erevna",
+        "label": "Erevna watermark",
+        "hint": "Indicates this site is powered by the free tier of Erevna"
       },
       "invoiceStatusValue": {
         "succeeded": "Paid",
@@ -1452,9 +1452,9 @@
       },
       "attribution": {
         "heading": "Attribution",
-        "showPoweredBy": "Show \"Powered by MenuFlow\"",
-        "showPoweredByHint": "Toggle visibility of the MenuFlow attribution on public pages",
-        "showPoweredByDescription": "When enabled, a small \"Powered by MenuFlow\" badge appears on your public pages"
+        "showPoweredBy": "Show \"Powered by Erevna\"",
+        "showPoweredByHint": "Toggle visibility of the Erevna attribution on public pages",
+        "showPoweredByDescription": "When enabled, a small \"Powered by Erevna\" badge appears on your public pages"
       },
       "support": {
         "heading": "Support",
@@ -2814,7 +2814,7 @@
       },
       "cta": {
         "title": "Ready to go digital?",
-        "subtitle": "Join hundreds of restaurants already using MenuFlow to serve their customers better.",
+        "subtitle": "Join teams already using Erevna to collect responses and turn feedback into better decisions.",
         "button": "Create Your Menu",
         "buttonHint": "Navigate to registration to create your menu"
       }
@@ -2927,7 +2927,7 @@
   },
   "dashboard": {
     "welcomeBack": "Welcome back, {{p1}}",
-    "welcomeNew": "Welcome to MenuFlow",
+    "welcomeNew": "Welcome to Erevna",
     "subtitleActive": "Here's what's happening with your business",
     "subtitleEmpty": "Let's get you started — create your first menu or survey in minutes",
     "menus": {
@@ -3310,7 +3310,7 @@
       "midnight": "Midnight",
       "midnightDesc": "Deep purple night mode with modern spacing"
     },
-    "poweredBy": "Powered by MenuFlow",
+    "poweredBy": "Powered by Erevna",
     "filter": {
       "searchPlaceholder": "Search menu items...",
       "searchLabel": "Search menu items",

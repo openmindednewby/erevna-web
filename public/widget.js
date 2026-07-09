@@ -1,5 +1,5 @@
 /**
- * MenuFlow Embeddable Widget Loader
+ * Erevna Embeddable Widget Loader
  *
  * Usage:
  *   <div data-menu-widget data-menu-id="YOUR_MENU_ID" data-origin="https://your-app.com"></div>
