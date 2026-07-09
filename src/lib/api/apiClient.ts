@@ -11,6 +11,7 @@
  */
 
 import { createBffAxiosClient, registerInterceptors } from '@dloizides/bff-web-client';
+import { notifyWarming } from '@dloizides/ui-feedback';
 
 import { apiEventBus } from './events/apiEventBus';
 import { registerCsrfInterceptor } from './interceptors/csrfInterceptor';
@@ -34,6 +35,10 @@ function registerAllInterceptors(instance: AxiosInstance): void {
       apiEventBus.emit({ type: 'toast', severity, message }),
     csrf: registerCsrfInterceptor,
     onSessionExpiry: registerSessionExpiryInterceptor,
+    // Surface the branded cold-start "warming up…" overlay while the warmup
+    // interceptor retries transient 502/503/504s (UX Move 3a). The overlay
+    // auto-settles a short grace period after the last retry.
+    warmupRetry: { onWarmupRetry: (info) => notifyWarming(info) },
   });
 }
 

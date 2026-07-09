@@ -8,7 +8,9 @@ import { Platform } from 'react-native';
 
 import { Stack, useRouter } from 'expo-router';
 
+import { WarmingOverlay } from '@dloizides/ui-feedback';
 import { Provider, useSelector } from 'react-redux';
+
 
 import { AuthProvider } from '../src/auth/AuthProvider';
 import { AnalyticsErrorBoundary, ErrorBoundary } from '../src/components/ErrorBoundary';
@@ -24,6 +26,7 @@ import { AnalyticsProvider, useAnalyticsIdentify, usePageTracking, useWebVitalsT
 import { initSentry, useSentryUser } from '../src/lib/monitoring';
 import { setRedirectHandler } from '../src/lib/navigation';
 import { setupTestNotificationApi } from '../src/lib/notifications';
+import { FM } from '../src/localization/helpers';
 import i18n from '../src/localization/i18n';
 import { IOSAddToHomePrompt } from '../src/pwa/IOSAddToHomePrompt';
 import { PWAInstallPrompt } from '../src/pwa/PWAInstallPrompt';
@@ -130,6 +133,13 @@ const InnerApp = (): ReactElement => {
 
   return (
     <FeedbackUiAdapter>
+      <WarmingOverlay
+        labels={{
+          title: FM('common.warming.title'),
+          subtitle: FM('common.warming.subtitle'),
+          accessibilityLabel: FM('common.warming.accessibilityLabel'),
+        }}
+      />
       <LazyQueryProvider>
       <TenantThemeConnector />
       <AuthProvider>
