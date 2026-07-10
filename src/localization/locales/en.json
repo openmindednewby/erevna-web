@@ -456,6 +456,8 @@
     "maxResponsesPlaceholder": "No limit",
     "maxResponsesHelp": "Optional. The survey stops accepting responses once this many are collected.",
     "questionsLabelHelp": "Manage question values and displayed text",
+    "livePreview": "Live preview",
+    "livePreviewHint": "Preview of how respondents will see this survey. Submission is disabled here.",
     "contentsHint": "Paste template JSON content",
     "contentsLabel": "Template JSON content",
     "deleteInactiveHint": "Delete all inactive templates",

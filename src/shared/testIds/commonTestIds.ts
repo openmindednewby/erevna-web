@@ -16,6 +16,8 @@ export const CommonTestIds = {
   TEMPLATE_CONTACT_MODE_ANONYMOUS: 'template-contact-mode-anonymous',
   TEMPLATE_CONTACT_MODE_OPTIONAL: 'template-contact-mode-optional',
   TEMPLATE_CONTACT_MODE_REQUIRED: 'template-contact-mode-required',
+  // Desktop-only (>= 1280px) live respondent-view preview pane in the template editor.
+  TEMPLATE_EDITOR_LIVE_PANE: 'template-editor-live-pane',
 
   // Generic list item (used by TenantListItem for various entity types)
   TENANT_LIST_ITEM: 'tenant-list-item',

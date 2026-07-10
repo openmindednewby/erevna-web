@@ -14,6 +14,7 @@ import { isValueDefined } from '@/utils/is';
 
 
 import TemplateEditorForm from './TemplateEditorForm';
+import TemplateEditorPanes from './TemplateEditorPanes';
 import TemplateJsonEditor from './TemplateJsonEditor';
 import {
   toClosingDateInput,
@@ -213,26 +214,28 @@ const TemplateEditorModal = ({ visible, item, onCancel, onSave, enableAnswerSect
       <Tabs activeKey={activeTab} tabs={tabLabels} onChange={handleTabChange} />
 
       {activeTab === 'form' ? (
-        <TemplateEditorForm
-          closingDate={closingDate}
-          description={description}
-          enableAnswerSection={enableAnswerSection}
-          isActive={isActive}
-          itemKey={item?.externalId}
-          maxResponses={maxResponses}
-          name={name}
-          questions={questions}
-          readOnly={readOnly}
-          respondentContactMode={respondentContactMode}
-          saving={false}
-          onCancel={onCancel}
-          onChange={handleFormChange}
-          onClosingDateChange={setClosingDate}
-          onMaxResponsesChange={setMaxResponses}
-          onQuestionsChange={handleQuestionsChange}
-          onRespondentContactModeChange={setRespondentContactMode}
-          onSave={handleSaveFromForm}
-        />
+        <TemplateEditorPanes description={description} name={name} questions={questions}>
+          <TemplateEditorForm
+            closingDate={closingDate}
+            description={description}
+            enableAnswerSection={enableAnswerSection}
+            isActive={isActive}
+            itemKey={item?.externalId}
+            maxResponses={maxResponses}
+            name={name}
+            questions={questions}
+            readOnly={readOnly}
+            respondentContactMode={respondentContactMode}
+            saving={false}
+            onCancel={onCancel}
+            onChange={handleFormChange}
+            onClosingDateChange={setClosingDate}
+            onMaxResponsesChange={setMaxResponses}
+            onQuestionsChange={handleQuestionsChange}
+            onRespondentContactModeChange={setRespondentContactMode}
+            onSave={handleSaveFromForm}
+          />
+        </TemplateEditorPanes>
       ) : (
         <TemplateJsonEditor jsonText={jsonText} readOnly={readOnly} onCancel={onCancel} onJsonTextChange={setJsonText} onSave={handleSaveFromJson} />
       )}

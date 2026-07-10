@@ -132,6 +132,13 @@ export const TABLET_BREAKPOINT_PX = 768;
 export const DESKTOP_BREAKPOINT_PX = 1024;
 
 /**
+ * Minimum viewport width (px) at which wide, side-by-side two-pane layouts are
+ * enabled (e.g. the template editor's editor + live-preview split). Below this the
+ * single-column layout is used unchanged.
+ */
+export const TWO_PANE_MIN_WIDTH_PX = 1280;
+
+/**
  * Duration for toast notifications in milliseconds.
  */
 export const TOAST_DURATION_MS = TOAST_DURATION_SECONDS * MS_PER_SECOND;
