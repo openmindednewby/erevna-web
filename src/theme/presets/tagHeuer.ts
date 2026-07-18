@@ -22,7 +22,9 @@ export const TAG_HEUER_THEME_CONFIG: TenantThemeConfig = {
     surface: '#f7f7f7',
     surfaceElevated: '#ffffff',
     text: '#001219',
-    textSecondary: '#777777',
+    // WCAG AA: see src/theme/presets/default.ts — #717171 clears 4.5:1 on both
+    // #ffffff (4.88:1) and the #f7f7f7 surface (4.56:1); #777777 cleared neither.
+    textSecondary: '#717171',
     border: '#e6e6e6',
     divider: '#e6e6e6',
   },

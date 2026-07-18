@@ -278,7 +278,7 @@ describe('generateThemePalette', () => {
       surface: '#f7f7f7',
       surfaceElevated: '#ffffff',
       text: '#001219',
-      textSecondary: '#777777',
+      textSecondary: '#717171',
       border: '#e6e6e6',
       divider: '#eeeeee',
     },

@@ -36,6 +36,9 @@ const FONT_OPTIONS = [
 ];
 
 const styles = StyleSheet.create({
+  // ui-forms@1.6.0 gave ChipSelector Field's own marginBottom: 16. The row below already
+  // supplies its spacing via `scaleRow.marginTop`, so leaving both would stack them to 28px.
+  chipSelectorContainer: { marginBottom: 0 },
   scaleRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 12 },
   scaleLabel: { fontSize: 14, fontWeight: '600' },
   scaleInput: {
@@ -89,6 +92,7 @@ const TypographyEditor = ({ typography, onChange, disabled }: Props): React.Reac
     <Section>
       <Heading>{FM('tenantThemes.typography')}</Heading>
       <ChipSelector
+        containerStyle={styles.chipSelectorContainer}
         disabled={disabled}
         label={FM('tenantThemes.fontFamily')}
         options={FONT_OPTIONS}

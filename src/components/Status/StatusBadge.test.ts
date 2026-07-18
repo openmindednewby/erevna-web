@@ -15,7 +15,7 @@ const mockModeColors: ThemeModeColors = {
   surface: '#f7f7f7',
   surfaceElevated: '#ffffff',
   text: '#001219',
-  textSecondary: '#777777',
+  textSecondary: '#717171',
   border: '#e6e6e6',
   divider: '#e6e6e6',
 };
@@ -48,18 +48,21 @@ describe('resolveSemanticColor', () => {
   it('returns textSecondary for "subtext" key', () => {
     const result = resolveSemanticColor(mockSemantic, mockModeColors, 'subtext');
 
-    expect(result).toBe('#777777');
+    // Bound to the fixture, not a literal: this asserts the resolver picks the
+    // textSecondary ROLE (rather than a semantic colour), so it stays meaningful
+    // if the palette value changes again.
+    expect(result).toBe(mockModeColors.textSecondary);
   });
 
   it('returns textSecondary for unknown key', () => {
     const result = resolveSemanticColor(mockSemantic, mockModeColors, 'unknown');
 
-    expect(result).toBe('#777777');
+    expect(result).toBe(mockModeColors.textSecondary);
   });
 
   it('returns textSecondary for empty string key', () => {
     const result = resolveSemanticColor(mockSemantic, mockModeColors, '');
 
-    expect(result).toBe('#777777');
+    expect(result).toBe(mockModeColors.textSecondary);
   });
 });

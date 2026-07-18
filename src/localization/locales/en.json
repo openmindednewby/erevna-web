@@ -12,7 +12,39 @@
       "lastHint": "Go to the last page",
       "rows": "Rows",
       "rowsOptionHint": "Set the number of rows per page",
-      "rowsTriggerHint": "Change the number of rows per page"
+      "rowsTriggerHint": "Change the number of rows per page",
+      "rowsTriggerLabel": "Rows per page, currently {{p1}}",
+      "rowsOptionLabel": "Show {{p1}} rows per page"
+    },
+    "loading": "Loading...",
+    "empty": "No results found",
+    "results": "results",
+    "rowLabel": "Row",
+    "rowHint": "Activates this row",
+    "rowDetail": "Row details",
+    "filters": {
+      "apply": "Apply",
+      "applyHint": "Apply the selected filters",
+      "clear": "Clear",
+      "clearHint": "Clear all selected filters",
+      "dropdownHint": "Opens the filter options",
+      "from": "From",
+      "to": "To",
+      "optionHint": "Select this filter option",
+      "selectPlaceholder": "All",
+      "selectTriggerLabel": "{{p1}}: {{p2}}"
+    },
+    "select": {
+      "row": "Select row",
+      "rowHint": "Selects or deselects this row",
+      "all": "Select all rows on this page",
+      "allHint": "Selects or deselects every row on this page",
+      "pageSelected": "All {{p1}} rows on this page are selected.",
+      "allMatching": "Select all {{p1}} matching this filter",
+      "allMatchingHint": "Selects every row matching the current filter",
+      "matchingSelected": "All {{p1}} rows matching this filter are selected.",
+      "clear": "Clear selection",
+      "clearHint": "Clears the current row selection"
     }
   },
   "auth": {
@@ -891,7 +923,8 @@
       "max": "Must be at most {{p1}}",
       "minSelections": "Select at least {{p1}} option(s)",
       "maxSelections": "Select at most {{p1}} option(s)"
-    }
+    },
+    "accordionToggleHint": "Expands or collapses this section"
   },
   "layout": {
     "closeSidebar": "Close sidebar",

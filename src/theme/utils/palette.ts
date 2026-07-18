@@ -33,7 +33,10 @@ const basePalette = {
     error: '#ae2012',
     text: '#001219',
     subtext: '#555555',
-    textSecondary: '#777777',
+    // WCAG AA: #777777 was 4.48:1 on #ffffff and 4.18:1 on the #f7f7f7 surface, below the
+    // 4.5:1 floor for normal text. #717171 clears both (4.88:1 / 4.56:1). Both light
+    // palettes share those surfaces, so they take the same value.
+    textSecondary: '#717171',
     muted: '#f0e9c9',
     textOnPrimary: '#ffffff',
   },
@@ -87,7 +90,10 @@ const tagHeuerPalette = {
     error: '#ed1b2f',
     text: '#001219',
     subtext: '#4b4b4b',
-    textSecondary: '#777777',
+    // WCAG AA: #777777 was 4.48:1 on #ffffff and 4.18:1 on the #f7f7f7 surface, below the
+    // 4.5:1 floor for normal text. #717171 clears both (4.88:1 / 4.56:1). Both light
+    // palettes share those surfaces, so they take the same value.
+    textSecondary: '#717171',
     muted: '#eaf7f0',
     textOnPrimary: '#ffffff',
   },

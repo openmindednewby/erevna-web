@@ -13,7 +13,7 @@ jest.mock('../../../theme/hooks/useTheme', () => ({
     theme: {
       colors: {
         text: '#001219',
-        textSecondary: '#777777',
+        textSecondary: '#717171',
         surface: '#f7f7f7',
         border: '#e6e6e6',
       },
