@@ -1,68 +1,19 @@
 /**
- * Form action buttons (Save/Cancel).
- * Uses core/Button instead of raw TouchableOpacity.
+ * Re-export of the shared FormActions from @dloizides/ui-forms (added with ui-forms@1.9.0).
+ * Theme is supplied app-wide via FeedbackUiAdapter (@dloizides/ui-feedback context).
+ *
+ * This replaces an app-local copy that was byte-identical to katalogos-web's. Two deliberate
+ * differences in the shared component, both handled at the call sites:
+ *
+ *  - Labels and hints are PRE-LOCALIZED props. The local copy resolved them internally via
+ *    `FM('common.save')` / `FM('common.cancel')` / `FM('common.saveHint')` /
+ *    `FM('common.discardHint')`, which coupled a shared UI primitive to one app's translation
+ *    keys. `saveLabel` is now required; every call site passes its own text.
+ *  - It renders `Button` from `@dloizides/ui-buttons` rather than `../core/Button`. That is NOT
+ *    a visual change here: `core/Button` is itself a thin adapter over the very same shared
+ *    Button (it only maps the app-local `ButtonVariant`/`ButtonSize` enums and an icon slot).
+ *
+ * The `save-button` / `cancel-button` testIDs are the shared component's own defaults, so
+ * existing Playwright selectors keep matching.
  */
-import React from 'react';
-
-import { StyleSheet, View, type ViewStyle } from 'react-native';
-
-import { FM } from '../../localization/helpers';
-import { Button, ButtonVariant } from '../core/Button';
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    gap: 12,
-  },
-});
-
-interface Props {
-  onSave: () => void;
-  onCancel?: () => void;
-  saveLabel?: string;
-  cancelLabel?: string;
-  saving?: boolean;
-  saveDisabled?: boolean;
-  containerStyle?: ViewStyle;
-}
-
-export const FormActions = ({
-  onSave,
-  onCancel,
-  saveLabel,
-  cancelLabel,
-  saving = false,
-  saveDisabled = false,
-  containerStyle,
-}: Props): React.ReactElement => {
-  const resolvedSaveLabel = saveLabel ?? FM('common.save');
-  const resolvedCancelLabel = cancelLabel ?? FM('common.cancel');
-
-  return (
-    <View style={[styles.container, containerStyle]}>
-      {typeof onCancel === 'function' ? (
-        <Button
-          accessibilityHint={FM('common.discardHint')}
-          accessibilityLabel={resolvedCancelLabel}
-          disabled={saving}
-          label={resolvedCancelLabel}
-          testID="cancel-button"
-          variant={ButtonVariant.Outline}
-          onPress={onCancel}
-        />
-      ) : null}
-
-      <Button
-        accessibilityHint={FM('common.saveHint')}
-        accessibilityLabel={resolvedSaveLabel}
-        disabled={saveDisabled}
-        label={resolvedSaveLabel}
-        loading={saving}
-        testID="save-button"
-        variant={ButtonVariant.Primary}
-        onPress={onSave}
-      />
-    </View>
-  );
-};
+export { FormActions } from '@dloizides/ui-forms';

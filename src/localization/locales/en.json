@@ -1671,7 +1671,9 @@
       "passwordLabel": "Password",
       "passwordPlaceholder": "Enter password",
       "enabledLabel": "Enabled",
-      "rolesLabel": "Roles"
+      "rolesLabel": "Roles",
+      "createButton": "Create",
+      "updateButton": "Update"
     }
   },
   "errorBoundary": {

@@ -6,6 +6,7 @@ import UserFormFields from './UserFormFields';
 import UserFormTenantSelector from './UserFormTenantSelector';
 import { buildSavePayload, trimFormValues } from './UserFormUtils';
 import { useUserFormState } from './useUserFormState';
+import { FM } from '../../localization/helpers';
 import { logger } from '../../utils/logger';
 import { FormActions } from '../Forms';
 
@@ -91,7 +92,7 @@ const UserForm = (props: Props): React.ReactElement => {
   }
 
   const showTenantSelector = !isEdit && tenants.length > 0;
-  const saveLabel = isEdit ? 'Update' : 'Create';
+  const saveLabel = isEdit ? FM('users.form.updateButton') : FM('users.form.createButton');
   const saveDisabled = formState.username.trim().length === 0;
 
   return (
@@ -123,7 +124,16 @@ const UserForm = (props: Props): React.ReactElement => {
           onUsernameChange={formState.setUsername}
         />
 
-        <FormActions saveDisabled={saveDisabled} saveLabel={saveLabel} saving={saving} onCancel={onCancel} onSave={handleSave} />
+        <FormActions
+          cancelHint={FM('common.discardHint')}
+          cancelLabel={FM('common.cancel')}
+          saveDisabled={saveDisabled}
+          saveHint={FM('common.saveHint')}
+          saveLabel={saveLabel}
+          saving={saving}
+          onCancel={onCancel}
+          onSave={handleSave}
+        />
       </View>
     </ScrollView>
   );

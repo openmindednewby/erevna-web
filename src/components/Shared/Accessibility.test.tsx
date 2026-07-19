@@ -191,6 +191,7 @@ describe('FormActions accessibility', () => {
     render(
       <FormActions
         cancelLabel="Discard"
+        saveLabel="Submit"
         onCancel={jest.fn()}
         onSave={jest.fn()}
       />,
@@ -200,16 +201,17 @@ describe('FormActions accessibility', () => {
     expect(cancelButton.props.accessibilityLabel).toBe('Discard');
   });
 
-  it('uses default labels when none provided', () => {
+  // The shared FormActions (ui-forms@1.9.0) takes PRE-LOCALIZED labels and no longer resolves
+  // `FM('common.save')` / `FM('common.cancel')` internally, so there are no defaults left to
+  // assert. What replaced that coverage is the conditional the app actually leans on: omitting
+  // `onCancel` renders a save-only row rather than an empty Cancel slot.
+  it('renders no cancel button when onCancel is omitted', () => {
     render(
-      <FormActions onCancel={jest.fn()} onSave={jest.fn()} />,
+      <FormActions saveLabel="Submit" onSave={jest.fn()} />,
     );
 
-    const saveButton = screen.getByTestId('save-button');
-    expect(saveButton.props.accessibilityLabel).toBe('Save');
-
-    const cancelButton = screen.getByTestId('cancel-button');
-    expect(cancelButton.props.accessibilityLabel).toBe('Cancel');
+    expect(screen.getByTestId('save-button')).toBeTruthy();
+    expect(screen.queryByTestId('cancel-button')).toBeNull();
   });
 });
 

@@ -14,10 +14,6 @@ interface TenantOption {
 
 const styles = StyleSheet.create({
   tenantSelectorCard: { borderRadius: 8, borderWidth: 1, padding: 8 },
-  // ui-forms@1.6.0 gave ChipSelector Field's own marginBottom: 16. This selector is the
-  // sole child of the bordered card above, so that margin would render as dead space
-  // inside the card; the section's own `tenantSection.marginBottom` supplies the spacing.
-  chipSelectorContainer: { marginBottom: 0 },
 });
 
 interface UserFormTenantSelectorProps {
@@ -45,7 +41,14 @@ const UserFormTenantSelector: React.FC<UserFormTenantSelectorProps> = ({
   return (
     <Field required label={FM('common.tenant')}>
       <View style={[styles.tenantSelectorCard, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-        <ChipSelector containerStyle={styles.chipSelectorContainer} disabled={disabled} options={tenantOptions} value={selectedTenantId} onChange={onSelectTenant} />
+        {/*
+          `spacing="gap"` drops Field's default 16px bottom margin. This selector is the sole
+          child of the bordered card above, so that margin would render as dead space inside
+          the card; the enclosing section supplies the real spacing. Same pixels as the
+          `marginBottom: 0` override it replaces, but stated as intent rather than a style
+          patch that a reader has to reverse-engineer.
+        */}
+        <ChipSelector disabled={disabled} options={tenantOptions} spacing="gap" value={selectedTenantId} onChange={onSelectTenant} />
       </View>
     </Field>
   );
