@@ -22,7 +22,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { mapRawContentToDto } from '../types';
 import { getContentListQueryKey, getContentQueryKey } from './useUploadContent';
-import env from '../../../../config/environment';
+import { BFF_API_BASE } from '../../../../server/bffRoutes';
 import { isValueDefined } from '../../../../utils/is';
 import { get } from '../../../http/utils/methods';
 
@@ -36,8 +36,20 @@ import type {
 } from '../types';
 import type { UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
 
-// Content API base URL - defaults to API_URL if CONTENT_API_URL not set
-const CONTENT_API_URL = env.CONTENT_API_URL !== '' ? env.CONTENT_API_URL : env.API_URL;
+// ContentService is reached same-origin through the BFF (`/bff/api/content`),
+// matching the upload path in uploadUtils.ts.
+//
+// The previous shape called `env.CONTENT_API_URL` (content-api.dloizides.com)
+// directly at `/api/content/...`. That was broken two ways:
+//   1. ContentService mounts every endpoint under `RoutePrefix = "api/v1"`
+//      (Configurations/MiddlewareConfig.cs), so the unversioned `/api/content`
+//      paths matched NO route. The authorization fallback policy then 401s the
+//      unmatched request, which read as an auth failure rather than a 404.
+//   2. `withToken` has been a no-op since the BFF cutover (see lib/axios.ts) —
+//      the SPA holds no token — and `withCredentials: false` suppressed the BFF
+//      session cookie too, so the calls carried no credentials at all.
+// (CORS itself was NOT the problem: content-api does allow erevna's origin.)
+const CONTENT_API_BASE = BFF_API_BASE.content;
 
 /**
  * Time constants for stale time calculation.
@@ -65,34 +77,38 @@ interface RawContentListResponse {
  * Fetches a single content item by ID.
  */
 async function fetchContent(contentId: string): Promise<ContentDto> {
-  const raw = await get<undefined, RawContentDto>(`/api/content/${contentId}`, undefined, {
-    withToken: true,
-    withCredentials: false, // Don't send cookies - use Bearer token auth for cross-browser compatibility
-    baseURL: CONTENT_API_URL,
+  const raw = await get<undefined, RawContentDto>(`/api/v1/content/${contentId}`, undefined, {
+    withToken: false,
+    withCredentials: true, // BFF session cookie — token attached server-side
+    baseURL: CONTENT_API_BASE,
   });
   return mapRawContentToDto(raw);
 }
 
 /**
- * Fetches a content access URL (authenticated).
+ * Returns the authenticated content access URL.
+ *
+ * Resolves to the same-origin BFF *streaming* path (`/content/{id}/download`)
+ * rather than the backend `/url` endpoint's presigned S3 URL. S3 is internal-
+ * only (no public ingress), so a presigned URL points at an unreachable host
+ * and the browser can't load the image. The streaming path proxies the bytes
+ * through content-api (public via the BFF); the BFF session cookie carries auth.
  */
 async function fetchContentUrl(contentId: string): Promise<ContentUrlResponse> {
-  return get<undefined, ContentUrlResponse>(`/api/content/${contentId}/url`, undefined, {
-    withToken: true,
-    withCredentials: false, // Don't send cookies - use Bearer token auth for cross-browser compatibility
-    baseURL: CONTENT_API_URL,
+  return Promise.resolve({
+    url: `${CONTENT_API_BASE}/api/v1/content/${contentId}/download`,
+    expiresAt: '',
   });
 }
 
 /**
- * Fetches a public content access URL (no authentication required).
- * Used for public pages where users may not be logged in.
+ * Returns the public (unauthenticated) content access URL — the same-origin BFF
+ * `/content/{id}/public-download` streaming path (see {@link fetchContentUrl}).
  */
 async function fetchPublicContentUrl(contentId: string): Promise<ContentUrlResponse> {
-  return get<undefined, ContentUrlResponse>(`/api/content/${contentId}/public-url`, undefined, {
-    withToken: false,
-    withCredentials: false,
-    baseURL: CONTENT_API_URL,
+  return Promise.resolve({
+    url: `${CONTENT_API_BASE}/api/v1/content/${contentId}/public-download`,
+    expiresAt: '',
   });
 }
 
@@ -100,10 +116,10 @@ async function fetchPublicContentUrl(contentId: string): Promise<ContentUrlRespo
  * Fetches a list of content items.
  */
 async function fetchContentList(params: ContentListParams): Promise<ContentListResponse> {
-  const raw = await get<ContentListParams, RawContentListResponse>('/api/content', params, {
-    withToken: true,
-    withCredentials: false, // Don't send cookies - use Bearer token auth for cross-browser compatibility
-    baseURL: CONTENT_API_URL,
+  const raw = await get<ContentListParams, RawContentListResponse>('/api/v1/content', params, {
+    withToken: false,
+    withCredentials: true, // BFF session cookie — token attached server-side
+    baseURL: CONTENT_API_BASE,
   });
   return {
     items: raw.items.map(mapRawContentToDto),
