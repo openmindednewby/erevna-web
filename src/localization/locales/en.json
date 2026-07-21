@@ -924,7 +924,11 @@
       "minSelections": "Select at least {{p1}} option(s)",
       "maxSelections": "Select at most {{p1}} option(s)"
     },
-    "accordionToggleHint": "Expands or collapses this section"
+    "accordionToggleHint": "Expands or collapses this section",
+    "copyHint": "Copy the full value to the clipboard",
+    "copied": "Copied!",
+    "copyFailed": "Copy failed",
+    "copyableIdHint": "Shortened for display — the full value is copied"
   },
   "layout": {
     "closeSidebar": "Close sidebar",
