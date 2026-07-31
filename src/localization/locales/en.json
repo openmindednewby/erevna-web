@@ -913,6 +913,7 @@
     "saveHint": "Save the current changes",
     "discardHint": "Discard unsaved changes",
     "statusBadgeHint": "Displays the current status",
+    "tabsMenuHint": "Open the menu to switch sections",
     "textInputLabel": "Text input field",
     "validation": {
       "required": "This field is required",
