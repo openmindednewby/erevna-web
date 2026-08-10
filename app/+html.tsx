@@ -27,24 +27,11 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Hel
 #root{min-height:100vh;display:flex;flex-direction:column}
 `;
 
-// Service worker registration - deferred to avoid blocking main thread (TBT optimization)
-const swRegistrationScript = `
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    var register = function() {
-      navigator.serviceWorker
-        .register('/service-worker.js')
-        .then(function(reg) { console.log('SW registered', reg.scope); })
-        .catch(function(err) { console.warn('SW failed', err); });
-    };
-    if (typeof requestIdleCallback !== 'undefined') {
-      requestIdleCallback(register);
-    } else {
-      setTimeout(register, 0);
-    }
-  });
-}
-`;
+// Service-worker registration is injected at build time (Dockerfile) from the
+// generated `/sw-register.js` — the shared @dloizides/pwa-sw auto-updater that
+// registers with updateViaCache:'none', polls for a new worker, and reloads once
+// on controllerchange. It is NOT inlined here because Expo's static export strips
+// <script> from +html.tsx (same reason Umami/SEO are sed-injected in the Dockerfile).
 
 // Manifest probe - deferred and simplified
 const manifestDebugScript = `
@@ -139,8 +126,8 @@ const RootHtml = ({ children }: PropsWithChildren): ReactElement => {
 
         <ScrollViewStyleReset />
 
-        {/* Service worker registration - deferred (TBT optimization) */}
-        <script defer dangerouslySetInnerHTML={{ __html: swRegistrationScript }} />
+        {/* Service-worker registration is injected at build time from the generated
+            /sw-register.js (Dockerfile sed) — see the note near the top of this file. */}
         {/* Debug: probe manifest availability (dev only, deferred) */}
         <script defer dangerouslySetInnerHTML={{ __html: manifestDebugScript }} />
         {/* Umami privacy-first analytics (web-app-standards). data-domains keeps

@@ -21,7 +21,18 @@ ENV EXPO_PUBLIC_ENV=$APP_ENV
 # on 2026-07-05. `--max-workers 2` + a per-process heap cap keeps peak RAM bounded
 # (slower, but reliable). Raise on a box with more RAM if build time matters.
 ENV NODE_OPTIONS=--max-old-space-size=2048
+# Regenerate the PWA service worker + auto-update registration BEFORE the export so
+# `public/service-worker.js` + `public/sw-register.js` land in dist/. @dloizides/pwa-sw
+# stamps a UNIQUE per-build BUILD_VERSION into the worker, so every deploy ships a
+# byte-different SW → the browser installs it → its `activate` evicts the previous
+# build's caches (kills Expo's stale STABLE-filename bootstrap bundles).
+RUN npm run generate:sw
 RUN echo "Building Erevna Web for ENV=$EXPO_PUBLIC_ENV" && npx expo export --platform web --max-workers 2
+
+# Inject the auto-updating service-worker registration (generated /sw-register.js).
+# Expo's static export strips <script> from app/+html.tsx, so — like Umami below —
+# the tag is added here as a post-export step.
+RUN find dist -name '*.html' -exec sed -i 's#</head>#<script defer src="/sw-register.js"></script></head>#' {} +
 
 # Inject the Umami analytics tag into every exported HTML page.
 # Expo's static export strips <script> elements from app/+html.tsx, so the

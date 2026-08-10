@@ -22,6 +22,12 @@ module.exports = {
     // online-menu reads still present in this app.
     publicApiPathMatchers: ['/public/questionerTemplates/', '/public/menus/'],
     purgeMessageType: 'PURGE_PUBLIC_CACHE',
+    // Root-scoped app: scope + swUrl take the package defaults ('/' + '/service-worker.js').
+    // The generated sw-register.js polls for a new worker on this interval (+ on load
+    // and refocus) and reloads once on controllerchange — the auto-update-on-deploy path.
+    scope: '/',
+    swUrl: '/service-worker.js',
+    updateCheckIntervalMs: 60000,
   },
   manifest: {
     name: 'Erevna',

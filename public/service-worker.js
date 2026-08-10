@@ -10,10 +10,15 @@
  * Cache names are versioned; bumping a version evicts the old (stale) cache on
  * activation. A "PURGE_PUBLIC_CACHE" message evicts the public cache
  * immediately for same-session freshness.
+ *
+ * BUILD_VERSION is stamped per build so every deploy ships a byte-different worker
+ * — the browser only fetches/installs a new SW when this file's bytes change, so
+ * this is what lets an already-open tab pick up a new release (auto-update).
  */
+var BUILD_VERSION = "source";
 
-var API_CACHE = "erevna-public-api-v2";
-var STATIC_CACHE = "erevna-static-assets-v1";
+var API_CACHE = "erevna-public-api-v2-source";
+var STATIC_CACHE = "erevna-static-assets-v1-source";
 var MANAGED_CACHES = [API_CACHE, STATIC_CACHE];
 var API_CACHE_PREFIX = "erevna-public-api-";
 var STATIC_CACHE_PREFIX = "erevna-static-assets-";
@@ -36,6 +41,16 @@ function isAdminApiRequest(url) {
   if (pathname.indexOf('/api/') !== -1 && pathname.indexOf('/public/') === -1) return true;
   if (pathname.indexOf('/realms/') !== -1 || pathname.indexOf('/token') !== -1) return true;
   return false;
+}
+
+/**
+ * A cacheable request over a supported scheme. The Cache API only accepts
+ * http/https — a chrome-extension:, safari-extension:, data: or other-scheme
+ * request throws on cache.put ("Request scheme '...' is unsupported"), so those
+ * must skip the SW entirely and pass through to the network.
+ */
+function isHttpRequest(url) {
+  return url.indexOf('http:') === 0 || url.indexOf('https:') === 0;
 }
 
 /** A static asset (cache-first) based on file extension. */
@@ -147,6 +162,7 @@ self.addEventListener('message', function(event) {
 self.addEventListener('fetch', function(event) {
   var request = event.request;
   if (request.method !== 'GET') return;
+  if (!isHttpRequest(request.url)) return;
   if (isAdminApiRequest(request.url)) return;
   if (isPublicApiRequest(request.url)) {
     networkFirst(event);
