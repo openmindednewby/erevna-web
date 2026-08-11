@@ -13,18 +13,9 @@
   var SCOPE = "/";
   var UPDATE_INTERVAL_MS = 60000;
 
-  // Reload ONCE when a new worker takes control (an update landed). The first
-  // controllerchange on a fresh visit is the initial install, not an update —
-  // don't reload for that one; only reload for a genuine hand-off after we were
-  // already controlled. The 'refreshing' guard makes the reload idempotent.
-  var hadController = !!navigator.serviceWorker.controller;
-  var refreshing = false;
-  navigator.serviceWorker.addEventListener('controllerchange', function () {
-    if (!hadController) { hadController = true; return; }
-    if (refreshing) return;
-    refreshing = true;
-    window.location.reload();
-  });
+  // reloadOnControllerChange is disabled for this app (it registers a second SW
+  // at the same scope). A new build still installs + evicts stale caches; the
+  // open tab converges on the next navigation instead of auto-reloading.
 
   window.addEventListener('load', function () {
     var start = function () {

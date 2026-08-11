@@ -105,10 +105,11 @@
     "react-redux": "^9.2.0",
     "read-excel-file": "^7.0.2",
     "web-vitals": "5.1.0",
-    "zod": "^4.3.6"
+    "zod": "^4.3.6",
+    "@dloizides/pwa-sw": "^1.2.0"
   },
   "devDependencies": {
-    "@dloizides/pwa-sw": "^1.1.1",
+    "@dloizides/pwa-sw": "^1.2.0",
     "@eslint/js": "^10.0.1",
     "@lhci/cli": "^0.15.1",
     "@size-limit/file": "12.0.0",

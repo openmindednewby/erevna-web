@@ -28,6 +28,13 @@ module.exports = {
     scope: '/',
     swUrl: '/service-worker.js',
     updateCheckIntervalMs: 60000,
+    // erevna ALSO registers a push-notifications SW (sw-notifications.js) at scope
+    // '/' (RealTimeNotificationProvider in the protected layout). Two full workers
+    // at one scope hand control back and forth; reload-on-controllerchange would
+    // turn that into a RELOAD LOOP on logged-in pages. Off here: the new build's
+    // SW still installs + evicts stale caches on public pages (the actual fix);
+    // only the open-tab auto-reload is skipped. See @dloizides/pwa-sw 1.2.0.
+    reloadOnControllerChange: false,
   },
   manifest: {
     name: 'Erevna',
