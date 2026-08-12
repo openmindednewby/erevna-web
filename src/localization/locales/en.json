@@ -913,6 +913,7 @@
     "saveHint": "Save the current changes",
     "discardHint": "Discard unsaved changes",
     "statusBadgeHint": "Displays the current status",
+    "buildInfoHint": "The build this app is currently running",
     "tabsMenuHint": "Open the menu to switch sections",
     "textInputLabel": "Text input field",
     "validation": {
