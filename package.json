@@ -56,6 +56,7 @@
     "@dloizides/logging-web": "^1.0.2",
     "@dloizides/notification-client": "^1.2.0",
     "@dloizides/orval-preset": "^1.0.1",
+    "@dloizides/pwa-sw": "^1.2.0",
     "@dloizides/rn-web-hooks": "^1.1.0",
     "@dloizides/tenant-theme-web": "^1.0.1",
     "@dloizides/theme-web": "^1.3.0",
@@ -63,7 +64,7 @@
     "@dloizides/ui-feedback": "^1.11.0",
     "@dloizides/ui-forms": "^1.13.4",
     "@dloizides/ui-icons": "^1.0.1",
-    "@dloizides/ui-layout": "^1.23.0",
+    "@dloizides/ui-layout": "^1.26.3",
     "@dloizides/ui-nav": "^1.18.0",
     "@dloizides/ui-primitives": "^1.3.0",
     "@dloizides/ui-tables": "^1.18.0",
@@ -105,8 +106,7 @@
     "react-redux": "^9.2.0",
     "read-excel-file": "^7.0.2",
     "web-vitals": "5.1.0",
-    "zod": "^4.3.6",
-    "@dloizides/pwa-sw": "^1.2.0"
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@dloizides/pwa-sw": "^1.2.0",
