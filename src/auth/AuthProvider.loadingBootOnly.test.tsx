@@ -37,9 +37,10 @@
 import React from 'react';
 
 import { Pressable, Text } from 'react-native';
+
 import { configureStore } from '@reduxjs/toolkit';
-import { Provider } from 'react-redux';
 import { fireEvent, render, waitFor } from '@testing-library/react-native';
+import { Provider } from 'react-redux';
 
 import { AuthProvider, useAuth } from './AuthProvider';
 import { bffAuthClient } from './bffAuthClient';
@@ -104,9 +105,9 @@ const Probe = (): React.ReactElement => {
       <Text testID="loading">{String(loading)}</Text>
       <Text testID="authed">{String(isLoggedIn)}</Text>
       <Pressable
-        testID="do-apply"
-        accessibilityLabel="apply bff session"
         accessibilityHint="applies a post-boot bff session"
+        accessibilityLabel="apply bff session"
+        testID="do-apply"
         onPress={(): void => {
           applyBffSession(USER);
         }}
@@ -114,11 +115,11 @@ const Probe = (): React.ReactElement => {
         <Text>apply</Text>
       </Pressable>
       <Pressable
-        testID="do-logout"
-        accessibilityLabel="logout"
         accessibilityHint="ends the session"
+        accessibilityLabel="logout"
+        testID="do-logout"
         onPress={(): void => {
-          void logout();
+          logout().catch(() => {});
         }}
       >
         <Text>logout</Text>
