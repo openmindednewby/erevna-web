@@ -60,3 +60,6 @@ public/download/*.apk
 public/service-worker.js
 public/manifest.json
 public/sw-register.js
+
+# Local sighting/export artifacts (VERIFY-1 screenshots, never committed)
+dist-sight/
