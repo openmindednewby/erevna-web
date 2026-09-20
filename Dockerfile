@@ -3,9 +3,8 @@ FROM node:22-alpine AS builder
 WORKDIR /app
 
 # Install dependencies
-COPY package.json package-lock.json ./
-# Use npm ci when possible; fall back to legacy peer dep resolution if needed
-RUN npm ci --no-audit --prefer-offline || npm install --no-audit --prefer-offline --legacy-peer-deps
+COPY package.json package-lock.json .npmrc ./
+RUN npm ci --no-audit --prefer-offline
 
 # Copy all project files
 COPY . .
@@ -21,6 +20,7 @@ ENV EXPO_PUBLIC_ENV=$APP_ENV
 # on 2026-07-05. `--max-workers 2` + a per-process heap cap keeps peak RAM bounded
 # (slower, but reliable). Raise on a box with more RAM if build time matters.
 ENV NODE_OPTIONS=--max-old-space-size=2048
+RUN npm run generate:sw
 RUN echo "Building Erevna Web for ENV=$EXPO_PUBLIC_ENV" && npx expo export --platform web --max-workers 2
 
 # Inject the Umami analytics tag into every exported HTML page.

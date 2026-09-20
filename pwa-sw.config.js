@@ -22,6 +22,15 @@ module.exports = {
     // online-menu reads still present in this app.
     publicApiPathMatchers: ['/public/questionerTemplates/', '/public/menus/'],
     purgeMessageType: 'PURGE_PUBLIC_CACHE',
+    // OFF deliberately: this app registers a SECOND service worker,
+    // `/sw-notifications.js`, with an explicit `scope: '/'`
+    // (src/lib/notifications/utils/serviceWorkerRegistration.ts:55). Two workers
+    // at the SAME scope hand control back and forth, and a reload on
+    // `controllerchange` turns that silent hand-off into a reload loop. With this
+    // off, a new build's worker still installs, activates and evicts stale caches
+    // - only the auto-reload of an already-open tab is skipped, so the tab
+    // converges on the next navigation.
+    reloadOnControllerChange: false,
   },
   manifest: {
     name: 'Erevna',

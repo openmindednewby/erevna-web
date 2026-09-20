@@ -10,21 +10,26 @@
  * Cache names are versioned; bumping a version evicts the old (stale) cache on
  * activation. A "PURGE_PUBLIC_CACHE" message evicts the public cache
  * immediately for same-session freshness.
+ *
+ * BUILD_VERSION is stamped per build so every deploy ships a byte-different worker
+ * — the browser only fetches/installs a new SW when this file's bytes change, so
+ * this is what lets an already-open tab pick up a new release (auto-update).
  */
+const BUILD_VERSION = "mua1dkzw";
 
-var API_CACHE = "erevna-public-api-v2";
-var STATIC_CACHE = "erevna-static-assets-v1";
-var MANAGED_CACHES = [API_CACHE, STATIC_CACHE];
-var API_CACHE_PREFIX = "erevna-public-api-";
-var STATIC_CACHE_PREFIX = "erevna-static-assets-";
-var PUBLIC_API_MATCHERS = ["/public/questionerTemplates/","/public/menus/"];
-var STATIC_EXTENSIONS = [".js",".css",".png",".jpg",".jpeg",".gif",".svg",".woff",".woff2",".ico"];
-var PURGE_MESSAGE_TYPE = "PURGE_PUBLIC_CACHE";
+const API_CACHE = "erevna-public-api-v2" + "-" + BUILD_VERSION;
+const STATIC_CACHE = "erevna-static-assets-v1" + "-" + BUILD_VERSION;
+const MANAGED_CACHES = [API_CACHE, STATIC_CACHE];
+const API_CACHE_PREFIX = "erevna-public-api-";
+const STATIC_CACHE_PREFIX = "erevna-static-assets-";
+const PUBLIC_API_MATCHERS = ["/public/questionerTemplates/","/public/menus/"];
+const STATIC_EXTENSIONS = [".js",".css",".png",".jpg",".jpeg",".gif",".svg",".woff",".woff2",".ico"];
+const PURGE_MESSAGE_TYPE = "PURGE_PUBLIC_CACHE";
 
 /** A cacheable public API read (network-first) if its pathname matches any matcher. */
 function isPublicApiRequest(url) {
-  var pathname = new URL(url).pathname;
-  for (var i = 0; i < PUBLIC_API_MATCHERS.length; i++) {
+  const pathname = new URL(url).pathname;
+  for (let i = 0; i < PUBLIC_API_MATCHERS.length; i++) {
     if (pathname.indexOf(PUBLIC_API_MATCHERS[i]) !== -1) return true;
   }
   return false;
@@ -32,16 +37,26 @@ function isPublicApiRequest(url) {
 
 /** An admin/protected/auth request that must never be cached. */
 function isAdminApiRequest(url) {
-  var pathname = new URL(url).pathname;
+  const pathname = new URL(url).pathname;
   if (pathname.indexOf('/api/') !== -1 && pathname.indexOf('/public/') === -1) return true;
   if (pathname.indexOf('/realms/') !== -1 || pathname.indexOf('/token') !== -1) return true;
   return false;
 }
 
+/**
+ * A cacheable request over a supported scheme. The Cache API only accepts
+ * http/https — a chrome-extension:, safari-extension:, data: or other-scheme
+ * request throws on cache.put ("Request scheme '...' is unsupported"), so those
+ * must skip the SW entirely and pass through to the network.
+ */
+function isHttpRequest(url) {
+  return url.indexOf('http:') === 0 || url.indexOf('https:') === 0;
+}
+
 /** A static asset (cache-first) based on file extension. */
 function isStaticAsset(url) {
-  var pathname = new URL(url).pathname.toLowerCase();
-  for (var i = 0; i < STATIC_EXTENSIONS.length; i++) {
+  const pathname = new URL(url).pathname.toLowerCase();
+  for (let i = 0; i < STATIC_EXTENSIONS.length; i++) {
     if (pathname.lastIndexOf(STATIC_EXTENSIONS[i]) === pathname.length - STATIC_EXTENSIONS[i].length) return true;
   }
   return false;
@@ -57,8 +72,8 @@ function networkFirst(event) {
     caches.open(API_CACHE).then(function(cache) {
       return fetch(event.request).then(function(networkResponse) {
         if (networkResponse && networkResponse.ok) {
-          var responseToCache = networkResponse.clone();
-          var headers = new Headers(responseToCache.headers);
+          const responseToCache = networkResponse.clone();
+          const headers = new Headers(responseToCache.headers);
           headers.set('sw-cached-at', new Date().toISOString());
           return responseToCache.blob().then(function(body) {
             cache.put(event.request, new Response(body, {
@@ -125,8 +140,8 @@ self.addEventListener('activate', function(event) {
       return Promise.all(
         cacheNames
           .filter(function(name) {
-            var isOurCache = name.indexOf(API_CACHE_PREFIX) === 0 || name.indexOf(STATIC_CACHE_PREFIX) === 0;
-            var isCurrent = MANAGED_CACHES.indexOf(name) !== -1;
+            const isOurCache = name.indexOf(API_CACHE_PREFIX) === 0 || name.indexOf(STATIC_CACHE_PREFIX) === 0;
+            const isCurrent = MANAGED_CACHES.indexOf(name) !== -1;
             return isOurCache && !isCurrent;
           })
           .map(function(name) { return caches.delete(name); })
@@ -138,15 +153,16 @@ self.addEventListener('activate', function(event) {
 });
 
 self.addEventListener('message', function(event) {
-  var data = event.data || {};
+  const data = event.data || {};
   if (data.type === PURGE_MESSAGE_TYPE) {
     event.waitUntil(purgePublicCache(data.externalId));
   }
 });
 
 self.addEventListener('fetch', function(event) {
-  var request = event.request;
+  const request = event.request;
   if (request.method !== 'GET') return;
+  if (!isHttpRequest(request.url)) return;
   if (isAdminApiRequest(request.url)) return;
   if (isPublicApiRequest(request.url)) {
     networkFirst(event);
