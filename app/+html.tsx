@@ -146,7 +146,7 @@ const RootHtml = ({ children }: PropsWithChildren): ReactElement => {
         {/* Umami privacy-first analytics (web-app-standards). data-domains keeps
             staging/localhost traffic out of the prod dataset. */}
         <script
-          defer
+          async
           data-domains="erevna.dloizides.com"
           data-website-id="2ecad02e-fd6e-4ded-9c2c-47ff8e0b6a4b"
           src="https://analytics.dloizides.com/script.js"

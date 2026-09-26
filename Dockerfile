@@ -26,7 +26,7 @@ RUN echo "Building Erevna Web for ENV=$EXPO_PUBLIC_ENV" && npx expo export --pla
 # Inject the Umami analytics tag into every exported HTML page.
 # Expo's static export strips <script> elements from app/+html.tsx, so the
 # tag is added here as a post-export step instead.
-RUN find dist -name '*.html' -exec sed -i 's#</head>#<script defer src="https://analytics.dloizides.com/script.js" data-website-id="2ecad02e-fd6e-4ded-9c2c-47ff8e0b6a4b"></script></head>#' {} +
+RUN find dist -name '*.html' -exec sed -i 's#</head>#<script async src="https://analytics.dloizides.com/script.js" data-website-id="2ecad02e-fd6e-4ded-9c2c-47ff8e0b6a4b"></script></head>#' {} +
 
 # Inject SEO meta (Open Graph / Twitter / canonical) — Expo's static export
 # strips these from app/+html.tsx, same as it strips <script>.
