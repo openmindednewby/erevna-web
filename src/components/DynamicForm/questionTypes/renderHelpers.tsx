@@ -1,8 +1,3 @@
-/**
- * Render + validation helpers for the question-type registry. Kept out of
- * `registry.tsx` so that file stays under the line limit and only holds the
- * type entries + lookups.
- */
 import React from 'react';
 
 import { getMatrixRows, selectedColumnForRow } from './matrixEncoding';
@@ -14,7 +9,6 @@ import type { QuestionRenderProps } from './types';
 import type { FormStyles } from '../../../theme/utils/styles';
 import type { Answer, Question } from '../interfaces';
 
-/** A choice renderer (radio / dropdown) sharing the scalar-answer shape. */
 type OptionComponent = React.FC<{
   value: string | number;
   errorMsg?: string;
@@ -88,11 +82,6 @@ export function defaultValidate(
   return validateByShape(answer, question.validationRules, messages);
 }
 
-/**
- * Ranking validator: a required ranking must rank EVERY option exactly once.
- * (The renderer always materializes a full permutation, so a present answer is
- * complete; this guards against a missing/short stored answer.)
- */
 export function rankingValidate(
   answer: Answer | undefined,
   question: Question,

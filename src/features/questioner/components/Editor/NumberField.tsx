@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
   input: { padding: 6, marginTop: 4 },
 });
 
-/** Parse numeric text input; blank/invalid clears the value (undefined). */
 function parse(text: string): number | undefined {
   const trimmed = text.trim();
   if (trimmed === '') return undefined;

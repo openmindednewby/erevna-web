@@ -1,7 +1,3 @@
-/**
- * Constants for Schedule editor and indicator components.
- */
-
 /** Container margin top. */
 export const SCHEDULE_CONTAINER_MARGIN_TOP = 16;
 

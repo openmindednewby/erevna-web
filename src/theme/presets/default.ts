@@ -1,8 +1,3 @@
-/**
- * Default theme preset.
- * Values are taken directly from palette.ts basePalette to ensure
- * the app looks identical before any tenant customization is applied.
- */
 import type { TenantThemeConfig } from '../types';
 
 export const DEFAULT_THEME_CONFIG: TenantThemeConfig = {
@@ -22,10 +17,6 @@ export const DEFAULT_THEME_CONFIG: TenantThemeConfig = {
     surface: '#f7f7f7',
     surfaceElevated: '#ffffff',
     text: '#001219',
-    // WCAG AA: #777777 measured 4.48:1 on #ffffff and 4.18:1 on the #f7f7f7 surface,
-    // below the 4.5:1 floor for normal text. #717171 clears both (4.88:1 / 4.56:1).
-    // Mirrors the same fix in @dloizides/theme-web 1.2.0 — this app resolves its theme
-    // from THIS preset, not from the package's DEFAULT_THEME_CONFIG, so it needs its own.
     textSecondary: '#717171',
     border: '#e6e6e6',
     divider: '#e6e6e6',

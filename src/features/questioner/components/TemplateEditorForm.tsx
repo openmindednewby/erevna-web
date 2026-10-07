@@ -30,13 +30,9 @@ interface Props {
   saving?: boolean;
   enableAnswerSection: boolean;
   readOnly?: boolean;
-  /** Unique key to force TemplateForm remount when editing a different item */
   itemKey?: string;
-  /** Date-only (YYYY-MM-DD) raw input for the soft-closing date. */
   closingDate: string;
-  /** Raw numeric-text input for the response quota. */
   maxResponses: string;
-  /** Respondent identity collection mode. */
   respondentContactMode: RespondentContactMode;
   onClosingDateChange: (value: string) => void;
   onMaxResponsesChange: (value: string) => void;

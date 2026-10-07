@@ -18,10 +18,6 @@ import { typographyEditorStyles as styles } from '../utils/typographyEditorStyle
 import type { GlobalTypography } from '../../../../types/menuStyleTypes';
 import type { TypographySectionKey } from '../utils/typographyConstants';
 
-// =============================================================================
-// Props Interface
-// =============================================================================
-
 interface TypographySectionProps {
   sectionKey: TypographySectionKey;
   value: GlobalTypography;
@@ -32,10 +28,6 @@ interface TypographySectionProps {
   borderColor: string;
   bgColor: string;
 }
-
-// =============================================================================
-// Component
-// =============================================================================
 
 export const TypographySection = ({
   sectionKey,
@@ -103,7 +95,6 @@ export const TypographySection = ({
       </Text>
 
       <View style={styles.inputsRow}>
-        {/* Font Family Picker */}
         <TypographyMenuPicker
           allowCustom
           accessibilityHint={FM('typography.fontHint')}
@@ -120,7 +111,6 @@ export const TypographySection = ({
           onSelect={handleFontChange}
         />
 
-        {/* Font Size Input */}
         <View style={styles.inputContainer}>
           <Text style={[styles.inputLabel, { color: textSecondary }]}>
             {FM('typography.size')}
@@ -147,7 +137,6 @@ export const TypographySection = ({
           </View>
         </View>
 
-        {/* Font Weight Picker */}
         <TypographyMenuPicker
           accessibilityHint={FM('typography.weightHint')}
           accessibilityLabel={FM('typography.weightLabel', section.label, currentWeightLabel)}

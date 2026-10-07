@@ -1,4 +1,3 @@
-/** Tests for the marketing API client — verifies URL/method/body mapping. */
 import {
   createCampaign,
   createSubscriber,

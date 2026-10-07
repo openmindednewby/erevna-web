@@ -1,16 +1,5 @@
-/**
- * useReorder - Hook providing reorder operations for arrays.
- *
- * Swaps adjacent items and reassigns displayOrder values.
- * Works with any array of objects that have an optional displayOrder field.
- */
 import { useCallback } from 'react';
 
-/**
- * Swap two adjacent elements in an array.
- * Returns a new array (immutable). Returns the original array
- * if the indices are out of bounds.
- */
 export function swapItems<T>(items: T[], fromIndex: number, toIndex: number): T[] {
   const isFromOutOfBounds = fromIndex < 0 || fromIndex >= items.length;
   const isToOutOfBounds = toIndex < 0 || toIndex >= items.length;
@@ -29,10 +18,6 @@ interface UseReorderResult<T> {
   moveDown: (items: T[], index: number) => T[];
 }
 
-/**
- * Hook that returns stable reorder callbacks.
- * @param assignDisplayOrder - function that reassigns displayOrder after swap
- */
 export function useReorder<T>(assignDisplayOrder: (items: T[]) => T[]): UseReorderResult<T> {
   const moveUp = useCallback(
     (items: T[], index: number): T[] => {

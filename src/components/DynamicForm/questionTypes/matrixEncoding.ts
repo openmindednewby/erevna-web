@@ -1,20 +1,5 @@
-/**
- * Matrix/grid encoding helpers.
- *
- * The backend is a dumb JSON store: a question carries only `options` (label/value
- * pairs) and an `answer` whose array shape is `multiValues: string[]`. A Matrix
- * question therefore reuses BOTH without any backend change:
- *
- *  - ROWS and COLUMNS are stored in the shared `options` array, distinguished by a
- *    value prefix: row options use `row:<id>`, column options use `col:<id>`.
- *  - The ANSWER is `multiValues` of `"rowId:colId"` strings — one entry per answered
- *    row (each row picks exactly one column).
- *
- * Pure functions (no React, no i18n) so they are trivially unit-testable.
- */
 import { isValueDefined } from '../../../utils/is';
 
-/** Minimal option shape accepted by the axis extractors (UI + generated models both fit). */
 interface AxisOption {
   value?: string | number | null;
   label?: string | null;
@@ -74,7 +59,6 @@ export function encodeSelection(rowId: string, colId: string): string {
   return `${rowId}${PAIR_SEPARATOR}${colId}`;
 }
 
-/** Parse a `multiValues` answer array into row→col selections (last write per row wins). */
 export function decodeSelections(values: Array<string | number> | undefined): MatrixSelection[] {
   if (!Array.isArray(values)) return [];
   const byRow = new Map<string, string>();
@@ -98,7 +82,6 @@ export function selectedColumnForRow(
   return match?.colId ?? null;
 }
 
-/** Apply a (row → col) pick, replacing any prior pick for that row. */
 export function applySelection(
   values: Array<string | number> | undefined,
   rowId: string,

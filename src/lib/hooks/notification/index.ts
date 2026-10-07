@@ -1,6 +1,3 @@
-/**
- * Notification hooks barrel export
- */
 export {
   useGetNotificationPreferences,
   useUpdateNotificationPreferences,

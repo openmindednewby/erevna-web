@@ -2,15 +2,6 @@ import type { Module } from '@baseclient/core';
 
 export const ONLINEMENU_MODULE_NAME = 'onlinemenu';
 
-/**
- * OnlineMenu Module - Menu Management
- *
- * Required service: OnlineMenuService (port 5006)
- *
- * Features:
- * - Restaurant menu management
- * - Categories and items
- */
 export const onlinemenuModule: Module = {
   name: ONLINEMENU_MODULE_NAME,
   displayName: 'Online Menu',

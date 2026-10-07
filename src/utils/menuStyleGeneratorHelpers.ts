@@ -1,10 +1,3 @@
-/**
- * Helper functions and constants for menu style generation.
- * Split from menuStyleGenerator.ts to keep file sizes under 200 lines.
- *
- * @see BaseClient/docs/Tasks/TODO/menu-customization-feature.md
- */
-
 import { Platform } from 'react-native';
 import type { TextStyle, ViewStyle, ImageStyle } from 'react-native';
 
@@ -26,18 +19,12 @@ import type {
   ItemLayout,
 } from '../types/menuStyleTypes';
 
-// =============================================================================
-// Constants
-// =============================================================================
-
-/** Map content alignment to React Native flexbox alignment */
 const ALIGNMENT_MAP: Record<ContentAlignment, TextStyle['textAlign']> = {
   left: 'left',
   center: 'center',
   right: 'right',
 };
 
-/** Map media fit to React Native resizeMode */
 const RESIZE_MODE_MAP: Record<MediaFit, ImageStyle['resizeMode']> = {
   cover: 'cover',
   contain: 'contain',
@@ -45,7 +32,6 @@ const RESIZE_MODE_MAP: Record<MediaFit, ImageStyle['resizeMode']> = {
   none: 'center',
 };
 
-/** Map media size to pixel dimensions */
 const SIZE_DIMENSION_MAP: Record<Exclude<MediaSize, 'custom' | 'full'>, number> = {
   thumbnail: 48,
   small: 80,
@@ -53,16 +39,11 @@ const SIZE_DIMENSION_MAP: Record<Exclude<MediaSize, 'custom' | 'full'>, number> 
   large: 200,
 };
 
-/** Default shadow values for iOS and Android */
 const DEFAULT_SHADOW_OFFSET = { width: 0, height: 2 };
 const DEFAULT_SHADOW_OPACITY = 0.25;
 const DEFAULT_SHADOW_RADIUS = 4;
 const DEFAULT_ELEVATION = 4;
 const DEFAULT_SHADOW_COLOR = 'rgba(0, 0, 0, 0.25)';
-
-// =============================================================================
-// Type Definitions for Generated Styles
-// =============================================================================
 
 /** Styles generated for a category */
 export interface CategoryStyles {
@@ -88,11 +69,6 @@ export interface TypographyStyles {
   price: TextStyle;
 }
 
-// =============================================================================
-// Helper Functions
-// =============================================================================
-
-/** Safely get a value or its default */
 function getValueOrDefault<T>(value: T | undefined, defaultValue: T): T {
   if (isValueDefined(value)) return value;
   return defaultValue;
@@ -104,7 +80,6 @@ export function getColorWithFallback(color: string | undefined, fallback: string
   return fallback;
 }
 
-/** Build shadow styles for ViewStyle (cross-platform) */
 function buildShadowStyles(
   shadowEnabled: boolean | undefined,
   shadowColor: string | undefined,
@@ -131,7 +106,6 @@ function buildShadowStyles(
   };
 }
 
-/** Calculate image dimensions based on size preset */
 function calculateImageDimensions(
   size: MediaSize | undefined,
   customWidth: number | undefined,
@@ -154,10 +128,6 @@ export function getAlignmentFromLayout(
   const alignment = getValueOrDefault(layout?.contentAlignment, defaultAlignment);
   return ALIGNMENT_MAP[alignment];
 }
-
-// =============================================================================
-// Style Builder Helpers
-// =============================================================================
 
 export function buildContainerStyle(styling: BoxStyling, colors: ColorScheme): ViewStyle {
   const borderColor = getColorWithFallback(styling.borderColor, colors.border ?? DEFAULT_COLOR_SCHEME.border);
@@ -199,9 +169,6 @@ export function buildGlobalTextStyle(
   return { fontFamily, fontSize, fontWeight, color };
 }
 
-/**
- * Generates image styles from media settings.
- */
 export function generateMediaStyles(media: MediaSettings | undefined): ImageStyle {
   const settings = { ...DEFAULT_ITEM_IMAGE_SETTINGS, ...media };
   const dimensions = calculateImageDimensions(settings.size, settings.customWidth, settings.customHeight);

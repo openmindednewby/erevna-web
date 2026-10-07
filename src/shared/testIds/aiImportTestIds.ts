@@ -1,7 +1,3 @@
-/**
- * Test IDs for the AI menu import feature.
- */
-
 export const AiImportTestIds = {
   AI_IMPORT_BUTTON: 'ai-import-button',
   AI_IMPORT_MODAL: 'ai-import-modal',

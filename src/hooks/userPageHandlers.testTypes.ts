@@ -1,7 +1,3 @@
-/**
- * Shared types for useUserPageHandlers tests.
- */
-
 /** Mock query object with data and refetch */
 export interface MockUsersQuery {
   data: {

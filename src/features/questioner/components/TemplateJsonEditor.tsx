@@ -32,9 +32,6 @@ interface Props {
   onSave: () => void;
 }
 
-/**
- * JSON editor tab content for TemplateEditorModal.
- */
 const TemplateJsonEditor = ({ jsonText, readOnly, onJsonTextChange, onCancel, onSave }: Props): React.ReactElement => {
   const { theme } = useTheme();
   const colors = theme.colors;

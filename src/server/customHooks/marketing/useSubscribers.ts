@@ -1,7 +1,3 @@
-/**
- * Hooks for marketing subscribers: list, create, delete.
- * Wraps the hand-written marketing client over the notification API.
- */
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { SUBSCRIBERS_QUERY_KEY } from './queryKeys';

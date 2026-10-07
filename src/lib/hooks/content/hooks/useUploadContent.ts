@@ -1,17 +1,3 @@
-/**
- * Hook for uploading content to the Content Service.
- *
- * Architecture (task #39, 2026-05-24): single-shot multipart POST to the
- * ContentService proxy endpoint via the BFF (see `utils/uploadUtils.ts`).
- * The 3-step presigned-PUT flow (request-url → PUT to SeaweedFS →
- * complete) was retired because the signed URLs pointed at internal K8s
- * DNS, which is unreachable from the browser.
- *
- * Flow:
- * 1. Validate the file client-side (size + MIME type).
- * 2. POST `multipart/form-data` to `/api/v1/content/upload` (single shot).
- * 3. Fetch full `ContentDto` via `fetchContent(contentId)`.
- */
 import { useCallback, useRef, useState } from 'react';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -32,7 +18,6 @@ import type {
   UploadState,
 } from '../types';
 
-/** Default upload state */
 const DEFAULT_UPLOAD_STATE: UploadState = {
   isUploading: false,
   progress: 0,
@@ -40,9 +25,6 @@ const DEFAULT_UPLOAD_STATE: UploadState = {
   contentId: null,
 };
 
-/**
- * Query key for content list queries.
- */
 export function getContentListQueryKey(category?: ContentCategory): string[] {
   if (isValueDefined(category))
     return ['content', 'list', category];
@@ -50,9 +32,6 @@ export function getContentListQueryKey(category?: ContentCategory): string[] {
   return ['content', 'list'];
 }
 
-/**
- * Query key for single content queries.
- */
 export function getContentQueryKey(contentId: string): string[] {
   return ['content', contentId];
 }
@@ -87,7 +66,6 @@ export function useUploadContent(options: UploadContentOptions): UploadHookResul
 
 export default useUploadContent;
 
-/** Upload flow configuration */
 interface UploadFlowConfig {
   file: FileInfo;
   category: ContentCategory;
@@ -95,7 +73,6 @@ interface UploadFlowConfig {
   signal: AbortSignal;
 }
 
-/** Creates the initial uploading state */
 function createUploadingState(): UploadState {
   return { isUploading: true, progress: 0, error: null, contentId: null };
 }
@@ -107,7 +84,6 @@ interface UploadHookResult {
   reset: () => void;
 }
 
-/** Performs the full upload flow: validate, single-shot proxy upload, fetch metadata. */
 async function performUploadFlow(
   config: UploadFlowConfig,
   onProgress: ((progress: number) => void) | undefined,
@@ -128,7 +104,6 @@ async function performUploadFlow(
   return fetchContent(uploadResponse.contentId);
 }
 
-/** Hook for upload mutation callbacks */
 function useUploadCallbacks(
   category: ContentCategory,
   onSuccess: ((content: ContentDto) => void) | undefined,
@@ -151,7 +126,6 @@ function useUploadCallbacks(
   return { handleSuccess, handleError };
 }
 
-/** Abort the current upload if there is one */
 function abortCurrentUpload(controllerRef: React.MutableRefObject<AbortController | null>): void {
   const controller = controllerRef.current;
   if (isValueDefined(controller)) {
@@ -161,10 +135,8 @@ function abortCurrentUpload(controllerRef: React.MutableRefObject<AbortControlle
   }
 }
 
-// Re-export validateFile for backwards compatibility
 export { validateFile } from '../utils/uploadUtils';
 
-/** Hook for cancel and reset operations */
 function useCancelAndReset(
   abortControllerRef: React.MutableRefObject<AbortController | null>,
   setState: React.Dispatch<React.SetStateAction<UploadState>>,

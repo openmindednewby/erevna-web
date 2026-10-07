@@ -1,10 +1,3 @@
-/**
- * StatusPage: displays live health status for all backend services.
- *
- * Polls each service's /health/ready endpoint via useServiceHealth and
- * renders an overall status banner plus individual ServiceHealthCard entries.
- */
-
 import React from 'react';
 
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -129,10 +122,6 @@ const StatusPage = (): React.ReactElement => {
   );
 };
 
-/**
- * Convert a 0-1 opacity value to a 2-character hex alpha suffix.
- * For example, 0.15 => '26'.
- */
 function toHexAlpha(opacity: number): string {
   const HEX_MAX = 255;
   const HEX_RADIX = 16;

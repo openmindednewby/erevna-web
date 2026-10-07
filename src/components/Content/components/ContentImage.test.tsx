@@ -1,14 +1,9 @@
-/**
- * Unit tests for ContentImage component.
- * Focus on logic: conditional rendering based on contentId, loading states, error handling.
- */
 import React from 'react';
 
 import { render } from '@testing-library/react-native';
 
 import { ContentImage } from './ContentImage';
 
-// Mock theme
 jest.mock('../../../theme/hooks/useTheme', () => ({
   useTheme: () => ({
     theme: {
@@ -26,7 +21,6 @@ jest.mock('../../../theme/hooks/useTheme', () => ({
   }),
 }));
 
-// Mock the content URL hooks
 const mockUseContentUrl = jest.fn();
 const mockUsePublicContentUrl = jest.fn();
 jest.mock('../../../lib/hooks/content', () => ({
@@ -37,13 +31,11 @@ jest.mock('../../../lib/hooks/content', () => ({
 describe('ContentImage', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    // Default mock returns successful URL data for authenticated hook
     mockUseContentUrl.mockReturnValue({
       data: { url: 'https://example.com/image.jpg' },
       isLoading: false,
       isError: false,
     });
-    // Default mock returns successful URL data for public hook
     mockUsePublicContentUrl.mockReturnValue({
       data: { url: 'https://example.com/public-image.jpg' },
       isLoading: false,
@@ -58,7 +50,6 @@ describe('ContentImage', () => {
       );
 
       expect(toJSON()).toBeNull();
-      // Hook should not be called with null
       expect(mockUseContentUrl).toHaveBeenCalledWith(undefined);
     });
 
@@ -99,7 +90,6 @@ describe('ContentImage', () => {
         <ContentImage contentId="content-123" testID="test-image" />,
       );
 
-      // Should render a container with testID
       const container = getByTestId('test-image');
       expect(container).toBeTruthy();
     });
@@ -172,7 +162,6 @@ describe('ContentImage', () => {
       render(<ContentImage contentId={undefined} />);
       render(<ContentImage contentId="" />);
 
-      // All three should call with undefined (disabled query)
       expect(mockUseContentUrl).toHaveBeenCalledTimes(3);
       expect(mockUseContentUrl).toHaveBeenNthCalledWith(1, undefined);
       expect(mockUseContentUrl).toHaveBeenNthCalledWith(2, undefined);
@@ -186,9 +175,7 @@ describe('ContentImage', () => {
         <ContentImage isPublic contentId="content-123" testID="test-image" />,
       );
 
-      // Public hook should be called with the contentId
       expect(mockUsePublicContentUrl).toHaveBeenCalledWith('content-123');
-      // Authenticated hook should be called with undefined (disabled)
       expect(mockUseContentUrl).toHaveBeenCalledWith(undefined);
     });
 
@@ -197,9 +184,7 @@ describe('ContentImage', () => {
         <ContentImage contentId="content-123" testID="test-image" />,
       );
 
-      // Authenticated hook should be called with the contentId
       expect(mockUseContentUrl).toHaveBeenCalledWith('content-123');
-      // Public hook should be called with undefined (disabled)
       expect(mockUsePublicContentUrl).toHaveBeenCalledWith(undefined);
     });
 

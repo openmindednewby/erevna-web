@@ -5,10 +5,6 @@ import CurrencyPosition from '../../../../types/enums/CurrencyPosition';
 import MediaPosition from '../../../../types/enums/MediaPosition';
 
 
-// =============================================================================
-// Style Constants
-// =============================================================================
-
 const ITEM_MIN_HEIGHT = 80;
 const BADGE_PADDING_HORIZONTAL = 8;
 const BADGE_PADDING_VERTICAL = 4;
@@ -26,13 +22,6 @@ export const DEFAULT_NAME_FONT_SIZE = 16;
 export const DEFAULT_DESCRIPTION_FONT_SIZE = 14;
 export const DEFAULT_IMAGE_BORDER_RADIUS = 8;
 
-// =============================================================================
-// Style Helpers
-// =============================================================================
-
-/**
- * Gets the flex direction for a media position.
- */
 export function getFlexDirection(position: MediaPosition): ViewStyle['flexDirection'] {
   if (position === MediaPosition.Left) return 'row';
   if (position === MediaPosition.Right) return 'row-reverse';
@@ -40,9 +29,6 @@ export function getFlexDirection(position: MediaPosition): ViewStyle['flexDirect
   return 'column';
 }
 
-/**
- * Options for formatting a price.
- */
 interface FormatPriceOptions {
   price: number;
   showCurrency: boolean;
@@ -51,9 +37,6 @@ interface FormatPriceOptions {
   suffix?: string;
 }
 
-/**
- * Formats a price with currency symbol based on settings.
- */
 export function formatPrice(options: FormatPriceOptions): string {
   const { price, showCurrency, currencyPosition, prefix, suffix } = options;
   const priceText = price.toFixed(2);
@@ -67,18 +50,11 @@ export function formatPrice(options: FormatPriceOptions): string {
   return `${prefixStr}${CURRENCY_SYMBOL}${priceText}${suffixStr}`;
 }
 
-/**
- * Gets the image size based on media settings.
- */
 export function getImageSize(size?: string): number {
   if (size === 'small' || size === 'thumbnail') return ITEM_IMAGE_SIZE_SMALL;
   if (size === 'large' || size === 'full') return ITEM_IMAGE_SIZE_LARGE;
   return ITEM_IMAGE_SIZE_MEDIUM;
 }
-
-// =============================================================================
-// Base Styles
-// =============================================================================
 
 export const styles = StyleSheet.create({
   container: {

@@ -17,7 +17,6 @@ interface Props {
   updateAnswer: (questionId: string, value: Answer) => void;
   shouldSkip: (q: Question) => boolean;
   styles: FormStyles;
-  /** Survey external id, threaded to the file-upload renderer for its public upload call. */
   surveyExternalId?: string;
 }
 

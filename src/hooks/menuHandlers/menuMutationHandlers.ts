@@ -1,6 +1,3 @@
-/**
- * Menu mutation handlers for delete, toggle, and external link operations.
- */
 import { useCallback } from 'react';
 
 import { Linking, Platform } from 'react-native';

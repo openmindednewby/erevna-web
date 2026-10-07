@@ -17,7 +17,6 @@ interface Props {
 
 const LINEAR_FALLBACK = { min: LINEAR_SCALE_MIN, max: LINEAR_SCALE_MAX, step: SCALE_STEP_DEFAULT };
 
-// Dependency-free stepped scale: discrete buttons across the configured continuous range.
 export const LinearScaleQuestion: React.FC<Props> = ({ value, config, errorMsg, updateAnswer, styles }) => {
   const bounds = resolveScaleBounds(config, LINEAR_FALLBACK);
   const ticks = buildScaleTicks(bounds);

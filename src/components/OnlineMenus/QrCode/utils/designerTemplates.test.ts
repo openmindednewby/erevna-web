@@ -1,8 +1,3 @@
-/**
- * Tests for SVG template rendering.
- * Verifies each template returns valid SVG with correct structure and content.
- */
-
 import {
   escapeXml,
   renderTableTentTemplate,
@@ -94,7 +89,7 @@ describe('renderTableTentTemplate', () => {
   it('omits logo image element when logo is empty', () => {
     const svg = renderTableTentTemplate(BASE_OPTIONS);
     const imageCount = (svg.match(/<image/g) ?? []).length;
-    expect(imageCount).toBe(1); // Only the QR image
+    expect(imageCount).toBe(1);
   });
 
   it('escapes special characters in restaurant name', () => {

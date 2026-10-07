@@ -1,10 +1,6 @@
 
 
 
-// =============================================================================
-// Font Weight Control
-// =============================================================================
-
 import React, { useRef } from 'react';
 
 import { Modal, Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native';
@@ -95,10 +91,6 @@ export const FontWeightControl: React.FC<FontWeightControlProps> = ({
     </View>
   );
 };
-
-// =============================================================================
-// Color Input Control
-// =============================================================================
 
 interface ColorInputControlProps {
   value: string;

@@ -1,8 +1,5 @@
 
 
-/**
- * ItemImage - Renders the menu item image with proper positioning.
- */
 import React from 'react';
 
 import { View } from 'react-native';
@@ -31,9 +28,6 @@ interface Props {
   isPublic?: boolean;
 }
 
-/**
- * Renders the image for a menu item based on position settings.
- */
 const ItemImage: React.FC<Props> = ({
   contentId,
   itemName,

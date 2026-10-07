@@ -1,7 +1,3 @@
-/**
- * MenuFilterBar - Combined search bar, dietary tag filters, and clear button.
- * Wraps MenuSearchBar and DietaryTagFilters into a unified filter section.
- */
 import React from 'react';
 
 import { Text, TouchableOpacity, View } from 'react-native';
@@ -15,20 +11,12 @@ import { TestIds } from '../../../shared/testIds';
 
 import type { PublicMenuTheme } from '../utils/publicMenuThemeTypes';
 
-// =============================================================================
-// Constants
-// =============================================================================
-
 const SECTION_GAP = 12;
 const CLEAR_BUTTON_PADDING_HORIZONTAL = 14;
 const CLEAR_BUTTON_PADDING_VERTICAL = 8;
 const CLEAR_BUTTON_BORDER_WIDTH = 1;
 const CLEAR_BUTTON_FONT_SIZE = 14;
 const CLEAR_BUTTON_MARGIN_TOP = 8;
-
-// =============================================================================
-// Props
-// =============================================================================
 
 interface MenuFilterBarProps {
   searchQuery: string;
@@ -40,10 +28,6 @@ interface MenuFilterBarProps {
   onClearAll: () => void;
   theme: PublicMenuTheme;
 }
-
-// =============================================================================
-// Component
-// =============================================================================
 
 export const MenuFilterBar: React.FC<MenuFilterBarProps> = ({
   searchQuery,

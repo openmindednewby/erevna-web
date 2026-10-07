@@ -1,16 +1,3 @@
-/**
- * Client-side password policy that mirrors the IdentityService
- * `ResetPasswordRequestValidator`:
- *
- * - 8 ≤ length ≤ 128
- * - at least one uppercase letter
- * - at least one lowercase letter
- * - at least one digit
- *
- * Single source of truth for both the reset-password screen and any future
- * password-input forms. Mirrors backend validation so 99% of bad passwords
- * fail in the UI before hitting the network.
- */
 import { PasswordPolicyError } from './passwordPolicyError';
 
 const UPPERCASE_REGEX = /[A-Z]/;

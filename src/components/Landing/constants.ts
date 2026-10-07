@@ -1,8 +1,3 @@
-/**
- * Layout constants for landing page components.
- * Uses TABLET_BREAKPOINT_PX and DESKTOP_BREAKPOINT_PX from shared constants.
- */
-
 /** Maximum content width for landing page sections */
 export const LANDING_MAX_WIDTH = 1200;
 

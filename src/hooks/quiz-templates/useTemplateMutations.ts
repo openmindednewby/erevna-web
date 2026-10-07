@@ -34,7 +34,6 @@ interface UseTemplateMutationsReturn {
   handleCreate: (payload: UpdateQuestionerTemplateRequest) => void;
 }
 
-/** Safely show success notification with error handling */
 function showSuccessNotification(messageKey: string): void {
   try {
     notifySuccess(FM(messageKey));
@@ -43,7 +42,6 @@ function showSuccessNotification(messageKey: string): void {
   }
 }
 
-/** Create success handler for save edit operation */
 function createSaveEditSuccessHandler(
   externalId: string,
   refetchTemplatesSoon: () => void,
@@ -51,8 +49,6 @@ function createSaveEditSuccessHandler(
   setEditingItem: (item: QuestionerTemplateDto | null) => void,
 ): () => void {
   return () => {
-    // Evict the public cache so the editor's own preview reflects the edit
-    // immediately (cross-visitor freshness is already covered by network-first).
     purgePublicCache(externalId);
     refetchTemplatesSoon();
     setIsModalVisible(false);
@@ -61,7 +57,6 @@ function createSaveEditSuccessHandler(
   };
 }
 
-/** Create success handler for delete operation */
 function createDeleteSuccessHandler(refetchTemplatesSoon: () => void): () => void {
   return () => {
     refetchTemplatesSoon();
@@ -69,7 +64,6 @@ function createDeleteSuccessHandler(refetchTemplatesSoon: () => void): () => voi
   };
 }
 
-/** Create handlers for activate operation */
 interface ActivateHandlers {
   onSuccess: () => void;
   onError: (err: unknown) => void;
@@ -78,7 +72,6 @@ interface ActivateHandlers {
 function createActivateHandlers(externalId: string, refetchTemplatesSoon: () => void): ActivateHandlers {
   return {
     onSuccess: () => {
-      // Activation flips public visibility — purge so the change shows at once.
       purgePublicCache(externalId);
       refetchTemplatesSoon();
       showSuccessNotification('quizTemplates.messages.activateSuccess');
@@ -91,7 +84,6 @@ function createActivateHandlers(externalId: string, refetchTemplatesSoon: () => 
   };
 }
 
-/** Create success handler for create operation */
 function createCreateSuccessHandler(refetchTemplatesSoon: () => void): () => void {
   return () => {
     refetchTemplatesSoon();
@@ -99,7 +91,6 @@ function createCreateSuccessHandler(refetchTemplatesSoon: () => void): () => voi
   };
 }
 
-/** Build activate mutation data from item */
 function buildActivateMutationData(
   id: string,
   item: QuestionerTemplateDto,
@@ -111,7 +102,6 @@ function buildActivateMutationData(
   };
 }
 
-/** Options for save/edit and create handlers */
 interface SaveAndCreateOptions {
   editingItem: QuestionerTemplateDto | null;
   refetchTemplatesSoon: () => void;
@@ -122,7 +112,6 @@ interface SaveAndCreateOptions {
   analyticsTrack?: AnalyticsTrackFn;
 }
 
-/** Hook for save/edit and create operations */
 function useSaveAndCreateHandlers(
   options: SaveAndCreateOptions,
 ): { handleSaveEdit: (p: UpdateQuestionerTemplateRequest) => void; handleCreate: (p: UpdateQuestionerTemplateRequest) => void } {
@@ -154,7 +143,6 @@ function useSaveAndCreateHandlers(
   return { handleSaveEdit, handleCreate };
 }
 
-/** Options for delete and activate handlers */
 interface DeleteAndActivateOptions {
   items: QuestionerTemplateDto[];
   refetchTemplatesSoon: () => void;
@@ -162,7 +150,6 @@ interface DeleteAndActivateOptions {
   deleteMutation: ReturnType<typeof useQuestionerWebQuestionerTemplatesDelete>;
 }
 
-/** Hook for delete and activate operations */
 function useDeleteAndActivateHandlers(
   options: DeleteAndActivateOptions,
 ): { handleDelete: (id: string) => void; handleActivate: (id: string, current?: boolean | number) => void } {
@@ -191,9 +178,6 @@ function useDeleteAndActivateHandlers(
   return { handleDelete, handleActivate };
 }
 
-/**
- * Hook that encapsulates template mutation operations (create, update, delete, activate).
- */
 export function useTemplateMutations(params: UseTemplateMutationsParams): UseTemplateMutationsReturn {
   const { editingItem, items, refetchTemplatesSoon, setIsModalVisible, setEditingItem, analyticsTrack } = params;
 

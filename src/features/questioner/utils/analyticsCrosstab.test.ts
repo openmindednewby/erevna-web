@@ -88,8 +88,7 @@ describe('computeCrosstab', () => {
     ];
     const result = computeCrosstab(defs, responses, 'q-color', 'q-gender');
     expect(result.matchedResponses).toBe(4);
-    expect(result.colBuckets).toEqual(['f', 'm']); // sorted
-    // red x f = 2, red x m = 1, blue x f = 1
+    expect(result.colBuckets).toEqual(['f', 'm']);
     expect(cellAt(result.rows, 'red', 0)).toBe(2);
     expect(cellAt(result.rows, 'red', 1)).toBe(1);
     expect(cellAt(result.rows, 'blue', 0)).toBe(1);
@@ -107,14 +106,14 @@ describe('computeCrosstab', () => {
     expect(result.colQuestionName).toBe('Gender');
     const redRow = result.rows.find((r) => r.bucket === 'red');
     expect(redRow?.total).toBe(2);
-    expect(result.colTotals).toEqual([2, 1]); // f total 2, m total 1
+    expect(result.colTotals).toEqual([2, 1]);
   });
 
   it('excludes responses that did not answer one of the two questions', () => {
     const responses = [
       response([ansRadio('q-color', 'red'), ansRadio('q-gender', 'f')]),
-      response([ansRadio('q-color', 'red')]), // no gender
-      response([ansRadio('q-gender', 'm')]), // no colour
+      response([ansRadio('q-color', 'red')]),
+      response([ansRadio('q-gender', 'm')]),
     ];
     const result = computeCrosstab(defs, responses, 'q-color', 'q-gender');
     expect(result.matchedResponses).toBe(1);
@@ -128,11 +127,9 @@ describe('computeCrosstab', () => {
       response([ansCheckbox('q-fruits', ['apple']), ansRadio('q-gender', 'm')]),
     ];
     const result = computeCrosstab(localDefs, responses, 'q-fruits', 'q-gender');
-    // apple appears with f once and m once; banana with f once
-    expect(cellAt(result.rows, 'apple', 0)).toBe(1); // apple x f
-    expect(cellAt(result.rows, 'apple', 1)).toBe(1); // apple x m
-    expect(cellAt(result.rows, 'banana', 0)).toBe(1); // banana x f
-    // matched responses is by RESPONSE, not by value pair
+    expect(cellAt(result.rows, 'apple', 0)).toBe(1);
+    expect(cellAt(result.rows, 'apple', 1)).toBe(1);
+    expect(cellAt(result.rows, 'banana', 0)).toBe(1);
     expect(result.matchedResponses).toBe(2);
   });
 
@@ -145,8 +142,8 @@ describe('computeCrosstab', () => {
     ];
     const result = computeCrosstab(localDefs, responses, 'q-rate', 'q-gender');
     expect(result.rows.map((r) => r.bucket)).toEqual(['3', '5']);
-    expect(cellAt(result.rows, '5', 0)).toBe(1); // 5 x f
-    expect(cellAt(result.rows, '5', 1)).toBe(1); // 5 x m
-    expect(cellAt(result.rows, '3', 0)).toBe(1); // 3 x f
+    expect(cellAt(result.rows, '5', 0)).toBe(1);
+    expect(cellAt(result.rows, '5', 1)).toBe(1);
+    expect(cellAt(result.rows, '3', 0)).toBe(1);
   });
 });

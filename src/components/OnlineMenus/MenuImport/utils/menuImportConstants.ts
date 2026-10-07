@@ -1,11 +1,4 @@
-/**
- * Constants for the menu import feature.
- */
 import { StyleSheet } from 'react-native';
-
-// =============================================================================
-// File Parsing
-// =============================================================================
 
 /** Maximum number of rows allowed in a single import file */
 export const MAX_IMPORT_ROWS = 500;
@@ -15,10 +8,6 @@ export const ACCEPTED_FILE_TYPES = '.csv,.xlsx';
 
 /** Number of sample rows to show for column mapping */
 export const SAMPLE_ROW_COUNT = 3;
-
-// =============================================================================
-// Column Detection - Known Aliases
-// =============================================================================
 
 /** Aliases for the Category column (all lowercase for matching) */
 export const CATEGORY_ALIASES = [
@@ -44,20 +33,12 @@ export const PRICE_ALIASES = [
   'menu price', 'unit price', 'sell price',
 ];
 
-// =============================================================================
-// UI Constants
-// =============================================================================
-
 export { MODAL_OVERLAY_COLOR } from '../../../../shared/constants';
 export const ERROR_ROW_COLOR = '#FFEBEE';
 export const ERROR_TEXT_COLOR = '#C62828';
 export const WARNING_ROW_COLOR = '#FFF3E0';
 export const WARNING_TEXT_COLOR = '#E65100';
 export const VALID_ROW_COLOR = '#E8F5E9';
-
-// =============================================================================
-// Shared Styles
-// =============================================================================
 
 export const sharedImportStyles = StyleSheet.create({
   stepTitle: { fontSize: 16, fontWeight: '600', marginBottom: 12 },

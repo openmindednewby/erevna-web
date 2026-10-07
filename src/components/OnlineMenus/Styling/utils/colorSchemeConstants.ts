@@ -1,12 +1,5 @@
-/**
- * Constants for the ColorSchemeEditor component.
- */
-
 const HEX_COLOR_REGEX = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
 
-/**
- * ColorScheme interface for menu styling.
- */
 export interface ColorScheme {
   background?: string;
   surface?: string;
@@ -106,9 +99,6 @@ export { DISABLED_OPACITY } from '../../../../shared/constants';
 /** Default gray swatch color for invalid colors */
 export const INVALID_COLOR_SWATCH = '#CCCCCC';
 
-/**
- * Validates if a string is a valid hex color.
- */
 export function isValidHexColor(color: string): boolean {
   return HEX_COLOR_REGEX.test(color);
 }

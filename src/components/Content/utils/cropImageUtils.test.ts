@@ -1,14 +1,6 @@
-/**
- * Unit tests for cropImageUtils.
- * Tests logic: aspect ratio mapping, blob-to-FileInfo conversion, crop flow.
- */
 import { blobToFileInfo, getAspectRatioValue } from './cropImageUtils';
 import AspectRatioPreset from '../../../shared/enums/AspectRatioPreset';
 
-
-// ---------------------------------------------------------------------------
-// getAspectRatioValue
-// ---------------------------------------------------------------------------
 
 describe('getAspectRatioValue', () => {
   it('returns 1 for Square', () => {
@@ -27,10 +19,6 @@ describe('getAspectRatioValue', () => {
     expect(getAspectRatioValue(AspectRatioPreset.Free)).toBeUndefined();
   });
 });
-
-// ---------------------------------------------------------------------------
-// blobToFileInfo
-// ---------------------------------------------------------------------------
 
 describe('blobToFileInfo', () => {
   const MOCK_BLOB_URL = 'blob:http://localhost/test-blob-id';

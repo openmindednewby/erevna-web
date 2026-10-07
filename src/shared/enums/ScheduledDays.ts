@@ -1,8 +1,3 @@
-/**
- * Flags enum representing days of the week for menu scheduling.
- * Mirrors the backend ScheduledDays enum with bitwise flag values.
- */
-
 /* eslint-disable no-magic-numbers */
 const enum ScheduledDays {
   None = 0,

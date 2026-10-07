@@ -9,7 +9,6 @@ import TextFieldRow from './TextFieldRow';
 
 interface Props {
   config: QuestionConfig | null | undefined;
-  /** When true, scale bounds are fixed (NPS); only endpoint labels are editable. */
   fixedBounds?: boolean;
   onChange: (config: QuestionConfig) => void;
 }

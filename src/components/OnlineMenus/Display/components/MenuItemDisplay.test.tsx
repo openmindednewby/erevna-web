@@ -1,14 +1,3 @@
-/**
- * Unit tests for MenuItemDisplay component.
- *
- * These tests focus on LOGIC, not rendering:
- * - Price formatting with different currency options
- * - Image position handling
- * - Availability badge visibility
- * - Style calculation based on item and global settings
- * - Callback behavior
- */
-
 import BadgePosition from '../../../../types/enums/BadgePosition';
 import CurrencyPosition from '../../../../types/enums/CurrencyPosition';
 import FontWeight from '../../../../types/enums/FontWeight';
@@ -25,10 +14,6 @@ import {
 } from '../utils/menuItemDisplayStyles';
 
 import type { MenuItem, MenuContents } from '../../../../types/menuTypes';
-
-// =============================================================================
-// Test Data Factories
-// =============================================================================
 
 function createMenuItem(overrides: Partial<MenuItem> = {}): MenuItem {
   return {
@@ -53,10 +38,6 @@ function createGlobalStyles(overrides: Partial<MenuContents> = {}): MenuContents
     ...overrides,
   };
 }
-
-// =============================================================================
-// Price Formatting Tests
-// =============================================================================
 
 describe('MenuItemDisplay Price Formatting', () => {
   describe('formatPrice', () => {
@@ -112,10 +93,6 @@ describe('MenuItemDisplay Price Formatting', () => {
   });
 });
 
-// =============================================================================
-// Image Size Tests
-// =============================================================================
-
 describe('MenuItemDisplay Image Size', () => {
   describe('getImageSize', () => {
     it('returns small size for thumbnail', () => {
@@ -148,10 +125,6 @@ describe('MenuItemDisplay Image Size', () => {
   });
 });
 
-// =============================================================================
-// Flex Direction Tests
-// =============================================================================
-
 describe('MenuItemDisplay Layout', () => {
   describe('getFlexDirection', () => {
     it('returns row for left position', () => {
@@ -180,27 +153,20 @@ describe('MenuItemDisplay Layout', () => {
   });
 });
 
-// =============================================================================
-// Item Data Processing Tests
-// =============================================================================
-
 describe('MenuItemDisplay Data Processing', () => {
   describe('item defaults', () => {
     it('uses default name when item name is null', () => {
       const item = createMenuItem({ name: undefined });
-      // Default behavior check - name should be undefined which triggers default
       expect(item.name).toBeUndefined();
     });
 
     it('uses default price of 0 when item price is null', () => {
       const item = createMenuItem({ price: undefined });
-      // Price should default to 0 in component
       expect(item.price).toBeUndefined();
     });
 
     it('treats item as available by default', () => {
       const item = createMenuItem({ isAvailable: undefined });
-      // isAvailable should default to true in component
       expect(item.isAvailable).toBeUndefined();
     });
   });
@@ -230,7 +196,6 @@ describe('MenuItemDisplay Data Processing', () => {
 
     it('does not show description when empty string', () => {
       const item = createMenuItem({ description: '' });
-      // Empty string should not show description
       const isEmpty = item.description === '';
       expect(isEmpty).toBe(true);
     });
@@ -241,10 +206,6 @@ describe('MenuItemDisplay Data Processing', () => {
     });
   });
 });
-
-// =============================================================================
-// Style Inheritance Tests
-// =============================================================================
 
 describe('MenuItemDisplay Style Inheritance', () => {
   describe('text color inheritance', () => {
@@ -299,16 +260,11 @@ describe('MenuItemDisplay Style Inheritance', () => {
   });
 });
 
-// =============================================================================
-// Price Position Tests
-// =============================================================================
-
 describe('MenuItemDisplay Price Position', () => {
   describe('price position options', () => {
     it('defaults to right position', () => {
       const item = createMenuItem({ priceStyle: undefined });
       expect(item.priceStyle?.position).toBeUndefined();
-      // Default is 'right' in component
     });
 
     it('can be set to below-name', () => {
@@ -328,16 +284,11 @@ describe('MenuItemDisplay Price Position', () => {
   });
 });
 
-// =============================================================================
-// Media Position Tests
-// =============================================================================
-
 describe('MenuItemDisplay Media Position', () => {
   describe('image settings position', () => {
     it('defaults to left when not specified', () => {
       const item = createMenuItem({ imageSettings: undefined });
       expect(item.imageSettings?.position).toBeUndefined();
-      // Default is 'left' in component
     });
 
     it('can be set to right', () => {
@@ -366,10 +317,6 @@ describe('MenuItemDisplay Media Position', () => {
     });
   });
 });
-
-// =============================================================================
-// Availability Badge Tests
-// =============================================================================
 
 describe('MenuItemDisplay Availability Badge', () => {
   describe('availability badge visibility', () => {
@@ -419,7 +366,6 @@ describe('MenuItemDisplay Availability Badge', () => {
     it('defaults to top-right', () => {
       const item = createMenuItem({ availabilityBadge: undefined });
       expect(item.availabilityBadge?.position).toBeUndefined();
-      // Default is 'top-right' in component
     });
 
     it('can be set to top-left', () => {
@@ -438,10 +384,6 @@ describe('MenuItemDisplay Availability Badge', () => {
     });
   });
 });
-
-// =============================================================================
-// Typography Tests
-// =============================================================================
 
 describe('MenuItemDisplay Typography', () => {
   describe('name typography', () => {
@@ -483,10 +425,6 @@ describe('MenuItemDisplay Typography', () => {
     });
   });
 });
-
-// =============================================================================
-// Box Styling Tests
-// =============================================================================
 
 describe('MenuItemDisplay Box Styling', () => {
   describe('border styling', () => {
@@ -535,10 +473,6 @@ describe('MenuItemDisplay Box Styling', () => {
   });
 });
 
-// =============================================================================
-// Price Style Tests
-// =============================================================================
-
 describe('MenuItemDisplay Price Style', () => {
   describe('strikethrough when unavailable', () => {
     it('enables strikethrough by default when unavailable', () => {
@@ -546,7 +480,6 @@ describe('MenuItemDisplay Price Style', () => {
         isAvailable: false,
         priceStyle: undefined,
       });
-      // Default is true in component
       expect(item.priceStyle?.strikethroughWhenUnavailable).toBeUndefined();
     });
 

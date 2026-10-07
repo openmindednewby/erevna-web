@@ -1,5 +1,3 @@
-/** Pure formatting helpers for marketing subscribers (no rendering). */
-
 const SUBSCRIBED = 'Subscribed';
 const UNSUBSCRIBED = 'Unsubscribed';
 

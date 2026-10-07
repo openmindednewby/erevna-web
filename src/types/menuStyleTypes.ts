@@ -1,19 +1,3 @@
-/**
- * Menu Style Types for Menu Customization Feature
- *
- * These types define the styling options available for menu customization.
- * They must match the C# backend schema for proper serialization/deserialization.
- *
- * Type guards are in menuStyleTypeGuards.ts.
- * Item/badge types are in menuStyleItemTypes.ts.
- *
- * @see BaseClient/docs/Tasks/TODO/menu-customization-feature.md
- */
-
-// =============================================================================
-// Enum Re-exports (each enum lives in its own file per enum-file-isolation)
-// =============================================================================
-
 import type CategoryItemLayout from './enums/CategoryItemLayout';
 import type CategoryLayoutType from './enums/CategoryLayoutType';
 import type ContentAlignment from './enums/ContentAlignment';
@@ -35,10 +19,6 @@ export { default as MediaSize } from './enums/MediaSize';
 export { default as MediaFit } from './enums/MediaFit';
 export { default as ContentAlignment } from './enums/ContentAlignment';
 
-// =============================================================================
-// Global Typography
-// =============================================================================
-
 /** Global typography settings applied to the entire menu. */
 export interface GlobalTypography {
   titleFont?: string;
@@ -51,10 +31,6 @@ export interface GlobalTypography {
   priceFontSize?: number;
   priceFontWeight?: FontWeight;
 }
-
-// =============================================================================
-// Color Scheme
-// =============================================================================
 
 /** Color scheme for the menu. All colors are valid CSS color values. */
 export interface ColorScheme {
@@ -69,10 +45,6 @@ export interface ColorScheme {
   unavailable?: string;
 }
 
-// =============================================================================
-// Layout Types
-// =============================================================================
-
 /** Menu layout settings controlling overall structure. */
 export interface MenuLayoutSettings {
   template?: LayoutTemplate;
@@ -82,10 +54,6 @@ export interface MenuLayoutSettings {
   showCategoryDividers?: boolean;
   showItemDividers?: boolean;
 }
-
-// =============================================================================
-// Position & Header Types
-// =============================================================================
 
 /** Settings for the menu header section. */
 export interface HeaderSettings {
@@ -108,10 +76,6 @@ export interface SpacingSettings {
   contentPadding?: number;
 }
 
-// =============================================================================
-// Media Types
-// =============================================================================
-
 /** Overlay settings for media. */
 export interface OverlaySettings {
   enabled: boolean;
@@ -130,10 +94,6 @@ export interface MediaSettings {
   opacity?: number;
   overlay?: OverlaySettings;
 }
-
-// =============================================================================
-// Category Styling
-// =============================================================================
 
 /** Typography settings specific to categories. */
 export interface CategoryTypography {
@@ -167,10 +127,6 @@ export interface BoxStyling {
   shadowColor?: string;
   shadowBlur?: number;
 }
-
-// =============================================================================
-// Re-exports: Item types, badge types, and type guards
-// =============================================================================
 
 export {
   CurrencyPosition,

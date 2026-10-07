@@ -1,8 +1,3 @@
-/**
- * CSS styles for the ShowcaseLayout wrapper.
- * Injected into the document head on web platform.
- */
-
 import { isValueDefined } from '../../../../shared/utils/validators';
 
 const showcaseLayoutStyles = `
@@ -36,10 +31,6 @@ const showcaseLayoutStyles = `
   }
 `;
 
-/**
- * Injects showcase layout CSS into the document head.
- * Idempotent: only injects once.
- */
 export function injectShowcaseLayoutStyles(): void {
   if (typeof document === 'undefined') return;
 

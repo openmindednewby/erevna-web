@@ -13,15 +13,6 @@ interface Props {
   children: React.ReactNode;
 }
 
-/**
- * Adapts the app's local theme + i18n (+ router) to the injectable provider of
- * @dloizides/ui-feedback. Mount once, below ThemeProvider.
- *
- * The app's `ResolvedTheme` colour scales carry the same runtime shape as the
- * package's `UiTheme` (string-keyed steps), but its concrete `ColorScale` type
- * lacks the string index signature `UiTheme` requires, so the theme is cast at
- * this single bridge point rather than changing the app's theme model.
- */
 const FeedbackUiAdapter = ({ children }: Props): React.ReactElement => {
   const { theme } = useTheme();
   const router = useRouter();

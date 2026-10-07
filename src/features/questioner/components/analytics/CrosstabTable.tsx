@@ -54,10 +54,6 @@ interface CrosstabTableProps {
   responses: CompletedQuestionerDto[];
 }
 
-/**
- * Interactive crosstab: two question-pair pickers (rows + columns) over a count matrix
- * joined from the responses that answered both questions. Fully client-side.
- */
 const CrosstabTable = ({ questions, responses }: CrosstabTableProps): React.ReactElement => {
   const { theme } = useTheme();
   const { colors } = theme;

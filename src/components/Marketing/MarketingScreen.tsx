@@ -1,7 +1,3 @@
-/**
- * MarketingScreen — organizer view to manage email subscribers and campaigns.
- * Logic-light: data + mutations live in the marketing custom hooks.
- */
 import React from 'react';
 
 import { ActivityIndicator, ScrollView, Text, View } from 'react-native';

@@ -1,7 +1,3 @@
-/**
- * Test IDs for the tooltip tour feature.
- */
-
 export const TooltipTourTestIds = {
   TOOLTIP_OVERLAY: 'tooltip-overlay',
   TOOLTIP_BACKDROP: 'tooltip-backdrop',

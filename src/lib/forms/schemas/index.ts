@@ -1,6 +1,3 @@
-/**
- * Schema exports for form validation.
- */
 export {
   requiredString,
   emailSchema,

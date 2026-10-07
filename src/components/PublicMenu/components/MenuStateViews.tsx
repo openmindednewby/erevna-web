@@ -55,10 +55,6 @@ const styles = StyleSheet.create({
   },
 });
 
-/**
- * Displays a skeleton loading placeholder for the menu viewer.
- * Renders placeholder rectangles for header, search bar, category titles, and item cards.
- */
 export const MenuLoadingState: React.FC<LoadingStateProps> = ({ backgroundColor, primaryColor }) => {
   const skeletonColor = { backgroundColor: primaryColor, opacity: SKELETON_OPACITY };
 

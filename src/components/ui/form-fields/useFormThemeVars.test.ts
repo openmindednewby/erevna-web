@@ -1,16 +1,6 @@
-/**
- * Unit tests for useFormThemeVars hook.
- *
- * Tests the mapping from useTheme() colors to CSS custom properties.
- * Focuses on logic: correct property names and values derived from theme.
- */
 import { renderHook } from '@testing-library/react-native';
 
 import { useFormThemeVars } from './useFormThemeVars';
-
-// =============================================================================
-// Mock Data
-// =============================================================================
 
 const MOCK_COLORS = {
   text: '#001219',
@@ -45,10 +35,6 @@ jest.mock('../../../theme/hooks/useTheme', () => ({
     mode: 'light',
   }),
 }));
-
-// =============================================================================
-// Tests
-// =============================================================================
 
 describe('useFormThemeVars', () => {
   it('maps theme background color to --form-background CSS variable', () => {

@@ -1,8 +1,3 @@
-/**
- * Constants for the Business Profile settings screen.
- * Form field limits, spacing, and styling values.
- */
-
 /** Re-export shared settings constants. */
 export {
   SECTION_SPACING,

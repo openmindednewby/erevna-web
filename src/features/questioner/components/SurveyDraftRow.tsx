@@ -20,10 +20,6 @@ interface Props {
   onSave: () => void;
 }
 
-/**
- * "Save & continue later" control for the public survey. After a save it shows
- * the shareable resume link the respondent can revisit to finish later.
- */
 const SurveyDraftRow = ({ isSaving, resumeUrl, onSave }: Props): React.ReactElement => {
   const { theme } = useTheme();
   const colors = theme.colors;

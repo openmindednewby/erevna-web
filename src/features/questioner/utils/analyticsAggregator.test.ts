@@ -96,7 +96,6 @@ describe('computeAnalytics', () => {
     const opts = stats.choiceQuestions[0].options;
     expect(opts.map((o) => o.value)).toEqual(['red', 'green', 'blue']);
     expect(opts.every((o) => o.count === 0)).toBe(true);
-    // divide-by-zero guard: pct must be 0, not NaN
     expect(opts.every((o) => o.pct === 0)).toBe(true);
   });
 
@@ -117,12 +116,10 @@ describe('computeAnalytics', () => {
     expect(byValue.red.count).toBe(2);
     expect(byValue.green.count).toBe(0);
     expect(byValue.blue.count).toBe(0);
-    // green and blue still present as rows
     expect(opts).toHaveLength(3);
   });
 
   it('matches answers to options by value, not label', () => {
-    // answer stringValue is the VALUE 'green', not the label 'Green'
     const stats = computeAnalytics(template([radioQuestion()]), [response([answeredRadio('green')])]);
     const green = stats.choiceQuestions[0].options.find((o) => o.value === 'green');
     expect(green?.count).toBe(1);
@@ -156,7 +153,6 @@ describe('computeAnalytics', () => {
     expect(byValue.apple.count).toBe(3);
     expect(byValue.banana.count).toBe(1);
     expect(byValue.cherry.count).toBe(1);
-    // pct is relative to total RESPONSES, so apple in all 3 => 100%
     expect(byValue.apple.pct).toBe(100);
   });
 
@@ -279,7 +275,6 @@ describe('computeAnalytics', () => {
         { value: 3, count: 1 },
         { value: 5, count: 2 },
       ]);
-      // numeric questions are NOT treated as choice/text
       expect(stats.choiceQuestions).toHaveLength(0);
       expect(stats.textQuestions).toHaveLength(0);
     });

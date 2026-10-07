@@ -1,7 +1,3 @@
-/**
- * Utility functions for UserForm.
- */
-
 export interface UserFormPayload {
   username: string;
   email?: string;
@@ -34,9 +30,6 @@ interface FormValuesInput {
   selectedTenantId: string;
 }
 
-/**
- * Trims all string values from the form.
- */
 export function trimFormValues(values: FormValuesInput): TrimmedFormValues {
   return {
     username: values.username.trim(),
@@ -49,16 +42,10 @@ export function trimFormValues(values: FormValuesInput): TrimmedFormValues {
   };
 }
 
-/**
- * Converts a trimmed string to undefined if empty.
- */
 function toOptional(value: string): string | undefined {
   return value.length > 0 ? value : undefined;
 }
 
-/**
- * Parses roles from an unknown value.
- */
 export function parseRoles(value: unknown, fallback: string[]): string[] {
   if (!Array.isArray(value)) return fallback;
   return value.filter((entry): entry is string => typeof entry === 'string');
@@ -70,9 +57,6 @@ interface BuildPayloadParams {
   selectedRoles: string[];
 }
 
-/**
- * Builds the save payload from trimmed values.
- */
 export function buildSavePayload({ trimmed, enabled, selectedRoles }: BuildPayloadParams): UserFormPayload {
   return {
     username: trimmed.username,

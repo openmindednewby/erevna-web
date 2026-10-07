@@ -1,8 +1,3 @@
-/**
- * CSS styles for native form controls: combobox, password, checkbox, textarea, and error.
- * Split from inputStyles.ts to keep file sizes under 200 lines.
- */
-
 export const nativeFormControlStyles = `
 /* Combobox (searchable select) */
 .form-native-combobox-wrapper {

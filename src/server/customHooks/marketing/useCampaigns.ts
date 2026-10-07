@@ -1,7 +1,3 @@
-/**
- * Hooks for marketing campaigns: list, create, send.
- * Wraps the hand-written marketing client over the notification API.
- */
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { CAMPAIGNS_QUERY_KEY } from './queryKeys';

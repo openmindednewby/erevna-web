@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
   input: { flex: 1, padding: INPUT_PADDING },
 });
 
-/** Generate a stable-ish id for a new axis item. */
 function nextId(prefix: string, existing: MatrixAxisItem[]): string {
   const max = existing.reduce((acc, item) => {
     const numeric = Number(item.id.replace(/\D/g, ''));
@@ -37,11 +36,6 @@ function nextId(prefix: string, existing: MatrixAxisItem[]): string {
   return `${prefix}${max + 1}`;
 }
 
-/**
- * Matrix builder editor: edits the ROW and COLUMN axes, persisting both into the
- * shared `options` array using the `row:` / `col:` value-prefix convention so the
- * matrix needs no backend Answer/Config change.
- */
 const MatrixEditor = ({ options, onChange }: Props): React.ReactElement => {
   const { theme } = useTheme();
   const primary = theme.palette.primary['500'];

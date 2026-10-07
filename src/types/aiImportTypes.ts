@@ -1,8 +1,3 @@
-/**
- * Types for the AI menu import feature.
- * These represent the response from the backend AI extraction endpoint.
- */
-
 /** A single menu item extracted by AI from an image or PDF. */
 export interface ImportedItem {
   name: string;

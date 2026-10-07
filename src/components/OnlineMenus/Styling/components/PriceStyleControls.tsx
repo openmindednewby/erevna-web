@@ -10,12 +10,7 @@ import { TestIds } from '../../../../shared/testIds';
 import { MAX_FONT_SIZE, MIN_FONT_SIZE } from '../utils/priceStyleConstants';
 import { priceStyleEditorStyles as styles } from '../utils/priceStyleEditorStyles';
 
-// Re-export controls from PriceStyleInputControls for backward compatibility
 export { ColorInputControl, FontWeightControl } from './PriceStyleInputControls';
-
-// =============================================================================
-// Font Size Control
-// =============================================================================
 
 interface FontSizeControlProps {
   value: number;
@@ -62,10 +57,6 @@ export const FontSizeControl: React.FC<FontSizeControlProps> = ({
   );
 };
 
-// =============================================================================
-// Toggle Controls
-// =============================================================================
-
 interface ToggleControlProps {
   value: boolean;
   onChange: (value: boolean) => void;
@@ -99,10 +90,6 @@ export const ToggleControl: React.FC<ToggleControlProps> = ({
     />
   </View>
 );
-
-// =============================================================================
-// Segmented Button Group (replaces react-native-paper SegmentedButtons)
-// =============================================================================
 
 interface SegmentedButtonProps {
   buttons: Array<{ value: string; label: string; testID?: string }>;
@@ -149,10 +136,6 @@ const SegmentedButtonGroup: React.FC<SegmentedButtonProps> = ({
     })}
   </View>
 );
-
-// =============================================================================
-// Currency Position Control
-// =============================================================================
 
 interface CurrencyPositionControlProps {
   value: string;

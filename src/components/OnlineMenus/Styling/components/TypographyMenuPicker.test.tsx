@@ -6,14 +6,6 @@ import { TypographyMenuPicker } from './TypographyMenuPicker';
 
 import type { TypographyMenuPickerProps } from './TypographyMenuPicker';
 
-// =============================================================================
-// Mocks
-// =============================================================================
-
-// =============================================================================
-// Test Data
-// =============================================================================
-
 const MOCK_OPTIONS = [
   { label: 'System', value: 'System' },
   { label: 'Serif', value: 'Serif' },
@@ -36,18 +28,10 @@ const DEFAULT_PROPS: TypographyMenuPickerProps = {
   accessibilityHint: 'Opens font selection',
 };
 
-// =============================================================================
-// Test Suite
-// =============================================================================
-
 describe('TypographyMenuPicker', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-
-  // ---------------------------------------------------------------------------
-  // Search Filtering
-  // ---------------------------------------------------------------------------
 
   describe('search filtering', () => {
     it('shows all options when modal is opened', () => {
@@ -57,7 +41,6 @@ describe('TypographyMenuPicker', () => {
 
       fireEvent.press(getByTestId('test-picker'));
 
-      // System appears twice: trigger label + option in list
       expect(getAllByText('System')).toHaveLength(2);
       expect(getByText('Serif')).toBeTruthy();
       expect(getByText('Sans-serif')).toBeTruthy();
@@ -74,10 +57,8 @@ describe('TypographyMenuPicker', () => {
 
       fireEvent.changeText(searchInput, 'ser');
 
-      // 'Serif' matches; 'System' only in trigger (not in filtered list)
       expect(queryAllByText('Serif')).toHaveLength(1);
-      // System still visible in trigger but NOT in options
-      expect(queryAllByText('System')).toHaveLength(1); // only the trigger label
+      expect(queryAllByText('System')).toHaveLength(1);
       expect(queryAllByText('Monospace')).toHaveLength(0);
     });
 
@@ -92,7 +73,6 @@ describe('TypographyMenuPicker', () => {
       fireEvent.changeText(searchInput, 'MONO');
 
       expect(queryAllByText('Monospace')).toHaveLength(1);
-      // System only in trigger
       expect(queryAllByText('System')).toHaveLength(1);
     });
 
@@ -122,17 +102,12 @@ describe('TypographyMenuPicker', () => {
 
       fireEvent.changeText(searchInput, '');
 
-      // All options visible again - System x2 (trigger + option)
       expect(queryAllByText('System')).toHaveLength(2);
       expect(getByText('Serif')).toBeTruthy();
       expect(getByText('Sans-serif')).toBeTruthy();
       expect(getByText('Monospace')).toBeTruthy();
     });
   });
-
-  // ---------------------------------------------------------------------------
-  // Selection
-  // ---------------------------------------------------------------------------
 
   describe('selection', () => {
     it('calls onSelect when option is pressed', () => {
@@ -166,26 +141,19 @@ describe('TypographyMenuPicker', () => {
         <TypographyMenuPicker {...DEFAULT_PROPS} />,
       );
 
-      // Open, type, select
       fireEvent.press(getByTestId('test-picker'));
       const searchInput = getByTestId('test-picker-search');
       fireEvent.changeText(searchInput, 'Ser');
       fireEvent.press(getByText('Serif'));
 
-      // Re-open - should show all options
       fireEvent.press(getByTestId('test-picker'));
 
-      // System appears twice (trigger + list)
       expect(getAllByText('System')).toHaveLength(2);
       expect(getByText('Serif')).toBeTruthy();
       expect(getByText('Sans-serif')).toBeTruthy();
       expect(getByText('Monospace')).toBeTruthy();
     });
   });
-
-  // ---------------------------------------------------------------------------
-  // Custom Font
-  // ---------------------------------------------------------------------------
 
   describe('custom font', () => {
     it('does not show custom option when allowCustom is false', () => {
@@ -249,9 +217,7 @@ describe('TypographyMenuPicker', () => {
       const searchInput = getByTestId('test-picker-search');
       fireEvent.changeText(searchInput, 'Ser');
 
-      // 'Serif' partially matches and should be shown
       expect(queryAllByText('Serif')).toHaveLength(1);
-      // Custom option should also appear since 'Ser' is not an exact match
       expect(getByText('Use custom font: Ser')).toBeTruthy();
     });
 
@@ -264,14 +230,9 @@ describe('TypographyMenuPicker', () => {
       const searchInput = getByTestId('test-picker-search');
       fireEvent.changeText(searchInput, 'system');
 
-      // 'system' matches 'System' case-insensitively, so no custom option
       expect(queryByTestId('test-picker-custom-option')).toBeNull();
     });
   });
-
-  // ---------------------------------------------------------------------------
-  // Disabled State
-  // ---------------------------------------------------------------------------
 
   describe('disabled state', () => {
     it('does not open menu when disabled', () => {

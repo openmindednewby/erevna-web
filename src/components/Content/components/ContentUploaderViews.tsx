@@ -1,11 +1,6 @@
 
 
 
-/**
- * Sub-components for ContentUploader.
- *
- * Extracted to reduce file size of main ContentUploader component.
- */
 import React from 'react';
 
 import { StyleSheet, Text, View } from 'react-native';
@@ -17,10 +12,6 @@ import { TestIds } from '../../../shared/testIds';
 import { isValueDefined } from '../../../utils/is';
 
 import type { ContentCategory, ContentDto } from '../../../lib/hooks/content/types';
-
-// ---------------------------------------------------------------------------
-// Constants
-// ---------------------------------------------------------------------------
 
 const styles = StyleSheet.create({
   container: {
@@ -35,10 +26,6 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
 });
-
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
 
 export interface ThemeStyles {
   label: TextStyle;
@@ -84,13 +71,6 @@ interface ErrorDisplayProps {
   themeStyles: ThemeStyles;
 }
 
-// ---------------------------------------------------------------------------
-// Components
-// ---------------------------------------------------------------------------
-
-/**
- * Renders the optional label.
- */
 export const UploaderLabel = ({ label, required, themeStyles }: LabelProps): React.ReactNode => {
   if (!isValueDefined(label))
     return null;
@@ -102,9 +82,6 @@ export const UploaderLabel = ({ label, required, themeStyles }: LabelProps): Rea
   );
 };
 
-/**
- * Renders the upload progress view.
- */
 export const UploadProgressView = ({
   label,
   required,
@@ -120,9 +97,6 @@ export const UploadProgressView = ({
   </View>
 );
 
-/**
- * Renders the content preview view.
- */
 export const ContentPreviewView = ({
   label,
   required,
@@ -151,9 +125,6 @@ export const ContentPreviewView = ({
   </View>
 );
 
-/**
- * Renders error messages.
- */
 export const ErrorDisplay = ({ uploadError, stateError, themeStyles }: ErrorDisplayProps): React.ReactNode => {
   if (isValueDefined(uploadError))
     return (

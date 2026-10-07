@@ -1,8 +1,3 @@
-/**
- * File-upload error codes returned by the public upload endpoint (400 responses),
- * plus helpers to extract a code from an unknown thrown error and map it to an
- * i18n message key. Kept isolated so the enum lives in its own file.
- */
 import { isValueDefined } from '../../../utils/is';
 
 const HTTP_CONFLICT = 409;
@@ -28,7 +23,6 @@ function asErrorWithResponse(error: unknown): ErrorWithResponse | undefined {
   return error;
 }
 
-/** Serialize the response body defensively so we can substring-match error codes. */
 function stringifyBody(data: unknown): string {
   if (typeof data === 'string') return data;
   try {

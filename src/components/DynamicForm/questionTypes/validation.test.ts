@@ -1,6 +1,3 @@
-/**
- * Tests for the dynamic-form answer validation logic.
- */
 import { isRequiredAnswerMissing, validateByShape, type ValidationMessages } from './validation';
 import QuestionType from '../../../shared/enums/QuestionType';
 

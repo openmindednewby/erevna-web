@@ -1,11 +1,3 @@
-/**
- * ItemStylingSection - Collapsible section for menu item styling options.
- *
- * Provides editors for:
- * - Box styling (borders, padding, shadows)
- * - Media position settings
- * - Price style formatting
- */
 import React, { useCallback, useState } from 'react';
 
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -26,10 +18,6 @@ import { SvgIcon } from '../Icons';
 import type { BoxStyling, MediaSettings, PriceStyle } from '../../types/menuStyleTypes';
 import type { MenuItem } from '../../types/menuTypes';
 
-// =============================================================================
-// Constants
-// =============================================================================
-
 const CHEVRON_ICON_SIZE = 16;
 const SECTION_PADDING = 12;
 const BORDER_RADIUS = 6;
@@ -37,10 +25,6 @@ const BORDER_WIDTH = 1;
 const TITLE_FONT_SIZE = 14;
 const CONTENT_PADDING = 16;
 const SECTION_GAP = 16;
-
-// =============================================================================
-// Styles
-// =============================================================================
 
 const styles = StyleSheet.create({
   container: {
@@ -65,10 +49,6 @@ const styles = StyleSheet.create({
   },
 });
 
-// =============================================================================
-// Props Interface
-// =============================================================================
-
 interface Props {
   item: MenuItem;
   onUpdate: (updates: Partial<MenuItem>) => void;
@@ -76,10 +56,6 @@ interface Props {
   textColor: string;
   surfaceColor: string;
 }
-
-// =============================================================================
-// Default Values
-// =============================================================================
 
 const DEFAULT_BOX_STYLING: BoxStyling = {
   padding: 0,
@@ -104,10 +80,6 @@ const DEFAULT_PRICE_STYLE: PriceStyle = {
   showCurrency: true,
   strikethroughWhenUnavailable: true,
 };
-
-// =============================================================================
-// Component
-// =============================================================================
 
 const ItemStylingSection: React.FC<Props> = ({
   item,

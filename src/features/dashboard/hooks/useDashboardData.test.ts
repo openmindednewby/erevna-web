@@ -1,13 +1,3 @@
-/**
- * Tests for useDashboardData (Erevna).
- *
- * Erevna is the Questioner product. The dashboard hook MUST NOT call
- * any onlinemenu endpoints — doing so leaks across the realm boundary
- * and causes 401s on production.
- *
- * Logic-only tests: shape of returned data, isEmpty derivation, and
- * (most importantly) absence of any cross-product hook import.
- */
 import { renderHook } from '@testing-library/react-native';
 
 import { useDashboardData } from './useDashboardData';
@@ -74,10 +64,6 @@ describe('useDashboardData (Erevna)', () => {
   });
 
   it('does NOT import any onlinemenu hook (Erevna must not call onlinemenu-api)', () => {
-    // Static guarantee: importing the hook above only mocks the questioner
-    // module. If a future change reintroduces an onlinemenu import, this
-    // test file would have to mock it too — making the leak visible at
-    // test time rather than only in production browser logs.
     const moduleSource = jest.requireActual<{ useDashboardData: unknown }>(
       './useDashboardData',
     );

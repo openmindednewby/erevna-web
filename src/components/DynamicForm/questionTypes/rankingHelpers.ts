@@ -1,19 +1,5 @@
-/**
- * Pure ordering helpers for the Ranking question type.
- *
- * A Ranking answer reuses the existing `multiValues` array as an ORDERED list of the
- * question's option values — no backend Answer change. The respondent reorders the
- * options; the stored order IS the ranking (index 0 = most preferred).
- */
 import type { Option } from '../interfaces';
 
-/**
- * Resolve the current ranked order of option values.
- *
- * Starts from any previously-stored order (`current`), keeps only values that still
- * exist as options, then appends any options not yet ranked (in their declared order).
- * Guarantees the result is a permutation of the option values.
- */
 export function resolveRankedOrder(
   options: Option[],
   current: Array<string | number> | undefined,

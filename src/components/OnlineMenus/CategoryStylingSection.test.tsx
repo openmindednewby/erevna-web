@@ -1,7 +1,3 @@
-/**
- * Unit tests for CategoryStylingSection component.
- * Tests focus on logic and callbacks, not rendering.
- */
 import React from 'react';
 
 import { fireEvent, render } from '@testing-library/react-native';
@@ -13,10 +9,6 @@ import MediaPosition from '../../types/enums/MediaPosition';
 import MediaSize from '../../types/enums/MediaSize';
 
 import type { BoxStyling, MediaSettings } from '../../types/menuStyleTypes';
-
-// =============================================================================
-// Mocks
-// =============================================================================
 
 jest.mock('react-redux', () => ({ useSelector: () => 'light' }));
 
@@ -57,10 +49,6 @@ jest.mock('./Styling/components/MediaPositionEditor', () => {
     ),
   };
 });
-
-// =============================================================================
-// Test Suite
-// =============================================================================
 
 describe('CategoryStylingSection', () => {
   const mockOnUpdateStyling = jest.fn();

@@ -1,9 +1,3 @@
-/**
- * Pure helpers for the file-upload question type: config defaults + resolution,
- * client-side pre-validation (type + size, mirroring the server allowlist), the
- * FileReference type guard, MB<->bytes conversion for the config editor, the CSV
- * formatter, and the registry validator. No React, no i18n — trivially testable.
- */
 import { FileUploadErrorCode } from './FileUploadErrorCode';
 import { isValueDefined } from '../../../utils/is';
 

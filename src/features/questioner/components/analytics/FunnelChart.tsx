@@ -128,11 +128,6 @@ interface FunnelChartProps {
   funnel: FunnelStats;
 }
 
-/**
- * Renders the COMPLETION / ANSWERED-RATE funnel (NOT abandonment drop-off — only completed
- * responses are stored). Shows per-page reach and per-question answered rate as SVG bars,
- * with an explicit caveat line so the data is never misread as drop-off.
- */
 const FunnelChart = ({ funnel }: FunnelChartProps): React.ReactElement => {
   const { theme } = useTheme();
   const { colors } = theme;

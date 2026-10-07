@@ -62,9 +62,6 @@ const styles = StyleSheet.create({
   },
 });
 
-/**
- * Renders a menu card with name, description, and a view button.
- */
 export const MenuCard: React.FC<MenuCardProps> = ({
   menu,
   defaultMenuTitle,

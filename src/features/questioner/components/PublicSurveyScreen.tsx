@@ -1,11 +1,3 @@
-/**
- * PublicSurveyScreen - the public, anonymous survey respondent UI.
- *
- * Reuses the exact pure fill stack (QuizContent + ThankYouOverlay via
- * useQuizForm) and renders friendly states for loading / not-available /
- * error. Lives outside the (protected) group; nothing here triggers the auth
- * gate.
- */
 import React, { useCallback, useMemo } from 'react';
 
 import { Platform, View } from 'react-native';
@@ -29,7 +21,6 @@ import { logger } from '../../../utils/logger';
 const SURVEY_RESIZE_MESSAGE = 'survey-widget-resize';
 const WILDCARD_ORIGIN = '*';
 
-/** Posts the current content height to the parent window for embed auto-resize. */
 function postSurveyResize(height: number, targetOrigin: string): void {
   if (Platform.OS !== 'web' || typeof window === 'undefined') return;
   try {
@@ -41,11 +32,8 @@ function postSurveyResize(height: number, targetOrigin: string): void {
 
 interface Props {
   externalId: string;
-  /** When true, renders for iframe embedding and posts resize messages to the parent. */
   embedMode?: boolean;
-  /** Target origin for postMessage resize (embed mode only). Defaults to wildcard. */
   targetOrigin?: string;
-  /** Resume token from the `?draft=` link; prefills saved answers when present. */
   draftToken?: string;
 }
 

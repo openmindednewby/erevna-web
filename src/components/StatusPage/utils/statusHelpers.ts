@@ -1,9 +1,3 @@
-/**
- * Pure helper functions for the StatusPage component.
- *
- * All functions are side-effect-free and independently testable.
- */
-
 import env from '../../../config/environment';
 import ServiceHealthStatus from '../../../shared/enums/ServiceHealthStatus';
 import { isValueDefined } from '../../../utils/is';
@@ -16,10 +10,6 @@ const DEGRADED_THRESHOLD_MS = 2000;
 /** Health endpoint path appended to each service base URL. */
 const HEALTH_ENDPOINT = '/health/ready';
 
-/**
- * Service definitions for all backend services to health-check.
- * Base URLs are resolved from environment config at module load time.
- */
 const SERVICE_CONFIGS: ServiceConfig[] = [
   { key: 'identity', nameKey: 'statusPage.services.identity', baseUrl: String(env.IDENTITY_API_URL) },
   { key: 'questioner', nameKey: 'statusPage.services.questioner', baseUrl: String(env.QUESTIONER_API_URL) },
@@ -34,14 +24,6 @@ function buildHealthUrl(config: ServiceConfig): string {
   return `${config.baseUrl}${HEALTH_ENDPOINT}`;
 }
 
-/**
- * Determine the health status from an HTTP response status and response time.
- *
- * - 200 with fast response = Healthy
- * - 200 with slow response = Degraded
- * - Non-200 = Down
- * - null (fetch failed) = Down
- */
 function determineStatus(httpStatus: number | null, responseTimeMs: number | null): ServiceHealthStatus {
   if (!isValueDefined(httpStatus)) return ServiceHealthStatus.Down;
 
@@ -54,13 +36,6 @@ function determineStatus(httpStatus: number | null, responseTimeMs: number | nul
   return ServiceHealthStatus.Healthy;
 }
 
-/**
- * Derive the overall system status from individual service results.
- *
- * - All healthy = Healthy
- * - Any down = Down (major outage)
- * - Otherwise = Degraded
- */
 function deriveOverallStatus(services: ServiceHealthResult[]): ServiceHealthStatus {
   if (services.length === 0) return ServiceHealthStatus.Unknown;
 
@@ -105,7 +80,6 @@ function overallStatusToMessageKey(status: ServiceHealthStatus): string {
   }
 }
 
-/** Semantic color bag passed by the component that owns useTheme(). */
 interface StatusColorMap {
   success: string;
   warning: string;

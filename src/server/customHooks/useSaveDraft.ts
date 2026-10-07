@@ -1,9 +1,3 @@
-/**
- * Custom hook for saving a PUBLIC, ANONYMOUS survey draft ("save & resume").
- *
- * Posts directly to the questioner API (no token/cookie) and returns the resume
- * token. Mirrors the direct-to-api pattern of {@link usePublicSubmitResponse}.
- */
 import { useMutation } from '@tanstack/react-query';
 
 import env from '../../config/environment';

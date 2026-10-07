@@ -16,7 +16,6 @@ interface Props {
   styles: FormStyles;
 }
 
-/** Parse free numeric input, treating blanks/invalid as cleared (null). */
 function parseNumeric(text: string): number | null {
   const trimmed = text.trim();
   if (trimmed === '') return null;

@@ -67,10 +67,6 @@ const styles = StyleSheet.create({
   ctaText: { fontSize: CTA_FONT_SIZE, fontWeight: '700' },
 });
 
-/**
- * Pricing tier card showing plan name, price, features checklist, and CTA button.
- * Highlighted variant gets an accent border for the recommended tier.
- */
 const PricingCard = ({
   nameKey,
   priceKey,

@@ -7,14 +7,7 @@ import {
   hasExactFontMatch,
 } from './typographyConstants';
 
-// =============================================================================
-// Test Suite
-// =============================================================================
-
 describe('typographyConstants', () => {
-  // ---------------------------------------------------------------------------
-  // Font Options Structure
-  // ---------------------------------------------------------------------------
 
   describe('FONT_FAMILY_OPTIONS', () => {
     it('has the expected total number of fonts', () => {
@@ -49,10 +42,6 @@ describe('typographyConstants', () => {
     });
   });
 
-  // ---------------------------------------------------------------------------
-  // getCssFontFamily
-  // ---------------------------------------------------------------------------
-
   describe('getCssFontFamily', () => {
     it('returns System css value for undefined input', () => {
       const result = getCssFontFamily(undefined);
@@ -76,10 +65,6 @@ describe('typographyConstants', () => {
     });
   });
 
-  // ---------------------------------------------------------------------------
-  // getFontFamilyLabel
-  // ---------------------------------------------------------------------------
-
   describe('getFontFamilyLabel', () => {
     it('returns System for undefined input', () => {
       expect(getFontFamilyLabel(undefined)).toBe('System');
@@ -97,10 +82,6 @@ describe('typographyConstants', () => {
       expect(getFontFamilyLabel('Sans-serif')).toBe('Sans-serif');
     });
   });
-
-  // ---------------------------------------------------------------------------
-  // hasExactFontMatch
-  // ---------------------------------------------------------------------------
 
   describe('hasExactFontMatch', () => {
     it('returns true for exact match', () => {

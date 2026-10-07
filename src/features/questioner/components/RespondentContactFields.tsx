@@ -25,10 +25,6 @@ interface Props {
   onEmailChange: (v: string) => void;
 }
 
-/**
- * Respondent identity inputs shown on the public survey when the template's
- * contact mode is Optional/Required. Required appends an asterisk to the labels.
- */
 const RespondentContactFields = ({ mode, name, email, error, onNameChange, onEmailChange }: Props): React.ReactElement => {
   const { theme } = useTheme();
   const colors = theme.colors;

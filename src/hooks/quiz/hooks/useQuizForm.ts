@@ -1,9 +1,6 @@
 
 
 
-/**
- * useQuizForm - Custom hook for managing quiz form state and submission.
- */
 import { useCallback, useMemo, useRef, useState } from 'react';
 
 import { Alert } from 'react-native';
@@ -42,9 +39,7 @@ interface SubmitDeps {
 interface ResetDeps { s: ReturnType<typeof useQuizFormState>; formRef: React.RefObject<DynamicQuiz | null>; refetch: () => Promise<unknown> }
 
 interface QuizFormOptions {
-  /** Localization function. */
   t: (k: string, d?: string) => string;
-  /** Optional caller gate run after page validation; return false to block submit. */
   validateExtra?: () => boolean;
 }
 
@@ -85,7 +80,7 @@ function useSubmit({ s, createCompleted, formRef, dataRef, tRef, setSubmitting, 
     if (!isValueDefined(form) || !isValueDefined(currentData)) return;
     if (!s.validateAllPages()) { Alert.alert(tRef.current('Validation Error'), tRef.current('Please fill in all required fields.')); return; }
     const extra = validateExtraRef.current;
-    if (typeof extra === 'function' && !extra()) return; // caller surfaces its own message
+    if (typeof extra === 'function' && !extra()) return;
     try { setSubmitting(true); await createCompleted.mutateAsync({ data: buildSubmissionPayload(form, currentData) }); setShowThankYou(true); }
     catch (_) { Alert.alert(tRef.current('Error'), tRef.current('Something went wrong during submission.')); }
     finally { setSubmitting(false); }

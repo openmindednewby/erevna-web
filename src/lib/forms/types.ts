@@ -1,12 +1,6 @@
-/**
- * Form type definitions for React Hook Form integration.
- */
 import type { UseFormReturn, DefaultValues, FieldValues } from 'react-hook-form';
 import type { ZodSchema, z } from 'zod';
 
-/**
- * Props for useFormWithSchema hook.
- */
 export interface UseFormWithSchemaProps<TSchema extends ZodSchema<FieldValues>> {
   /** Zod schema for validation and type inference */
   schema: TSchema;
@@ -18,14 +12,8 @@ export interface UseFormWithSchemaProps<TSchema extends ZodSchema<FieldValues>> 
   reValidateMode?: 'onBlur' | 'onChange' | 'onSubmit';
 }
 
-/**
- * Return type for useFormWithSchema hook.
- */
 export type UseFormWithSchemaReturn<TSchema extends ZodSchema<FieldValues>> = UseFormReturn<z.infer<TSchema>>;
 
-/**
- * Common form field props shared across all form field components.
- */
 export interface BaseFormFieldProps {
   /** Label text */
   label?: string;

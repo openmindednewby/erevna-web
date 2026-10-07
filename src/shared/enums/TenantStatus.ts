@@ -3,9 +3,6 @@ export enum TenantStatusEnum {
   Enabled = 1,
 }
 
-/**
- * Map tenant status to translation key (use with i18n)
- */
 export type TenantStatusInput = TenantStatusEnum | number | boolean | undefined;
 
 function normalizeStatusValue(s: TenantStatusInput): TenantStatusEnum | undefined {
@@ -25,10 +22,6 @@ export function tenantStatusToLabelKey(s: TenantStatusInput): string {
   return 'tenants.status.disabled';
 }
 
-/**
- * Map tenant status to a semantic color key used by the theme palette.
- * Caller should resolve the actual color from the palette.
- */
 export function tenantStatusToColorKey(s: TenantStatusInput | undefined): string {
   const normalized = normalizeStatusValue(s);
   if (normalized === TenantStatusEnum.Enabled) return 'success';

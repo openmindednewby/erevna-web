@@ -1,6 +1,3 @@
-/**
- * Tests for the file-upload pure helpers and error-code mapping.
- */
 import { extractFileErrorCode, FileUploadErrorCode, messageKeyForCode } from './FileUploadErrorCode';
 import {
   asFileReferences,

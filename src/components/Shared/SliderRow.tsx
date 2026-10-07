@@ -1,9 +1,3 @@
-/**
- * SliderRow - reusable slider control with increment/decrement buttons.
- *
- * Promoted from OnlineMenus/Styling to Shared. Self-contained styles
- * (no product-specific imports).
- */
 import React, { useCallback } from 'react';
 
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -11,10 +5,6 @@ import type { ViewStyle } from 'react-native';
 
 import { FM } from '@/localization/helpers';
 import { DISABLED_OPACITY } from '@/shared/constants';
-
-// =============================================================================
-// Styles
-// =============================================================================
 
 const styles = StyleSheet.create({
   container: {
@@ -65,10 +55,6 @@ const styles = StyleSheet.create({
   },
 });
 
-// =============================================================================
-// Types
-// =============================================================================
-
 interface Props {
   label: string;
   value: number;
@@ -84,10 +70,6 @@ interface Props {
   accessibilityLabel: string;
   accessibilityHint: string;
 }
-
-// =============================================================================
-// Component
-// =============================================================================
 
 const SliderRow = ({
   label,

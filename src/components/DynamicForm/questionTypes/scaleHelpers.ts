@@ -1,4 +1,3 @@
-/** Pure helpers for building discrete scale tick values from question config. */
 import { SCALE_STEP_DEFAULT } from './constants';
 
 import type { QuestionConfig } from '../interfaces';

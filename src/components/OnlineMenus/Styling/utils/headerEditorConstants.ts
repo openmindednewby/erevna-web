@@ -1,11 +1,4 @@
-/**
- * Constants for the HeaderEditor component.
- */
 import { HorizontalPosition, LogoSize } from '../../../../types/menuStyleTypes';
-
-// =============================================================================
-// Position Options
-// =============================================================================
 
 interface PositionOption {
   value: HorizontalPosition;
@@ -19,10 +12,6 @@ export const POSITION_OPTIONS: PositionOption[] = [
   { value: HorizontalPosition.Right, labelKey: 'headerEditor.position.right', fallback: 'Right' },
 ];
 
-// =============================================================================
-// Logo Size Options
-// =============================================================================
-
 interface LogoSizeOption {
   value: LogoSize;
   labelKey: string;
@@ -35,10 +24,6 @@ export const LOGO_SIZE_OPTIONS: LogoSizeOption[] = [
   { value: LogoSize.Large, labelKey: 'headerEditor.logoSizeOption.large', fallback: 'L' },
 ];
 
-// =============================================================================
-// Preview Settings
-// =============================================================================
-
 export const PREVIEW_WIDTH = 280;
 export const PREVIEW_MIN_HEIGHT = 60;
 
@@ -47,10 +32,6 @@ export const LOGO_SIZE_DIMENSIONS: Record<LogoSize, number> = {
   [LogoSize.Medium]: 48,
   [LogoSize.Large]: 64,
 };
-
-// =============================================================================
-// Styling Constants
-// =============================================================================
 
 export { DISABLED_OPACITY } from '../../../../shared/constants';
 export const BUTTON_BORDER_RADIUS = 4;

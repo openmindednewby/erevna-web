@@ -1,12 +1,3 @@
-/**
- * Unit tests for variantModifierHelpers.
- *
- * Tests LOGIC only — pure function inputs/outputs for:
- * - Creating variant/modifier groups and items
- * - CRUD operations on groups and items
- * - Price calculation (min variant price, price adjustment formatting)
- * - Edge cases (empty arrays, undefined, null maxSelections)
- */
 import {
   createVariantGroup,
   createVariant,
@@ -32,10 +23,6 @@ import {
 
 import type { MenuItem, VariantGroup, ModifierGroup } from '../../../types/menuTypes';
 
-// =============================================================================
-// Factory Helpers
-// =============================================================================
-
 function createMenuItem(overrides: Partial<MenuItem> = {}): MenuItem {
   return {
     id: 'item-1',
@@ -46,10 +33,6 @@ function createMenuItem(overrides: Partial<MenuItem> = {}): MenuItem {
     ...overrides,
   };
 }
-
-// =============================================================================
-// Variant Group CRUD Tests
-// =============================================================================
 
 describe('Variant Group CRUD', () => {
   it('creates a variant group with default required=true', () => {
@@ -115,10 +98,6 @@ describe('Variant Group CRUD', () => {
   });
 });
 
-// =============================================================================
-// Variant Item CRUD Tests
-// =============================================================================
-
 describe('Variant Item CRUD', () => {
   const baseGroups: VariantGroup[] = [
     { ...createVariantGroup('Size'), variants: [createVariant('Small', 12)] },
@@ -158,10 +137,6 @@ describe('Variant Item CRUD', () => {
     expect(updateVariantInGroup(undefined, 0, 0, { name: 'X' })).toEqual([]);
   });
 });
-
-// =============================================================================
-// Modifier Group CRUD Tests
-// =============================================================================
 
 describe('Modifier Group CRUD', () => {
   it('creates a modifier group with default required=false', () => {
@@ -208,10 +183,6 @@ describe('Modifier Group CRUD', () => {
   });
 });
 
-// =============================================================================
-// Modifier Item CRUD Tests
-// =============================================================================
-
 describe('Modifier Item CRUD', () => {
   const baseGroups: ModifierGroup[] = [
     {
@@ -251,10 +222,6 @@ describe('Modifier Item CRUD', () => {
     expect(updateModifierInGroup(undefined, 0, 0, { name: 'X' })).toEqual([]);
   });
 });
-
-// =============================================================================
-// Price Calculation Tests
-// =============================================================================
 
 describe('getMinVariantPrice', () => {
   it('returns undefined when no variant groups exist', () => {
@@ -349,10 +316,6 @@ describe('getMinVariantPrice', () => {
   });
 });
 
-// =============================================================================
-// hasVariants / hasModifiers Tests
-// =============================================================================
-
 describe('hasVariants', () => {
   it('returns false when no variant groups', () => {
     expect(hasVariants(createMenuItem())).toBe(false);
@@ -398,10 +361,6 @@ describe('hasModifiers', () => {
     ).toBe(true);
   });
 });
-
-// =============================================================================
-// formatPriceAdjustment Tests
-// =============================================================================
 
 describe('formatPriceAdjustment', () => {
   it('formats positive adjustment with + prefix', () => {

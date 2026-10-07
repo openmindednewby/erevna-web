@@ -26,9 +26,6 @@ interface GenerateNutritionResponse {
   detectedAllergens: string[];
 }
 
-/**
- * Calls the backend AI nutrition generation endpoint.
- */
 export async function generateNutrition(
   request: GenerateNutritionRequest,
 ): Promise<GenerateNutritionResponse> {
@@ -44,10 +41,6 @@ export async function generateNutrition(
   });
 }
 
-/**
- * React Query mutation hook for generating AI nutritional info.
- * No cache invalidation needed since this returns ephemeral data.
- */
 export function useGenerateNutrition<TError = unknown, TContext = unknown>(
   options?: UseMutationOptions<
     GenerateNutritionResponse,

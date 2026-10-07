@@ -84,12 +84,6 @@ const styles = StyleSheet.create({
   ctaText: { fontSize: CTA_FONT_SIZE, fontWeight: '600' },
 });
 
-/**
- * Branded marketing hero for the landing page.
- * Renders the locked Wordmark (Outfit / Manrope), tagline, supporting subhead, and two CTAs.
- *
- * The visual proportions match brand/landing-hero-preview.html (96px wordmark on desktop).
- */
 const BrandedHero = (props: Props): ReactElement => {
   const {
     wordmarkKey,

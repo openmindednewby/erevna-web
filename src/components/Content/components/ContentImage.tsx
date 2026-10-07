@@ -1,16 +1,6 @@
 
 
 
-/**
- * Displays an image from the Content Service.
- * Fetches the content URL using the provided content ID.
- */
-/**
- * Content Image component.
- *
- * Fetches and displays an image from the Content Service using its content ID.
- * Handles loading states, errors, and provides a consistent display for content images.
- */
 import React, { useMemo } from 'react';
 
 import {
@@ -27,10 +17,6 @@ import { isValueDefined } from '../../../utils/is';
 
 import type { ContentUrlResponse } from '../../../lib/hooks/content';
 import type { UseQueryResult } from '@tanstack/react-query';
-
-// ---------------------------------------------------------------------------
-// Constants
-// ---------------------------------------------------------------------------
 
 const DEFAULT_HEIGHT = 150;
 const DEFAULT_BORDER_RADIUS = 8;
@@ -51,65 +37,25 @@ const styles = StyleSheet.create({
   },
 });
 
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
-
 interface Props {
-  /**
-   * The content ID from the Content Service.
-   * If undefined or empty, nothing is rendered.
-   */
   contentId: string | null | undefined;
 
-  /**
-   * Optional style for the container.
-   */
   style?: StyleProp<ViewStyle>;
 
-  /**
-   * Optional style for the image.
-   */
   imageStyle?: StyleProp<ImageStyle>;
 
-  /**
-   * Optional test ID for the container.
-   */
   testID?: string;
 
-  /**
-   * Optional accessibility label for the image.
-   */
   accessibilityLabel?: string;
 
-  /**
-   * Optional accessibility hint for the image.
-   */
   accessibilityHint?: string;
 
-  /**
-   * Optional width for the image container.
-   * Defaults to 100%.
-   */
   width?: DimensionValue;
 
-  /**
-   * Optional height for the image container.
-   * Defaults to 150.
-   */
   height?: DimensionValue;
 
-  /**
-   * Optional border radius.
-   * Defaults to 8.
-   */
   borderRadius?: number;
 
-  /**
-   * Whether to use public (unauthenticated) URL fetching.
-   * Set to true for public pages where users may not be logged in.
-   * Defaults to false (authenticated).
-   */
   isPublic?: boolean;
 }
 
@@ -136,27 +82,14 @@ interface ImageContentProps {
   borderRadius: number;
 }
 
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
-/**
- * Checks if a content ID is valid (non-empty string).
- */
 function isValidContentId(contentId: string | null | undefined): contentId is string {
   return isValueDefined(contentId) && contentId !== '';
 }
 
-/**
- * Checks if the URL data contains a valid URL.
- */
 function hasValidUrl(urlData: ContentUrlResponse | undefined): urlData is ContentUrlResponse & { url: string } {
   return isValueDefined(urlData?.url) && urlData.url !== '';
 }
 
-/**
- * Hook to get content URL, selecting between public and authenticated endpoints.
- */
 function useContentImageUrl(params: UseContentImageUrlParams): UseQueryResult<ContentUrlResponse> {
   const { contentId, isPublic } = params;
   const publicQuery = usePublicContentUrl(isPublic ? contentId : undefined);
@@ -164,9 +97,6 @@ function useContentImageUrl(params: UseContentImageUrlParams): UseQueryResult<Co
   return isPublic ? publicQuery : authenticatedQuery;
 }
 
-/**
- * Logs debug information for public content fetch failures.
- */
 function logPublicContentError(isPublic: boolean, isError: boolean, contentId: string | undefined, error: unknown): void {
   const shouldLog = isPublic && isError;
   if (!shouldLog) return;
@@ -174,13 +104,6 @@ function logPublicContentError(isPublic: boolean, isError: boolean, contentId: s
   console.warn('[ContentImage] Public URL fetch failed:', { contentId, error: errorMessage });
 }
 
-// ---------------------------------------------------------------------------
-// Sub-components
-// ---------------------------------------------------------------------------
-
-/**
- * Renders the loading state for the image.
- */
 const LoadingState = ({ containerStyle, style, testID, primaryColor }: LoadingStateProps): React.ReactElement => (
   <View
     style={[styles.container, styles.loadingContainer, containerStyle, style]}
@@ -190,9 +113,6 @@ const LoadingState = ({ containerStyle, style, testID, primaryColor }: LoadingSt
   </View>
 );
 
-/**
- * Renders the actual image content.
- */
 const ImageContent = ({
   containerStyle,
   style,
@@ -214,10 +134,6 @@ const ImageContent = ({
     />
   </View>
 );
-
-// ---------------------------------------------------------------------------
-// Main component
-// ---------------------------------------------------------------------------
 
 export const ContentImage = ({
   contentId,

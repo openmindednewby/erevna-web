@@ -1,8 +1,3 @@
-/**
- * Constants for the AI menu import feature.
- */
-
-/** Number of wizard steps */
 const AI_IMPORT_STEP_COUNT = 4;
 
 /** Maximum file size in bytes (10 MB) */

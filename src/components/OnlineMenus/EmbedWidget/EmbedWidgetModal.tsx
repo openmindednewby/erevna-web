@@ -19,17 +19,12 @@ import type { EmbedWidgetConfig } from './hooks/useEmbedCode';
 
 interface Props {
   visible: boolean;
-  /** Display name shown in the modal title (menu name / survey name). */
   menuName: string;
   publicUrl: string;
-  /** External id to embed (menu id / survey id). */
   menuId: string;
   onClose: () => void;
-  /** Embed kind — menu by default. Surveys pass SURVEY_EMBED_KIND. */
   kind?: EmbedKind;
-  /** Title translation key — defaults to the menu modal title. */
   titleKey?: string;
-  /** Modal testID — defaults to the menu embed modal id. */
   modalTestID?: string;
 }
 

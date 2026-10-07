@@ -1,9 +1,3 @@
-/**
- * CollapsibleSection - Reusable collapsible section with header and content.
- *
- * Promoted from OnlineMenus/Styling to Shared. Self-contained styles (no
- * product-specific imports). Accepts theme colors via props.
- */
 import React from 'react';
 
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -15,10 +9,6 @@ import { SvgIcon } from '../Icons';
 
 import type { IconName } from '../Icons';
 
-// =============================================================================
-// Constants
-// =============================================================================
-
 const CHEVRON_DOWN: IconName = 'chevronDown';
 const CHEVRON_UP: IconName = 'chevronUp';
 const CHEVRON_ICON_SIZE = 16;
@@ -28,10 +18,6 @@ const SECTION_CONTENT_PADDING = 16;
 const BORDER_RADIUS = 8;
 const BORDER_WIDTH = 1;
 const TITLE_FONT_SIZE = 14;
-
-// =============================================================================
-// Styles
-// =============================================================================
 
 const styles = StyleSheet.create({
   sectionContainer: {
@@ -61,10 +47,6 @@ const styles = StyleSheet.create({
   },
 });
 
-// =============================================================================
-// Props Interface
-// =============================================================================
-
 interface Props {
   title: string;
   testId: string;
@@ -78,10 +60,6 @@ interface Props {
   containerStyle?: StyleProp<ViewStyle>;
   headerStyle?: StyleProp<ViewStyle>;
 }
-
-// =============================================================================
-// Component
-// =============================================================================
 
 const CollapsibleSection: React.FC<Props> = ({
   title,

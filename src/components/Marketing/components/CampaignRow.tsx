@@ -1,4 +1,3 @@
-/** Single campaign row: name, subject, status badge, results, and Send flow. */
 import React, { useCallback, useMemo, useState } from 'react';
 
 import { Text, View } from 'react-native';

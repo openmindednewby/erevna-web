@@ -1,19 +1,3 @@
-/**
- * Form-state + submit logic for the reset-password screen.
- *
- * Pulled out of the route component so the route stays under 200 lines and the
- * (testable) logic isn't entangled with router/navigation calls. The hook
- * returns plain values + callbacks; the caller wires them to JSX.
- *
- * Behaviour:
- * - Validates new password against the shared `passwordPolicy` (mirrors backend).
- * - Validates confirmPassword matches.
- * - Surfaces a single localised error message at submit time (preferring policy
- *   errors over mismatch errors so the user fixes one issue at a time).
- * - Calls `useBffResetPassword` (the BFF `/bff/reset-password` flow). On
- *   success, invokes `onSuccess` (the screen navigates to login + shows a
- *   toast).
- */
 import { useMemo, useState } from 'react';
 
 import { useBffResetPassword } from './bffPasswordHooks';

@@ -48,9 +48,6 @@ describe('resolveSemanticColor', () => {
   it('returns textSecondary for "subtext" key', () => {
     const result = resolveSemanticColor(mockSemantic, mockModeColors, 'subtext');
 
-    // Bound to the fixture, not a literal: this asserts the resolver picks the
-    // textSecondary ROLE (rather than a semantic colour), so it stays meaningful
-    // if the palette value changes again.
     expect(result).toBe(mockModeColors.textSecondary);
   });
 

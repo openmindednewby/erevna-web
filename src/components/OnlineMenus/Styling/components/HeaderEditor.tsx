@@ -1,12 +1,6 @@
 
 
 
-/**
- * HeaderEditor Component
- *
- * A component for editing HeaderSettings for menu customization.
- * Allows configuration of logo display, positioning, and title settings.
- */
 import React, { useCallback } from 'react';
 
 import { Switch, Text, View } from 'react-native';
@@ -30,28 +24,16 @@ import { headerEditorStyles as styles } from '../utils/headerEditorStyles';
 import type { RootState } from '../../../../store/reduxStore';
 import type { HeaderSettings } from '../../../../types/menuStyleTypes';
 
-// =============================================================================
-// Types
-// =============================================================================
-
 interface Props {
   value: HeaderSettings;
   onChange: (value: HeaderSettings) => void;
   disabled?: boolean;
 }
 
-// =============================================================================
-// Constants
-// =============================================================================
-
 const MIN_BANNER_HEIGHT = 100;
 const MAX_BANNER_HEIGHT = 400;
 const BANNER_HEIGHT_STEP = 20;
 const DEFAULT_BANNER_HEIGHT = 200;
-
-// =============================================================================
-// Main Component
-// =============================================================================
 
 const HeaderEditor: React.FC<Props> = ({ value, onChange, disabled = false }) => {
   const theme = useSelector((s: RootState) => s.ui.theme);
@@ -63,7 +45,6 @@ const HeaderEditor: React.FC<Props> = ({ value, onChange, disabled = false }) =>
   const bgColor = String(colors.surface);
   const accentColor = String(colors.primary);
 
-  // Current values with defaults
   const showLogo = value.showLogo ?? false;
   const logoPosition = value.logoPosition ?? HorizontalPosition.Center;
   const logoSize = value.logoSize ?? LogoSize.Medium;
@@ -72,7 +53,6 @@ const HeaderEditor: React.FC<Props> = ({ value, onChange, disabled = false }) =>
   const showMenuDescription = value.showMenuDescription ?? true;
   const titlePosition = value.titlePosition ?? HorizontalPosition.Center;
 
-  // Handlers
   const handleShowLogoChange = useCallback(
     (enabled: boolean) => onChange({ ...value, showLogo: enabled }),
     [onChange, value],

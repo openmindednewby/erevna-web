@@ -1,14 +1,5 @@
-/**
- * Unit tests for useOperatingHours hook logic.
- * Tests parse, serialize, toggle, and time update operations.
- */
-
 import { DEFAULT_CLOSE_TIME, DEFAULT_OPEN_TIME } from '../constants';
 import { createDefaultHours, parseOperatingHours, serializeOperatingHours } from './useOperatingHours';
-
-// ---------------------------------------------------------------------------
-// Constants
-// ---------------------------------------------------------------------------
 
 const EXPECTED_DAYS_COUNT = 7;
 const MONDAY_INDEX = 0;
@@ -26,10 +17,6 @@ const VALID_JSON = JSON.stringify({
     { day: 6, open: '', close: '', isClosed: true },
   ],
 });
-
-// ---------------------------------------------------------------------------
-// Tests: createDefaultHours
-// ---------------------------------------------------------------------------
 
 describe('createDefaultHours', () => {
   it('creates entries for all 7 days', () => {
@@ -58,10 +45,6 @@ describe('createDefaultHours', () => {
     expect(hours.every(h => !h.isClosed)).toBe(true);
   });
 });
-
-// ---------------------------------------------------------------------------
-// Tests: parseOperatingHours
-// ---------------------------------------------------------------------------
 
 describe('parseOperatingHours', () => {
   it('returns defaults for null input', () => {
@@ -114,10 +97,6 @@ describe('parseOperatingHours', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
-// Tests: serializeOperatingHours
-// ---------------------------------------------------------------------------
-
 describe('serializeOperatingHours', () => {
   it('wraps hours array in an object with hours key', () => {
     const hours = createDefaultHours();
@@ -155,30 +134,17 @@ describe('serializeOperatingHours', () => {
   });
 });
 
-// ---------------------------------------------------------------------------
-// Tests: toggle and update operations (pure function simulation)
-// ---------------------------------------------------------------------------
-
 describe('operating hours state updates', () => {
   interface HourEntry { day: number; open: string; close: string; isClosed: boolean }
 
-  /**
-   * Simulates the toggleClosed logic from the hook.
-   */
   function toggleClosed(hours: readonly HourEntry[], day: number): HourEntry[] {
     return hours.map(entry => (entry.day === day ? { ...entry, isClosed: !entry.isClosed } : entry));
   }
 
-  /**
-   * Simulates the updateOpenTime logic from the hook.
-   */
   function updateOpenTime(hours: readonly HourEntry[], day: number, time: string): HourEntry[] {
     return hours.map(entry => (entry.day === day ? { ...entry, open: time } : entry));
   }
 
-  /**
-   * Simulates the updateCloseTime logic from the hook.
-   */
   function updateCloseTime(hours: readonly HourEntry[], day: number, time: string): HourEntry[] {
     return hours.map(entry => (entry.day === day ? { ...entry, close: time } : entry));
   }

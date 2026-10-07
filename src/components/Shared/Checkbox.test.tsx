@@ -1,18 +1,8 @@
-/**
- * Unit tests for Checkbox component.
- *
- * Tests focus on LOGIC: state change callbacks, label rendering logic,
- * and theme-derived style values. Visual correctness is tested by E2E.
- */
 import React from 'react';
 
 import { render, fireEvent } from '@testing-library/react-native';
 
 import Checkbox from './Checkbox';
-
-// =============================================================================
-// Mock Data
-// =============================================================================
 
 const MOCK_COLORS = {
   text: '#001219',
@@ -49,10 +39,6 @@ jest.mock('../../theme/hooks/useTheme', () => ({
     mode: 'light',
   }),
 }));
-
-// =============================================================================
-// Tests
-// =============================================================================
 
 describe('Checkbox', () => {
   describe('state changes', () => {
@@ -158,10 +144,6 @@ describe('Checkbox', () => {
     });
   });
 });
-
-// =============================================================================
-// Helpers
-// =============================================================================
 
 interface TreeNode {
   type: string;

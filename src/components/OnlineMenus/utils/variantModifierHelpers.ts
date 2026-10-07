@@ -1,6 +1,3 @@
-/**
- * Pure helpers for variant/modifier CRUD and price calculations.
- */
 import type {
   VariantGroup,
   Variant,
@@ -9,10 +6,6 @@ import type {
   MenuItem,
 } from '../../../types/menuTypes';
 
-// =============================================================================
-// Constants
-// =============================================================================
-
 const DEFAULT_VARIANT_PRICE = 0;
 const DEFAULT_MODIFIER_PRICE = 0;
 const DEFAULT_MIN_SELECTIONS = 1;
@@ -20,13 +13,6 @@ const DEFAULT_MAX_SELECTIONS = 1;
 const MODIFIER_DEFAULT_MIN = 0;
 const MODIFIER_DEFAULT_MAX = 3;
 
-// =============================================================================
-// Variant Group Helpers
-// =============================================================================
-
-/**
- * Creates a new empty variant group with sensible defaults.
- */
 export function createVariantGroup(name: string): VariantGroup {
   return {
     name,
@@ -38,9 +24,6 @@ export function createVariantGroup(name: string): VariantGroup {
   };
 }
 
-/**
- * Creates a new variant with default values.
- */
 export function createVariant(name: string, price: number = DEFAULT_VARIANT_PRICE): Variant {
   return {
     name,
@@ -50,9 +33,6 @@ export function createVariant(name: string, price: number = DEFAULT_VARIANT_PRIC
   };
 }
 
-/**
- * Adds a variant group to the item's variant groups array.
- */
 export function addVariantGroup(
   existingGroups: VariantGroup[] | undefined,
   group: VariantGroup,
@@ -61,9 +41,6 @@ export function addVariantGroup(
   return [...groups, { ...group, displayOrder: groups.length }];
 }
 
-/**
- * Removes a variant group by index.
- */
 export function removeVariantGroup(
   groups: VariantGroup[] | undefined,
   groupIndex: number,
@@ -72,9 +49,6 @@ export function removeVariantGroup(
   return groups.filter((_, i) => i !== groupIndex);
 }
 
-/**
- * Updates a variant group at the given index.
- */
 export function updateVariantGroup(
   groups: VariantGroup[] | undefined,
   groupIndex: number,
@@ -84,9 +58,6 @@ export function updateVariantGroup(
   return groups.map((g, i) => (i === groupIndex ? { ...g, ...updates } : g));
 }
 
-/**
- * Adds a variant to a specific group.
- */
 export function addVariantToGroup(
   groups: VariantGroup[] | undefined,
   groupIndex: number,
@@ -100,9 +71,6 @@ export function addVariantToGroup(
   });
 }
 
-/**
- * Removes a variant from a specific group.
- */
 export function removeVariantFromGroup(
   groups: VariantGroup[] | undefined,
   groupIndex: number,
@@ -116,9 +84,6 @@ export function removeVariantFromGroup(
   });
 }
 
-/**
- * Updates a variant within a specific group.
- */
 export function updateVariantInGroup(
   groups: VariantGroup[] | undefined,
   groupIndex: number,
@@ -135,13 +100,6 @@ export function updateVariantInGroup(
   });
 }
 
-// =============================================================================
-// Modifier Group Helpers
-// =============================================================================
-
-/**
- * Creates a new empty modifier group with sensible defaults.
- */
 export function createModifierGroup(name: string): ModifierGroup {
   return {
     name,
@@ -153,9 +111,6 @@ export function createModifierGroup(name: string): ModifierGroup {
   };
 }
 
-/**
- * Creates a new modifier with default values.
- */
 export function createModifier(
   name: string,
   priceAdjustment: number = DEFAULT_MODIFIER_PRICE,
@@ -168,9 +123,6 @@ export function createModifier(
   };
 }
 
-/**
- * Adds a modifier group to the item's modifier groups array.
- */
 export function addModifierGroup(
   existingGroups: ModifierGroup[] | undefined,
   group: ModifierGroup,
@@ -179,9 +131,6 @@ export function addModifierGroup(
   return [...groups, { ...group, displayOrder: groups.length }];
 }
 
-/**
- * Removes a modifier group by index.
- */
 export function removeModifierGroup(
   groups: ModifierGroup[] | undefined,
   groupIndex: number,
@@ -190,9 +139,6 @@ export function removeModifierGroup(
   return groups.filter((_, i) => i !== groupIndex);
 }
 
-/**
- * Updates a modifier group at the given index.
- */
 export function updateModifierGroup(
   groups: ModifierGroup[] | undefined,
   groupIndex: number,
@@ -202,9 +148,6 @@ export function updateModifierGroup(
   return groups.map((g, i) => (i === groupIndex ? { ...g, ...updates } : g));
 }
 
-/**
- * Adds a modifier to a specific group.
- */
 export function addModifierToGroup(
   groups: ModifierGroup[] | undefined,
   groupIndex: number,
@@ -218,9 +161,6 @@ export function addModifierToGroup(
   });
 }
 
-/**
- * Removes a modifier from a specific group.
- */
 export function removeModifierFromGroup(
   groups: ModifierGroup[] | undefined,
   groupIndex: number,
@@ -234,9 +174,6 @@ export function removeModifierFromGroup(
   });
 }
 
-/**
- * Updates a modifier within a specific group.
- */
 export function updateModifierInGroup(
   groups: ModifierGroup[] | undefined,
   groupIndex: number,
@@ -253,14 +190,6 @@ export function updateModifierInGroup(
   });
 }
 
-// =============================================================================
-// Price Calculation Helpers
-// =============================================================================
-
-/**
- * Returns the minimum price across all variants in all groups.
- * Returns undefined if no variants exist.
- */
 export function getMinVariantPrice(item: MenuItem): number | undefined {
   const groups = item.variantGroups;
   if (!groups || groups.length === 0) return undefined;
@@ -272,27 +201,18 @@ export function getMinVariantPrice(item: MenuItem): number | undefined {
   return Math.min(...availableVariants.map((v) => v.price));
 }
 
-/**
- * Returns true if the item has any variant groups with variants.
- */
 export function hasVariants(item: MenuItem): boolean {
   const groups = item.variantGroups;
   if (!groups || groups.length === 0) return false;
   return groups.some((g) => (g.variants ?? []).length > 0);
 }
 
-/**
- * Returns true if the item has any modifier groups with modifiers.
- */
 export function hasModifiers(item: MenuItem): boolean {
   const groups = item.modifierGroups;
   if (!groups || groups.length === 0) return false;
   return groups.some((g) => (g.modifiers ?? []).length > 0);
 }
 
-/**
- * Formats a modifier price adjustment for display (e.g., "+$1.00").
- */
 export function formatPriceAdjustment(amount: number): string {
   const prefix = amount >= 0 ? '+' : '-';
   return `${prefix}$${Math.abs(amount).toFixed(2)}`;

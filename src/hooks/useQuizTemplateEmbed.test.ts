@@ -1,7 +1,3 @@
-/**
- * Tests for useQuizTemplateEmbed hook.
- * Focuses on state management logic for the survey embed widget modal.
- */
 import { renderHook, act } from '@testing-library/react-native';
 
 import { useQuizTemplateEmbed } from './useQuizTemplateEmbed';

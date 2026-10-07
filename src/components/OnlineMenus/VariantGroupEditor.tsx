@@ -1,12 +1,3 @@
-/**
- * VariantGroupEditor - CRUD editor for variant groups on a menu item.
- *
- * Renders a collapsible section with controls to:
- * - Add/remove variant groups (e.g., "Size")
- * - Add/remove variants within each group (e.g., Small $12, Large $20)
- * - Set group name, required flag
- * - Set variant name and absolute price
- */
 import React, { useCallback, useMemo, useState } from 'react';
 
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
@@ -29,17 +20,9 @@ import CollapsibleSection from '../Shared/CollapsibleSection';
 
 import type { MenuItem } from '../../types/menuTypes';
 
-// =============================================================================
-// Constants
-// =============================================================================
-
 const INNER_GAP = 8;
 const BORDER_RADIUS = 6;
 const SMALL_FONT_SIZE = 12;
-
-// =============================================================================
-// Styles
-// =============================================================================
 
 const styles = StyleSheet.create({
   addButton: {
@@ -51,10 +34,6 @@ const styles = StyleSheet.create({
   addButtonText: { fontSize: SMALL_FONT_SIZE, fontWeight: '600' },
 });
 
-// =============================================================================
-// Props
-// =============================================================================
-
 interface Props {
   item: MenuItem;
   onUpdate: (updates: Partial<MenuItem>) => void;
@@ -64,10 +43,6 @@ interface Props {
   primaryColor: string;
   textOnPrimary: string;
 }
-
-// =============================================================================
-// Component
-// =============================================================================
 
 const VariantGroupEditor: React.FC<Props> = ({
   item,

@@ -1,8 +1,3 @@
-/**
- * Orchestrates the file-upload answer for a single question: picking a file,
- * client-side pre-validation, uploading via the public endpoint, and reflecting
- * the returned reference into the answer. Keeps {@link FileUploadQuestion} thin.
- */
 import { useCallback, useState } from 'react';
 
 import * as ExpoDocumentPicker from 'expo-document-picker';
@@ -83,7 +78,6 @@ export function useFileUploadAnswer(
   return { files, state, pickAndUpload, removeFile };
 }
 
-/** Pre-upload gate: returns a localized error key when the pick must be blocked. */
 function preUploadErrorKey(context: UploadContext): string | undefined {
   const hasSurvey = isValueDefined(context.surveyExternalId) && context.surveyExternalId !== '';
   if (!hasSurvey) return messageKeyForCode(FileUploadErrorCode.Unknown);

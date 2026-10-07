@@ -1,6 +1,3 @@
-/**
- * Menu save mutation handlers for create and update operations.
- */
 import { useCallback } from 'react';
 
 import { getErrorMessage, isDuplicateNameError } from './menuErrorUtils';
@@ -46,12 +43,10 @@ function handleMenuUpdate(
   updateMutation.mutate({ data: request }, { onSuccess, onError });
 }
 
-/** Checks if contents have any categories to save */
 function hasContentsToSave(contents: MenuContents): boolean {
   return isValueDefined(contents.categories) && contents.categories.length > 0;
 }
 
-/** Parameters for handleMenuCreate */
 interface HandleMenuCreateParams {
   data: MenuSaveData;
   createMutation: ReturnType<typeof useOnlineMenuWebTenantMenusCreate>;
@@ -60,7 +55,6 @@ interface HandleMenuCreateParams {
   onError: (err: unknown) => void;
 }
 
-/** Handler for the create success callback when contents need to be saved */
 function createWithContentsSuccessHandler(
   params: Omit<HandleMenuCreateParams, 'createMutation'>,
 ): (response: CreateTenantMenusResponse) => void {
@@ -86,14 +80,12 @@ function handleMenuCreate(params: HandleMenuCreateParams): void {
   const needsContentsUpdate = hasContentsToSave(data.contents);
 
   if (needsContentsUpdate) {
-    // Two-step process: create menu, then update with contents
     const onCreateSuccess = createWithContentsSuccessHandler({ data, updateMutation, onSuccess, onError });
     createMutation.mutate(
       { data: { name: data.name, description: data.description ?? undefined } },
       { onSuccess: onCreateSuccess, onError },
     );
   } else
-    // Simple create without contents
     createMutation.mutate(
       { data: { name: data.name, description: data.description ?? undefined } },
       { onSuccess, onError },

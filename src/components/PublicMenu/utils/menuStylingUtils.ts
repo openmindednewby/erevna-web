@@ -16,12 +16,6 @@ interface ThemeColors {
   textSecondary?: string;
 }
 
-/**
- * Extracts menu styling from menu contents, falling back to theme colors.
- * @param menuContents - The menu contents with optional color overrides
- * @param colors - The theme colors to use as fallbacks
- * @returns Resolved styling values
- */
 export function extractMenuStyling(
   menuContents: MenuContents | undefined,
   colors: ThemeColors,

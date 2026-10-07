@@ -1,6 +1,3 @@
-/**
- * Tests for scale tick / bounds helpers.
- */
 import { buildScaleTicks, resolveScaleBounds } from './scaleHelpers';
 
 const FALLBACK = { min: 1, max: 5, step: 1 };

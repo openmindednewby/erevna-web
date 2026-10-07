@@ -23,9 +23,6 @@ interface GenerateDescriptionResponse {
   description: string;
 }
 
-/**
- * Calls the backend AI description generation endpoint.
- */
 export async function generateMenuItemDescription(
   request: GenerateDescriptionRequest,
 ): Promise<GenerateDescriptionResponse> {
@@ -43,10 +40,6 @@ export async function generateMenuItemDescription(
   });
 }
 
-/**
- * React Query mutation hook for generating AI menu item descriptions.
- * No cache invalidation needed since this returns ephemeral data.
- */
 export function useGenerateMenuItemDescription<TError = unknown, TContext = unknown>(
   options?: UseMutationOptions<
     GenerateDescriptionResponse,

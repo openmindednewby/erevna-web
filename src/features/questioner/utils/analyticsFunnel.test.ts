@@ -44,7 +44,7 @@ describe('computeFunnel (completion / answered-rate funnel — NOT drop-off)', (
     const responses = [
       response([answered('q1', 'a'), answered('q2', 'b')]),
       response([answered('q1', 'a'), nullAnswer('q2')]),
-      response([answered('q1', 'a')]), // q2 entirely absent
+      response([answered('q1', 'a')]),
       response([nullAnswer('q1'), answered('q2', 'b')]),
     ];
     const funnel = computeFunnel(questions, responses);
@@ -77,20 +77,17 @@ describe('computeFunnel (completion / answered-rate funnel — NOT drop-off)', (
       q('q3', 'Third', 2),
     ];
     const responses = [
-      // reaches page 1 (q1) and page 2 (q3)
       response([answered('q1', 'a'), nullAnswer('q2'), answered('q3', 'c')]),
-      // reaches page 1 (q2) only
       response([nullAnswer('q1'), answered('q2', 'b'), nullAnswer('q3')]),
-      // reaches page 1 only (no page-2 answer)
       response([answered('q1', 'a')]),
     ];
     const funnel = computeFunnel(questions, responses);
     expect(funnel.pageSteps.map((p) => p.page)).toEqual([1, 2]);
     const page1 = funnel.pageSteps[0];
     const page2 = funnel.pageSteps[1];
-    expect(page1.reached).toBe(3); // all three answered something on page 1
+    expect(page1.reached).toBe(3);
     expect(page1.reachedPct).toBe(100);
-    expect(page2.reached).toBe(1); // only the first response answered q3
+    expect(page2.reached).toBe(1);
     expect(Math.round(page2.reachedPct)).toBe(33);
   });
 

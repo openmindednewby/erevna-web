@@ -1,13 +1,3 @@
-/**
- * Light, open-closed registry of question types.
- *
- * Each entry maps a UI `QuestionType` to its API numeric type, label key, renderer and
- * (optional) validator. The renderer + builder drive off this map instead of hardcoded
- * `if (type === …)` chains, so adding a type is a single registry entry plus its component.
- *
- * Numeric API types come from `./apiTypes` (plain literals) — this shared `components/`
- * module must not import the product-specific generated `questioner` models.
- */
 import React from 'react';
 
 import { MATRIX_ENTRY, RANKING_ENTRY } from './advancedEntries';

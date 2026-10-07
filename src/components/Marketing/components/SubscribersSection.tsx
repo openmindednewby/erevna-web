@@ -1,4 +1,3 @@
-/** Subscribers section: title, add form, and the subscriber list. */
 import React from 'react';
 
 import { Text, View } from 'react-native';

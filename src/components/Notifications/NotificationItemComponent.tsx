@@ -7,9 +7,6 @@ import { TestIds } from '../../shared/testIds';
 import { isValueDefined } from '../../utils/is';
 import { SvgIcon } from '../Icons';
 
-/**
- * Notification item interface
- */
 export interface NotificationItem {
   id: string;
   title: string;
@@ -19,9 +16,6 @@ export interface NotificationItem {
   createdAt: string;
 }
 
-/**
- * Theme colors interface for styling
- */
 export interface ThemeColors {
   text: string;
   textSecondary: string;
@@ -91,9 +85,6 @@ const styles = StyleSheet.create({
   },
 });
 
-/**
- * Formats a date string to a relative time display with i18n support
- */
 function useFormatRelativeTime(): (dateString: string) => string {
   return useCallback((dateString: string): string => {
     const date = new Date(dateString);
@@ -111,9 +102,6 @@ function useFormatRelativeTime(): (dateString: string) => string {
   }, []);
 }
 
-/**
- * A single notification item component with unread indicator, icon, and relative time.
- */
 const NotificationItemComponent = ({ item, colors, onPress }: NotificationItemComponentProps): React.ReactElement => {
   const formatRelativeTime = useFormatRelativeTime();
 

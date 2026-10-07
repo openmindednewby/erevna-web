@@ -1,6 +1,3 @@
-/**
- * Tests for the question-type registry lookups and per-type validation wiring.
- */
 import {
   getAllEntries,
   getEntryByApiType,

@@ -15,7 +15,6 @@ interface Props {
   styles: FormStyles;
 }
 
-// NPS is a fixed 0-10 scale; config only contributes endpoint labels.
 const NPS_TICKS = buildScaleTicks({ min: NPS_MIN, max: NPS_MAX, step: SCALE_STEP_DEFAULT });
 
 export const NpsQuestion: React.FC<Props> = ({ value, config, errorMsg, updateAnswer, styles }) => (

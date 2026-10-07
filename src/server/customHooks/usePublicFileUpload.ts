@@ -1,14 +1,3 @@
-/**
- * Custom hook for uploading a PUBLIC, ANONYMOUS file-upload answer.
- *
- * Posts multipart/form-data directly to the questioner API (NOT via the BFF) so
- * no cookie/token is attached, mirroring {@link usePublicSubmitResponse}'s
- * direct-to-api pattern (same base URL / anonymous posture). The multipart field
- * name is `File` (single file per request), per the backend contract.
- *
- * `errorMessageMode: 'none'` suppresses the global error modal so the renderer
- * can map the 400/404/409 error codes to inline, localized messages itself.
- */
 import { useCallback } from 'react';
 
 import env from '../../config/environment';

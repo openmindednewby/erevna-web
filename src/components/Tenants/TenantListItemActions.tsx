@@ -36,7 +36,6 @@ interface StatusAwareButtonProps {
   onPress: () => void;
 }
 
-/** Button that is disabled when the item is not active. */
 const StatusAwareButton = ({
   isActive, activeColor, inactiveColor, label,
   activeHint, disabledHint, iconName, testID, onPress,

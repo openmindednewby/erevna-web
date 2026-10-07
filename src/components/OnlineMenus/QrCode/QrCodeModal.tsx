@@ -22,9 +22,7 @@ interface Props {
   menuName: string;
   publicUrl: string;
   onClose: () => void;
-  /** Optional title override (defaults to the menu QR title). */
   title?: string;
-  /** Optional explanatory note rendered under the title. */
   note?: string;
 }
 

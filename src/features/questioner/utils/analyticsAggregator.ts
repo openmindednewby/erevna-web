@@ -22,8 +22,6 @@ const CHOICE_TYPES: ReadonlySet<number> = new Set<number>([
   QuestionType.Checkbox,
   QuestionType.Radio,
   QuestionType.Dropdown,
-  // Ranking's options ARE its answer values, so the choice tally counts how often each
-  // option was ranked — a sensible aggregation alongside the other choice types.
   QuestionType.Ranking,
 ]);
 
@@ -39,7 +37,6 @@ const EMPTY_STATS: AnalyticsStats = {
   dateQuestions: [],
 };
 
-/** Split the template's defined questions into choice/text/numeric/date aggregations. */
 function splitQuestionStats(
   questions: Question[],
   matching: CompletedQuestionerDto[],
@@ -64,17 +61,6 @@ function splitQuestionStats(
   return split;
 }
 
-/**
- * Compute client-side analytics for the active template's responses only.
- *
- * - Choice questions (Radio/Dropdown/Checkbox/MultipleChoice): one distribution row per
- *   option DEFINED on the question (zero-count options included). Matching is by option
- *   `value`. Checkbox/MultipleChoice tally EACH value in `answer.multiValues`.
- * - Numeric questions (Rating/Nps/Number/LinearScale): count, average + value distribution.
- * - Date questions: collect non-empty `answer.stringValue` values.
- * - Text questions: collect non-empty `answer.stringValue` strings.
- * - `pct` is guarded against divide-by-zero (0 when there are no responses).
- */
 export function computeAnalytics(
   activeTemplate: QuestionerTemplateDto | null | undefined,
   responses: CompletedQuestionerDto[] | null | undefined,

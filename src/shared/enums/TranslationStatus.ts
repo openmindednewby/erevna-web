@@ -1,6 +1,3 @@
-/**
- * Status of a menu translation.
- */
 const enum TranslationStatus {
   Pending = 0,
   InProgress = 1,

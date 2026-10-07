@@ -5,10 +5,6 @@ const FACEBOOK_SHARE_URL = 'https://www.facebook.com/sharer/sharer.php';
 const TWITTER_INTENT_URL = 'https://twitter.com/intent/tweet';
 const COPIED_FEEDBACK_DURATION_MS = 2000;
 
-/**
- * Builds a WhatsApp share URL with the given text.
- * Uses the wa.me deep link which works on both mobile and desktop.
- */
 export function buildWhatsAppUrl(shareText: string): string {
   return `${WHATSAPP_BASE_URL}?text=${encodeURIComponent(shareText)}`;
 }
@@ -62,10 +58,6 @@ export async function triggerNativeShare(
   }
 }
 
-/**
- * Copies text to clipboard and returns true on success.
- * Uses the Clipboard API with a fallback to execCommand for older browsers.
- */
 export async function copyToClipboard(text: string): Promise<boolean> {
   try {
     await navigator.clipboard.writeText(text);

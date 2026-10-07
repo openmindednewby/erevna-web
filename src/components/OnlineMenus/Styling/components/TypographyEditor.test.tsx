@@ -11,17 +11,9 @@ import FontWeight from '../../../../types/enums/FontWeight';
 
 import type { GlobalTypography } from '../../../../types/menuStyleTypes';
 
-// =============================================================================
-// Mocks
-// =============================================================================
-
 jest.mock('react-redux', () => ({
   useSelector: () => 'light',
 }));
-
-// =============================================================================
-// Test Suite
-// =============================================================================
 
 describe('TypographyEditor', () => {
   const mockOnChange = jest.fn();
@@ -49,10 +41,6 @@ describe('TypographyEditor', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-
-  // ---------------------------------------------------------------------------
-  // Title Typography Tests
-  // ---------------------------------------------------------------------------
 
   describe('title typography', () => {
     it('displays current title font family', () => {
@@ -140,10 +128,6 @@ describe('TypographyEditor', () => {
     });
   });
 
-  // ---------------------------------------------------------------------------
-  // Body Typography Tests
-  // ---------------------------------------------------------------------------
-
   describe('body typography', () => {
     it('displays body section', () => {
       const { getByTestId } = render(<TypographyEditor {...defaultProps} />);
@@ -193,10 +177,6 @@ describe('TypographyEditor', () => {
     });
   });
 
-  // ---------------------------------------------------------------------------
-  // Price Typography Tests
-  // ---------------------------------------------------------------------------
-
   describe('price typography', () => {
     it('displays price section', () => {
       const { getByTestId } = render(<TypographyEditor {...defaultProps} />);
@@ -236,7 +216,6 @@ describe('TypographyEditor', () => {
       const weightPicker = getByTestId('typography-weight-picker-price');
       fireEvent.press(weightPicker);
 
-      // Use Semibold to avoid confusion with existing 'Normal' labels on the page
       const semiboldOptions = getAllByText('Semibold');
       fireEvent.press(semiboldOptions[semiboldOptions.length - 1]);
 
@@ -246,10 +225,6 @@ describe('TypographyEditor', () => {
       });
     });
   });
-
-  // ---------------------------------------------------------------------------
-  // Preview Tests
-  // ---------------------------------------------------------------------------
 
   describe('preview', () => {
     it('displays preview section', () => {
@@ -264,10 +239,6 @@ describe('TypographyEditor', () => {
       expect(getByText('$12.99')).toBeTruthy();
     });
   });
-
-  // ---------------------------------------------------------------------------
-  // Reset Button Tests
-  // ---------------------------------------------------------------------------
 
   describe('reset button', () => {
     it('calls onReset when reset button is pressed', () => {
@@ -298,10 +269,6 @@ describe('TypographyEditor', () => {
       expect(mockOnReset).not.toHaveBeenCalled();
     });
   });
-
-  // ---------------------------------------------------------------------------
-  // Disabled State Tests
-  // ---------------------------------------------------------------------------
 
   describe('disabled state', () => {
     it('does not open font menu when disabled', () => {
@@ -336,10 +303,6 @@ describe('TypographyEditor', () => {
     });
   });
 
-  // ---------------------------------------------------------------------------
-  // Accessibility Tests
-  // ---------------------------------------------------------------------------
-
   describe('accessibility', () => {
     it('has correct testIDs', () => {
       const { getByTestId } = render(<TypographyEditor {...defaultProps} />);
@@ -355,10 +318,6 @@ describe('TypographyEditor', () => {
       expect(getByTestId('typography-reset-button')).toBeTruthy();
     });
   });
-
-  // ---------------------------------------------------------------------------
-  // Edge Cases Tests
-  // ---------------------------------------------------------------------------
 
   describe('edge cases', () => {
     it('handles empty GlobalTypography value', () => {
@@ -394,10 +353,6 @@ describe('TypographyEditor', () => {
       expect(sizeInput.props.value).toBe(String(FONT_SIZE_LIMITS.title.default));
     });
   });
-
-  // ---------------------------------------------------------------------------
-  // Constants Export Tests
-  // ---------------------------------------------------------------------------
 
   describe('exported constants', () => {
     it('exports FONT_FAMILY_OPTIONS with all built-in fonts', () => {

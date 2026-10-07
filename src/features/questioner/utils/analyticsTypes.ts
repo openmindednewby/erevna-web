@@ -70,8 +70,6 @@ export interface AnalyticsStats {
   dateQuestions: DateQuestionStats[];
 }
 
-/* --- Crosstab --------------------------------------------------------------- */
-
 /** A pickable question for the crosstab row/column selectors. */
 export interface CrosstabQuestionOption {
   questionId: string;
@@ -91,13 +89,6 @@ export interface CrosstabRow {
   total: number;
 }
 
-/**
- * Result of crossing a row-question against a col-question.
- *
- * Buckets are answer values (choice option values, numeric values as strings, or date
- * strings). Multi-value answers contribute to EACH of their value buckets. Only responses
- * that answered BOTH questions are joined into the matrix.
- */
 export interface CrosstabStats {
   rowQuestionId: string;
   rowQuestionName: string;
@@ -110,16 +101,6 @@ export interface CrosstabStats {
   /** Number of responses that answered both questions (the joined sample size). */
   matchedResponses: number;
 }
-
-/* --- Completion / answered-rate funnel ------------------------------------- */
-/*
- * IMPORTANT: this is a COMPLETION / ANSWERED-RATE funnel, NOT an abandonment drop-off
- * funnel. Only COMPLETED submissions are stored (no partial/abandoned record — responses
- * carry a CompletedDate only), so we cannot measure true mid-survey abandonment. The
- * funnel here measures (a) how often each question was actually answered (answer present
- * vs null) among completed responses, and (b) how far skip logic lets respondents reach
- * per page. True drop-off needs a backend partial-progress capture (out of scope).
- */
 
 /** Answered-rate for a single question across completed responses. */
 export interface FunnelQuestionStep {

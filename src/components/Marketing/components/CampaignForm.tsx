@@ -1,4 +1,3 @@
-/** New-campaign form: name, subject, body (multiline). */
 import React, { useCallback, useMemo, useState } from 'react';
 
 import { TextInput, View } from 'react-native';

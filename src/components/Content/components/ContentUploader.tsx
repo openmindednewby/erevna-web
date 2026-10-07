@@ -1,12 +1,6 @@
 
 
 
-/**
- * Generic content uploader component.
- *
- * Wraps the file picker components with upload functionality,
- * progress tracking, and preview.
- */
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -46,36 +40,19 @@ const styles = StyleSheet.create({
   },
 });
 
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
-
 interface Props {
-  /** Current content ID value (if already uploaded) */
   value?: string;
-  /** Callback when content is uploaded or removed */
   onChange?: (contentId: string | null) => void;
-  /** Content category to accept */
   category: ContentCategory;
-  /** Optional label text */
   label?: string;
-  /** Whether the field is required */
   required?: boolean;
-  /** Whether the uploader is disabled */
   disabled?: boolean;
-  /** Whether uploads should be public */
   isPublic?: boolean;
-  /** Function to open file picker - must be provided by parent */
   onPickFile: () => Promise<FileInfo | null>;
-  /** Hint text to display in the upload area */
   hint?: string;
-  /** Current content data (optional, for preview) */
   content?: ContentDto;
-  /** URL for preview (optional) */
   previewUrl?: string;
-  /** Error message from loading the preview URL */
   previewError?: string;
-  /** Whether content metadata or URL is loading */
   isLoading?: boolean;
 }
 
@@ -88,13 +65,6 @@ interface UploaderColors {
   error: string;
 }
 
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
-/**
- * Creates theme styles for the uploader.
- */
 function createUploaderThemeStyles(colors: UploaderColors, disabled: boolean): ThemeStyles {
   return {
     label: { color: colors.text },
@@ -108,10 +78,6 @@ function createUploaderThemeStyles(colors: UploaderColors, disabled: boolean): T
     errorText: { color: colors.error },
   };
 }
-
-// ---------------------------------------------------------------------------
-// Main component
-// ---------------------------------------------------------------------------
 
 export const ContentUploader = ({
   value,
@@ -190,7 +156,6 @@ export const ContentUploader = ({
     setUploadedFileName(null);
   }, [cancel]);
 
-  // Show upload progress
   const isShowingProgress = state.isUploading && isValueDefined(uploadedFileName);
   if (isShowingProgress)
     return (
@@ -206,7 +171,6 @@ export const ContentUploader = ({
     );
 
 
-  // Show content preview if we have a value
   const hasValue = isValueDefined(value) && value !== '';
   if (hasValue)
     return (
@@ -226,7 +190,6 @@ export const ContentUploader = ({
     );
 
 
-  // Show upload button
   const defaultHint = `Tap to select a ${category.toLowerCase()}`;
   const displayHint = hint ?? defaultHint;
   const buttonStyle: ViewStyle[] = [styles.uploadButton, themeStyles.uploadButton];

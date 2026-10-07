@@ -1,16 +1,8 @@
-/**
- * Unit tests for useLogoUrl hook.
- *
- * Tests logo content ID extraction and URL resolution logic.
- * Does NOT test rendering.
- */
 import { renderHook } from '@testing-library/react-native';
 
 import { useLogoUrl } from './useLogoUrl';
 
 import type { TenantThemeConfig } from '../../../theme/types';
-
-// -- Mocks -------------------------------------------------------------------
 
 const mockUsePublicContentUrl = jest.fn();
 
@@ -46,8 +38,6 @@ const BASE_CONFIG: TenantThemeConfig = {
     presetId: 'default',
   },
 };
-
-// -- Tests -------------------------------------------------------------------
 
 describe('useLogoUrl', () => {
   beforeEach(() => {

@@ -1,14 +1,3 @@
-/**
- * Reset-password landing page (`/reset-password?token=…`).
- *
- * Reachable while logged out — the route lives under the `(auth)` group which
- * does not gate on session state. The token comes from the email-link query
- * param; on mount we read it once and pass it to `useResetPasswordForm`.
- *
- * On success: navigates to the login screen and emits a success notification.
- * On expired / invalid token (HTTP 400): swaps the form for a CTA that returns
- * the user to login (where they can request a new link).
- */
 import React, { useCallback, useMemo } from 'react';
 
 import { ActivityIndicator, StyleSheet, Text, TextInput, View } from 'react-native';

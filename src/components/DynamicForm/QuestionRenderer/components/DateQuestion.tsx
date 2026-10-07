@@ -17,9 +17,6 @@ interface Props {
 
 const ISO_DATE_LENGTH = 'yyyy-MM-dd'.length;
 
-// On web, RN-web forwards unknown props to the DOM <input>, so `type: 'date'`
-// upgrades to the browser's native date picker. Native platforms ignore it and
-// fall back to a masked ISO text input. Typed loosely to allow the web-only prop.
 const WEB_DATE_PROPS: Record<string, string> = Platform.OS === 'web' ? { type: 'date' } : {};
 
 export const DateQuestion: React.FC<Props> = ({ value, errorMsg, updateAnswer, styles }) => {

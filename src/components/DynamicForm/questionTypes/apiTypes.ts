@@ -1,10 +1,3 @@
-/**
- * Stable numeric API question-type values (mirrors the backend QuestionType enum).
- *
- * Defined as plain literals here so this shared `components/` module does not import
- * the product-specific generated `questioner` models. The numeric values are part of
- * the wire contract and will not change; an Orval regen reproduces them identically.
- */
 export const API_QUESTION_TYPE = {
   Text: 0,
   MultipleChoice: 1,

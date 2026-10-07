@@ -2,8 +2,6 @@ import type { PropsWithChildren, ReactElement } from 'react';
 
 import { ScrollViewStyleReset } from 'expo-router/html';
 
-// SEO Configuration Constants — Erevna marketing brand (locked).
-// Mirrors apps/erevna-web/brand/brand.config.json (W-01 Outfit + T-18 tagline).
 const SEO_CONFIG = {
   title: 'Erevna — From wondering to knowing',
   description:
@@ -14,10 +12,6 @@ const SEO_CONFIG = {
   siteName: 'Erevna',
 };
 
-// Critical CSS for immediate visual rendering (LCP optimization)
-// These styles render the initial loading state without waiting for JS.
-// Body font keeps the existing system stack — only the marketing wordmark uses Outfit
-// (loaded as a separate stylesheet below). This preserves Tag Heuer's in-app continuity.
 const criticalCss = `
 *,*::before,*::after{box-sizing:border-box}
 body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:#fff;-webkit-font-smoothing:antialiased}
@@ -27,7 +21,6 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Hel
 #root{min-height:100vh;display:flex;flex-direction:column}
 `;
 
-// Service worker registration - deferred to avoid blocking main thread (TBT optimization)
 const swRegistrationScript = `
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
@@ -46,7 +39,6 @@ if ('serviceWorker' in navigator) {
 }
 `;
 
-// Manifest probe - deferred and simplified
 const manifestDebugScript = `
 if (typeof __DEV__ !== 'undefined' && __DEV__) {
   var probe = function() {
@@ -58,7 +50,6 @@ if (typeof __DEV__ !== 'undefined' && __DEV__) {
 }
 `;
 
-// Script to remove initial loader after React hydrates
 const removeLoaderScript = `
 document.addEventListener('DOMContentLoaded', function() {
   var loader = document.getElementById('initial-loader');
@@ -80,16 +71,13 @@ const RootHtml = ({ children }: PropsWithChildren): ReactElement => {
         <meta content="IE=edge" httpEquiv="X-UA-Compatible" />
         <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport" />
 
-        {/* Critical CSS - inlined for immediate render (LCP optimization) */}
         <style dangerouslySetInnerHTML={{ __html: criticalCss }} />
 
-        {/* Resource hints for faster API connections (LCP optimization) */}
         <link href="https://identity.dloizides.com" rel="preconnect" />
         <link href="https://identity.dloizides.com" rel="dns-prefetch" />
         <link href="https://erevna-api.dloizides.com" rel="preconnect" />
         <link href="https://erevna-api.dloizides.com" rel="dns-prefetch" />
 
-        {/* Marketing wordmark font (Outfit) — preconnect for fast first paint on landings */}
         <link href="https://fonts.googleapis.com" rel="preconnect" />
         <link crossOrigin="anonymous" href="https://fonts.gstatic.com" rel="preconnect" />
         <link
@@ -97,19 +85,14 @@ const RootHtml = ({ children }: PropsWithChildren): ReactElement => {
           rel="stylesheet"
         />
 
-        {/* SEO: Page Title */}
         <title>{SEO_CONFIG.title}</title>
 
-        {/* SEO: Meta Description */}
         <meta content={SEO_CONFIG.description} name="description" />
 
-        {/* SEO: Robots directive */}
         <meta content="index, follow" name="robots" />
 
-        {/* SEO: Canonical URL */}
         <link href={SEO_CONFIG.url} rel="canonical" />
 
-        {/* Open Graph meta tags for social sharing */}
         <meta content={SEO_CONFIG.title} property="og:title" />
         <meta content={SEO_CONFIG.description} property="og:description" />
         <meta content="website" property="og:type" />
@@ -118,33 +101,25 @@ const RootHtml = ({ children }: PropsWithChildren): ReactElement => {
         <meta content={SEO_CONFIG.siteName} property="og:site_name" />
         <meta content={SEO_CONFIG.locale} property="og:locale" />
 
-        {/* Twitter Card meta tags */}
         <meta content="summary_large_image" name="twitter:card" />
         <meta content={SEO_CONFIG.title} name="twitter:title" />
         <meta content={SEO_CONFIG.description} name="twitter:description" />
         <meta content={`${SEO_CONFIG.url}${SEO_CONFIG.image}`} name="twitter:image" />
 
-        {/* Link the PWA manifest */}
         <link href="/manifest.json" rel="manifest" />
 
-        {/* iOS add-to-home support */}
         <link href="/icons/logo-192.png" rel="apple-touch-icon" />
         <meta content="yes" name="apple-mobile-web-app-capable" />
         <meta content="default" name="apple-mobile-web-app-status-bar-style" />
         <meta content={SEO_CONFIG.siteName} name="application-name" />
         <meta content={SEO_CONFIG.siteName} name="apple-mobile-web-app-title" />
 
-        {/* Theme color for mobile browsers — keeps BaseClient default for in-app continuity */}
         <meta content="#008d5c" name="theme-color" />
 
         <ScrollViewStyleReset />
 
-        {/* Service worker registration - deferred (TBT optimization) */}
         <script defer dangerouslySetInnerHTML={{ __html: swRegistrationScript }} />
-        {/* Debug: probe manifest availability (dev only, deferred) */}
         <script defer dangerouslySetInnerHTML={{ __html: manifestDebugScript }} />
-        {/* Umami privacy-first analytics (web-app-standards). data-domains keeps
-            staging/localhost traffic out of the prod dataset. */}
         <script
           async
           data-domains="erevna.dloizides.com"
@@ -153,12 +128,10 @@ const RootHtml = ({ children }: PropsWithChildren): ReactElement => {
         />
       </head>
       <body>
-        {/* Loading placeholder for LCP - shows immediately while JS loads */}
         <div className="loading-container" id="initial-loader">
           <div className="loading-spinner" />
         </div>
         {children}
-        {/* Remove initial loader once React hydrates */}
         <script dangerouslySetInnerHTML={{ __html: removeLoaderScript }} />
       </body>
     </html>

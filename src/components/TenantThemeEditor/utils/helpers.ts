@@ -1,7 +1,3 @@
-/**
- * Pure helper functions for TenantThemeEditor.
- * Handles config transformations and change detection.
- */
 import { type BrandColorField } from './BrandColorField';
 import { isValidHex } from '../../../theme/utils/palette-generator';
 import { isValueDefined } from '../../../utils/is';
@@ -9,10 +5,6 @@ import { isValueDefined } from '../../../utils/is';
 
 import type { TenantThemeConfig, TypographyConfig } from '../../../theme/types';
 
-/**
- * Return a new config with the specified brand color updated.
- * Sets presetId to null (marks as custom) when a valid hex is applied.
- */
 export function applyColorToConfig(
   config: TenantThemeConfig,
   field: BrandColorField,

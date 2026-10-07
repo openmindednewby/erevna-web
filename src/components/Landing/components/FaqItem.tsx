@@ -9,7 +9,6 @@ import { useTheme } from '../../../theme/hooks/useTheme';
 interface Props {
   question: string;
   answer: string;
-  /** Hint resolved by caller for screen reader users. */
   toggleHint: string;
 }
 
@@ -39,9 +38,6 @@ const styles = StyleSheet.create({
   },
 });
 
-/**
- * Single collapsible FAQ entry. Tap the question row to toggle the answer.
- */
 const FaqItem = ({ question, answer, toggleHint }: Props): ReactElement => {
   const { theme } = useTheme();
   const [open, setOpen] = useState(false);

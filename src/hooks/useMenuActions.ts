@@ -5,11 +5,6 @@ import { customInstance } from '../server/httpClient';
 
 import type { UseMutationOptions, UseMutationResult } from '@tanstack/react-query';
 
-/**
- * Activates a tenant menu by externalId.
- * @param externalId - The unique identifier of the menu to activate
- * @returns Promise that resolves when the menu is activated (204 No Content)
- */
 export async function activateMenu(externalId: string): Promise<unknown> {
   return customInstance({
     url: `/api/v1/TenantMenus/${externalId}/activate`,
@@ -17,11 +12,6 @@ export async function activateMenu(externalId: string): Promise<unknown> {
   });
 }
 
-/**
- * Deactivates a tenant menu by externalId.
- * @param externalId - The unique identifier of the menu to deactivate
- * @returns Promise that resolves when the menu is deactivated (204 No Content)
- */
 export async function deactivateMenu(externalId: string): Promise<unknown> {
   return customInstance({
     url: `/api/v1/TenantMenus/${externalId}/deactivate`,
@@ -29,22 +19,6 @@ export async function deactivateMenu(externalId: string): Promise<unknown> {
   });
 }
 
-/**
- * React Query hook for activating a menu.
- * Automatically invalidates relevant queries on success.
- *
- * @example
- * ```tsx
- * const { mutate: activate, isPending } = useActivateMenu({
- *   onSuccess: () => {
- *     showNotification('Menu activated successfully');
- *   },
- * });
- *
- * // Call it
- * activate({ externalId: 'menu-guid-here' });
- * ```
- */
 export function useActivateMenu<TError = unknown, TContext = unknown>(
   options?: UseMutationOptions<
     unknown,
@@ -60,16 +34,13 @@ export function useActivateMenu<TError = unknown, TContext = unknown>(
     ...restOptions,
     mutationFn: async ({ externalId }) => activateMenu(externalId),
     onSuccess: (data, variables, onMutateResult, context) => {
-      // Invalidate queries to refresh the UI
       queryClient.invalidateQueries({
         queryKey: getOnlineMenuWebMenuListQueryKey(),
       }).catch(() => {
-        // Ignore invalidation errors
       });
       queryClient.invalidateQueries({
         queryKey: getOnlineMenuWebMenuGetByIdQueryKey(variables.externalId),
       }).catch(() => {
-        // Ignore invalidation errors
       });
 
       if (options?.onSuccess)
@@ -79,22 +50,6 @@ export function useActivateMenu<TError = unknown, TContext = unknown>(
   });
 }
 
-/**
- * React Query hook for deactivating a menu.
- * Automatically invalidates relevant queries on success.
- *
- * @example
- * ```tsx
- * const { mutate: deactivate, isPending } = useDeactivateMenu({
- *   onSuccess: () => {
- *     showNotification('Menu deactivated successfully');
- *   },
- * });
- *
- * // Call it
- * deactivate({ externalId: 'menu-guid-here' });
- * ```
- */
 export function useDeactivateMenu<TError = unknown, TContext = unknown>(
   options?: UseMutationOptions<
     unknown,
@@ -110,16 +65,13 @@ export function useDeactivateMenu<TError = unknown, TContext = unknown>(
     ...restOptions,
     mutationFn: async ({ externalId }) => deactivateMenu(externalId),
     onSuccess: (data, variables, onMutateResult, context) => {
-      // Invalidate queries to refresh the UI
       queryClient.invalidateQueries({
         queryKey: getOnlineMenuWebMenuListQueryKey(),
       }).catch(() => {
-        // Ignore invalidation errors
       });
       queryClient.invalidateQueries({
         queryKey: getOnlineMenuWebMenuGetByIdQueryKey(variables.externalId),
       }).catch(() => {
-        // Ignore invalidation errors
       });
 
       if (options?.onSuccess)

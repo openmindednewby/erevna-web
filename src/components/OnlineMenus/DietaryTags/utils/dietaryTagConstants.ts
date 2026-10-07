@@ -1,7 +1,3 @@
-/**
- * Constants for dietary tag components.
- */
-
 export const BADGE_BORDER_RADIUS = 12;
 export const BADGE_PADDING_HORIZONTAL = 8;
 export const BADGE_PADDING_VERTICAL = 4;

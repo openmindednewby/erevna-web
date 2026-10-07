@@ -1,14 +1,3 @@
-/**
- * Menu Style Generator Utility
- *
- * Converts menu styling settings to React Native StyleSheet objects.
- * Used by the Menu Customization Feature to dynamically apply tenant styling.
- *
- * Helpers and constants are in menuStyleGeneratorHelpers.ts.
- *
- * @see BaseClient/docs/Tasks/TODO/menu-customization-feature.md
- */
-
 import type { TextStyle, ViewStyle } from 'react-native';
 
 import {
@@ -53,12 +42,7 @@ import type {
 } from '../types/menuStyleTypes';
 import type { Category, MenuItem } from '../types/menuTypes';
 
-// Re-export types and generateMediaStyles for backward compatibility
 export { generateMediaStyles } from './menuStyleGeneratorHelpers';
-
-// =============================================================================
-// Main Generator Functions
-// =============================================================================
 
 /** Generates styles for a category based on its styling settings. */
 export function generateCategoryStyles(
@@ -136,10 +120,6 @@ export function generateBoxStyles(box: BoxStyling | undefined, colorScheme?: Col
   return buildContainerStyle(styling, colors);
 }
 
-// =============================================================================
-// Category-Specific Style Generators
-// =============================================================================
-
 /** Generates category typography styles only. */
 export function generateCategoryTypographyStyles(
   typography: CategoryTypography | undefined,
@@ -157,10 +137,6 @@ export function generateCategoryTypographyStyles(
     description: buildTextStyle(typo.descriptionFontSize, typo.descriptionFontWeight, descColor, textAlign),
   };
 }
-
-// =============================================================================
-// Item-Specific Style Generators
-// =============================================================================
 
 /** Generates item typography styles only. */
 export function generateItemTypographyStyles(

@@ -1,13 +1,3 @@
-/**
- * Unit tests for menuDefaults utility.
- *
- * Tests focus on logic:
- * - Proper merging of defaults with user values
- * - Handling of null/undefined inputs
- * - Schema version migration
- * - Edge cases for nested objects
- */
-
 
 import {
   applyMenuDefaults,
@@ -76,11 +66,9 @@ describe('menuDefaults', () => {
 
       const result = applyMenuDefaults(contents);
 
-      // User values preserved
       expect(result.typography?.titleFont).toBe('Arial');
       expect(result.colorScheme?.background).toBe('#000000');
 
-      // Defaults applied for missing values
       expect(result.typography?.titleFontSize).toBe(DEFAULT_TYPOGRAPHY.titleFontSize);
       expect(result.colorScheme?.text).toBe(DEFAULT_COLOR_SCHEME.text);
     });
@@ -605,16 +593,13 @@ describe('menuDefaults', () => {
 
       const result = normalizeMenuContents(legacyContents);
 
-      // Should upgrade to v2 and apply defaults
       expect(result.schemaVersion).toBe(2);
       expect(result.typography).toEqual(DEFAULT_TYPOGRAPHY);
       expect(result.colorScheme).toEqual(DEFAULT_COLOR_SCHEME);
 
-      // Legacy fields preserved
       expect(result.titleFont).toBe('OldFont');
       expect(result.backgroundColor).toBe('#FFFFFF');
 
-      // Categories processed
       expect(result.categories).toHaveLength(1);
       expect(result.categories?.[0]?.name).toBe('Old Category');
     });
@@ -632,7 +617,6 @@ describe('menuDefaults', () => {
       expect(result.typography?.titleFont).toBe('Modern');
       expect(result.colorScheme?.accent).toBe('#0000FF');
 
-      // Defaults applied for missing
       expect(result.typography?.titleFontSize).toBe(DEFAULT_TYPOGRAPHY.titleFontSize);
       expect(result.colorScheme?.background).toBe(DEFAULT_COLOR_SCHEME.background);
     });
@@ -644,7 +628,6 @@ describe('menuDefaults', () => {
 
       const result = normalizeMenuContents(contents);
 
-      // Treated as v1, upgraded to v2
       expect(result.schemaVersion).toBe(2);
       expect(result.titleFont).toBe('Legacy');
       expect(result.typography).toEqual(DEFAULT_TYPOGRAPHY);
@@ -658,7 +641,6 @@ describe('menuDefaults', () => {
 
       const result = normalizeMenuContents(futureContents);
 
-      // Should apply current defaults for forward compatibility
       expect(result.schemaVersion).toBe(99);
       expect(result.typography?.titleFont).toBe('FutureFont');
       expect(result.typography?.titleFontSize).toBe(DEFAULT_TYPOGRAPHY.titleFontSize);
@@ -671,8 +653,6 @@ describe('menuDefaults', () => {
 
       const result = normalizeMenuContents(contents);
 
-      // SchemaVersion 0 is preserved (treated as unknown, but value is kept)
-      // Defaults are applied for missing fields
       expect(result.schemaVersion).toBe(0);
       expect(result.typography).toEqual(DEFAULT_TYPOGRAPHY);
     });

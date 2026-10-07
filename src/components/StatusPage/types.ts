@@ -1,7 +1,3 @@
-/**
- * Type definitions for the StatusPage component and service health polling.
- */
-
 import type ServiceHealthStatus from '../../shared/enums/ServiceHealthStatus';
 
 /** Configuration for a single backend service to health-check. */

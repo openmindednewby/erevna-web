@@ -1,4 +1,3 @@
-/** Tests for pure subscriber formatting helpers. */
 import { subscriberStatusLabelKey } from './subscriberFormat';
 
 describe('subscriberStatusLabelKey', () => {

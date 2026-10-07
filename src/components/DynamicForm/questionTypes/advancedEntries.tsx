@@ -1,10 +1,3 @@
-/**
- * Registry entries for the advanced question types (Ranking, Matrix).
- *
- * Kept out of `registry.tsx` so that file stays under the line limit. Both reuse the
- * shared `multiValues` array answer shape — Ranking as an ordered list of option values,
- * Matrix as `"rowId:colId"` strings — so they need no backend Answer change.
- */
 import React from 'react';
 
 import { API_QUESTION_TYPE } from './apiTypes';

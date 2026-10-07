@@ -1,6 +1,3 @@
-/**
- * Content components barrel export.
- */
 export { ContentImage } from './components/ContentImage';
 export { ContentPreview } from './components/ContentPreview';
 export { ContentUploader } from './components/ContentUploader';

@@ -1,11 +1,6 @@
 
 
 
-/**
- * HeaderPositionSelector Component
- *
- * A reusable selector for horizontal position options (left/center/right).
- */
 import React from 'react';
 
 import { Text, TouchableOpacity, View } from 'react-native';
@@ -19,10 +14,6 @@ import { headerEditorStyles as styles } from '../utils/headerEditorStyles';
 
 import type { HorizontalPosition } from '../../../../types/menuStyleTypes';
 
-// =============================================================================
-// Types
-// =============================================================================
-
 interface Props {
   label: string;
   activeValue: HorizontalPosition;
@@ -35,10 +26,6 @@ interface Props {
   accentColor: string;
 }
 
-// =============================================================================
-// Constants
-// =============================================================================
-
 const LOGO_POSITION_TEST_IDS: Record<HorizontalPosition, string> = {
   left: TestIds.HEADER_EDITOR_LOGO_POSITION_LEFT,
   center: TestIds.HEADER_EDITOR_LOGO_POSITION_CENTER,
@@ -50,10 +37,6 @@ const TITLE_POSITION_TEST_IDS: Record<HorizontalPosition, string> = {
   center: TestIds.HEADER_EDITOR_TITLE_POSITION_CENTER,
   right: TestIds.HEADER_EDITOR_TITLE_POSITION_RIGHT,
 };
-
-// =============================================================================
-// Component
-// =============================================================================
 
 const HeaderPositionSelector = ({
   label,

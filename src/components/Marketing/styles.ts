@@ -1,4 +1,3 @@
-/** Shared styles for the Marketing campaigns feature. */
 import { StyleSheet } from 'react-native';
 
 const CONTAINER_PADDING = 16;
@@ -32,7 +31,6 @@ export const marketingStyles = StyleSheet.create({
   loadingContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   errorContainer: { padding: CONTAINER_PADDING },
 
-  // Cards / rows
   card: {
     padding: CARD_PADDING,
     borderRadius: CARD_BORDER_RADIUS,
@@ -45,11 +43,9 @@ export const marketingStyles = StyleSheet.create({
   secondaryText: { fontSize: SUBTITLE_FONT_SIZE, marginTop: 2 },
   metaText: { fontSize: META_FONT_SIZE, marginTop: 4 },
 
-  // Badge
   badge: { paddingHorizontal: BADGE_PADDING_H, paddingVertical: BADGE_PADDING_V, borderRadius: BADGE_BORDER_RADIUS },
   badgeText: { fontSize: BADGE_FONT_SIZE, fontWeight: '600' },
 
-  // Inputs / forms
   input: {
     borderWidth: 1,
     borderRadius: INPUT_BORDER_RADIUS,
@@ -60,11 +56,9 @@ export const marketingStyles = StyleSheet.create({
   bodyInput: { minHeight: BODY_INPUT_MIN_HEIGHT, textAlignVertical: 'top' },
   formActions: { marginTop: 4, alignSelf: 'flex-start' },
 
-  // Remove button
   removeButton: { padding: REMOVE_BUTTON_PADDING },
   removeIcon: { fontSize: REMOVE_ICON_SIZE, fontWeight: '700' },
 
-  // Send confirm
   confirmRow: { flexDirection: 'row', gap: 8, marginTop: 8 },
   cardActions: { marginTop: 8 },
 });

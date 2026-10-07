@@ -1,7 +1,3 @@
-/**
- * Constants for TeamManagement screens.
- */
-
 /** Height of each row in team member and invitation lists. */
 export const ROW_PADDING_VERTICAL = 12;
 

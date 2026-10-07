@@ -1,12 +1,3 @@
-/**
- * Menu Style Types for Item-Level Styling
- *
- * Types for menu item typography, price display, layout, and badges.
- * Split from menuStyleTypes.ts to keep file sizes under 200 lines.
- *
- * @see BaseClient/docs/Tasks/TODO/menu-customization-feature.md
- */
-
 import CurrencyPosition from './enums/CurrencyPosition';
 
 import type BadgePosition from './enums/BadgePosition';
@@ -16,10 +7,6 @@ import type PricePosition from './enums/PricePosition';
 import type { FontWeight, ContentAlignment } from './menuStyleTypes';
 
 export { CurrencyPosition };
-
-// =============================================================================
-// Item Styling
-// =============================================================================
 
 /** Typography settings specific to menu items. */
 export interface ItemTypography {
@@ -54,10 +41,6 @@ export interface ItemLayout {
   minHeight?: number;
   maxWidth?: number;
 }
-
-// =============================================================================
-// Badge Styling
-// =============================================================================
 
 /** Styling for availability badges. */
 export interface AvailabilityBadgeStyle {

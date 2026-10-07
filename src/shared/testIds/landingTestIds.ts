@@ -1,7 +1,3 @@
-/**
- * Test IDs for landing page components.
- */
-
 export const LandingTestIds = {
   LANDING_NAVBAR: 'landing-navbar',
   LANDING_FOOTER: 'landing-footer',

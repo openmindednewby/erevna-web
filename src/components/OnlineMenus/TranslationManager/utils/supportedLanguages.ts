@@ -1,7 +1,3 @@
-/**
- * Supported languages for AI menu translation.
- */
-
 interface SupportedLanguage {
   code: string;
   name: string;
@@ -20,9 +16,6 @@ export const SUPPORTED_LANGUAGES: readonly SupportedLanguage[] = [
   { code: 'ar', name: 'Arabic' },
 ] as const;
 
-/**
- * Returns the display name for a language code, or the code itself if unknown.
- */
 export function getLanguageName(code: string): string {
   return SUPPORTED_LANGUAGES.find((l) => l.code === code)?.name ?? code;
 }

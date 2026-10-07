@@ -1,9 +1,3 @@
-/**
- * Custom hook for fetching a PUBLIC, ANONYMOUS survey draft by resume token.
- *
- * Calls the questioner API directly (no token/cookie). Returns the saved answers
- * used to prefill a resumed survey. Disabled when no token is supplied.
- */
 import { useQuery } from '@tanstack/react-query';
 
 import env from '../../config/environment';

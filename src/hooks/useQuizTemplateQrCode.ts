@@ -17,11 +17,6 @@ interface UseQuizTemplateQrCodeResult {
   handleCloseQrCode: () => void;
 }
 
-/**
- * Manages the Share/QR modal state for survey (questioner) templates.
- * Mirrors {@link useMenuQrCode}; builds the public survey URL for the
- * selected template.
- */
 export function useQuizTemplateQrCode(items: QuestionerTemplateDto[]): UseQuizTemplateQrCodeResult {
   const [qrCodeState, setQrCodeState] = useState<QrCodeState | null>(null);
 

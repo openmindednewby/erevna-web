@@ -1,7 +1,3 @@
-/**
- * Tests for useMenuTemplates hook.
- * Focuses on data transformation and loading state logic.
- */
 import { renderHook, waitFor } from '@testing-library/react-native';
 
 import { useMenuTemplates } from './useMenuTemplates';

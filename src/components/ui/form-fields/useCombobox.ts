@@ -1,7 +1,3 @@
-/**
- * Custom hook for combobox behavior: filtering, keyboard navigation,
- * and open/close state management.
- */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import type { SelectOption } from './types';
@@ -43,10 +39,6 @@ function filterOptions(options: SelectOption[], searchText: string): SelectOptio
   return options.filter((opt) => opt.label.toLowerCase().includes(lowerSearch));
 }
 
-// =============================================================================
-// Keyboard navigation helpers
-// =============================================================================
-
 interface OpenKeyDownContext {
   filteredOptions: SelectOption[];
   highlightedIndex: number;
@@ -85,10 +77,6 @@ function handleOpenKeyDown(event: React.KeyboardEvent, ctx: OpenKeyDownContext):
   }
 }
 
-// =============================================================================
-// Click-outside hook
-// =============================================================================
-
 function useClickOutside(
   wrapperRef: React.RefObject<HTMLDivElement | null>,
   closeDropdown: () => void,
@@ -108,10 +96,6 @@ function useClickOutside(
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [wrapperRef, closeDropdown, onBlur]);
 }
-
-// =============================================================================
-// Combobox state management hook
-// =============================================================================
 
 interface ComboboxState {
   isOpen: boolean;
@@ -192,10 +176,6 @@ function useComboboxCallbacks(
 
   return { closeDropdown, selectOption, handleInputChange, handleInputFocus };
 }
-
-// =============================================================================
-// Main hook
-// =============================================================================
 
 export function useCombobox({ options, value, onChange, onBlur }: UseComboboxParams): UseComboboxReturn {
   const [isOpen, setIsOpen] = useState(false);

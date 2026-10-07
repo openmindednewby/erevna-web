@@ -1,7 +1,3 @@
-/**
- * Test IDs for dark mode toggle controls.
- */
-
 export const DarkModeTestIds = {
   DARK_MODE_TOGGLE: 'dark-mode-toggle',
   DARK_MODE_OPTION_LIGHT: 'dark-mode-option-light',

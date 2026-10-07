@@ -19,16 +19,11 @@ interface UseQuizTemplateEmbedResult {
   handleCloseEmbed: () => void;
 }
 
-/** The app origin used as the embed `publicUrl` (the embed builder appends the route). */
 function buildPublicOrigin(): string {
   if (Platform.OS === 'web' && typeof window !== 'undefined') return window.location.origin;
   return '';
 }
 
-/**
- * Manages the Embed-widget modal state for survey (questioner) templates.
- * Mirrors {@link useMenuEmbed}; the embed builder appends `/public/survey/embed/{id}`.
- */
 export function useQuizTemplateEmbed(items: QuestionerTemplateDto[]): UseQuizTemplateEmbedResult {
   const [embedState, setEmbedState] = useState<EmbedState | null>(null);
 

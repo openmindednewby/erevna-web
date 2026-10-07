@@ -1,8 +1,3 @@
-/**
- * CSS styles for native form buttons, cards, and page layout.
- * Split from styles.ts to keep file sizes under 200 lines.
- */
-
 export const nativeFormButtonStyles = `
 /* Native Button */
 .btn-native {

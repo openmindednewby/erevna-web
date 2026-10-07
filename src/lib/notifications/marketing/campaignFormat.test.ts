@@ -1,4 +1,3 @@
-/** Tests for pure campaign formatting helpers. */
 import {
   campaignStatusLabelKey,
   formatCampaignResults,

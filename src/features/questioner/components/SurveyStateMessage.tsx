@@ -24,7 +24,6 @@ interface Props {
   onRetry: () => void;
 }
 
-/** Maps a non-Ready public-survey state to its title id, message id, and testID. */
 const STATE_COPY: Partial<Record<PublicSurveyState, { title: string; message: string; testID: string }>> = {
   [PublicSurveyState.NotFound]: {
     title: 'publicSurvey.unavailableTitle',
@@ -38,10 +37,6 @@ const STATE_COPY: Partial<Record<PublicSurveyState, { title: string; message: st
   },
 };
 
-/**
- * Renders the loading / unavailable / closed / error states for the public survey
- * (everything except the fillable form). Keeps the screen's branching low.
- */
 const SurveyStateMessage = ({ state, onRetry }: Props): React.ReactElement | null => {
   const { theme } = useTheme();
   const colors = theme.colors;

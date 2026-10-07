@@ -1,8 +1,3 @@
-/**
- * Shared layout constants for versioning components.
- * Used by VersionHistoryPanel, VersionDetailView, VersionDiffView, and RestoreConfirmModal.
- */
-
 /** Standard container padding. */
 export const CONTAINER_PADDING = 16;
 

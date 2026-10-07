@@ -1,12 +1,3 @@
-/**
- * usePublicSurvey - orchestration hook for the public, anonymous survey screen.
- *
- * Wires the public template fetch + public submit mutation into the existing
- * pure fill stack (`useQuizForm`) and derives the screen state the route needs.
- * When the template collects respondent identity (Optional/Required), it also
- * owns the name/email inputs, validates them client-side, and feeds them to the
- * submit body.
- */
 import { useCallback, useMemo, useRef, useState } from 'react';
 
 import { useQuizForm } from './quiz';
@@ -48,18 +39,15 @@ interface UsePublicSurveyResult {
   draftSave: SurveyDraftSave;
 }
 
-/** Inputs for deriving the public survey screen state. */
 interface DeriveStateParams {
   isLoading: boolean;
   isError: boolean;
   error: unknown;
   hasData: boolean;
-  /** Survey exists and is active but no longer accepting responses (date/quota). */
   isClosed?: boolean;
 }
 
 /** Derives the screen state from the template query result. */
-// ts-prune-ignore-next -- exported for unit testing the screen-state logic
 export function deriveState({ isLoading, isError, error, hasData, isClosed = false }: DeriveStateParams): PublicSurveyState {
   if (isLoading) return PublicSurveyState.Loading;
   if (isError) return isNotFoundError(error) ? PublicSurveyState.NotFound : PublicSurveyState.Error;
@@ -74,13 +62,11 @@ interface RespondentContactHook {
   validateExtra: () => boolean;
 }
 
-/** Owns the respondent name/email inputs, their validation, and submit-time read. */
 function useRespondentContact(mode: RespondentContactMode): RespondentContactHook {
   const collects = collectsRespondentContact(mode);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [error, setError] = useState<RespondentContactError>(null);
-  // Read the latest contact at submit time (avoids stale-closure values).
   const ref = useRef<RespondentContact>({});
   ref.current = { name, email };
   const getRespondent = useCallback(

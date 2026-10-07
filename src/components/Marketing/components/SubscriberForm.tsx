@@ -1,4 +1,3 @@
-/** Add-subscriber form: email (required) + optional name. */
 import React, { useCallback, useMemo, useState } from 'react';
 
 import { TextInput, View } from 'react-native';

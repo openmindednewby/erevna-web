@@ -22,7 +22,6 @@ import ScaleConfigEditor from './ScaleConfigEditor';
 import SkipConditionsEditor from './SkipConditions';
 import ValidationRulesEditor from './ValidationRulesEditor';
 
-/** Types that use the flat option list (label/value rows): choice types + Ranking. */
 const OPTION_TYPES: ReadonlySet<number> = new Set<number>([
   QuestionType.MultipleChoice,
   QuestionType.Checkbox,

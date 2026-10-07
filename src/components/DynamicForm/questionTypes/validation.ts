@@ -1,10 +1,3 @@
-/**
- * Answer validation logic for dynamic-form questions.
- *
- * Pure functions (no React, no i18n) so they are trivially unit-testable. The caller
- * supplies already-localized message templates (see `ValidationMessages`). Parameterized
- * messages use `{{p1}}` placeholders which `formatMessage` substitutes.
- */
 import { isValueDefined } from '../../../utils/is';
 
 import type { Answer, Question } from '../interfaces';
@@ -23,7 +16,6 @@ export interface ValidationMessages {
 
 const SINGLE_PARAM_TOKEN = '{{p1}}';
 
-/** Substitute a single `{{p1}}` placeholder in a message template. */
 function formatMessage(template: string, param: number): string {
   return template.replace(SINGLE_PARAM_TOKEN, String(param));
 }
@@ -36,7 +28,6 @@ export function isRequiredAnswerMissing(answer: Answer | undefined): boolean {
   return false;
 }
 
-/** Validate a free-text answer against length/pattern rules. */
 function validateText(value: string, rules: Question['validationRules'], messages: ValidationMessages): string | undefined {
   if (!isValueDefined(rules)) return undefined;
 
@@ -59,7 +50,6 @@ function resolvePatternMessage(rules: NonNullable<Question['validationRules']>, 
   return isValueDefined(custom) && custom !== '' ? custom : messages.pattern;
 }
 
-/** Test a pattern without throwing on an invalid regex (treated as non-blocking). */
 function safeRegexTest(pattern: string, value: string): boolean {
   try {
     return new RegExp(pattern).test(value);
@@ -68,7 +58,6 @@ function safeRegexTest(pattern: string, value: string): boolean {
   }
 }
 
-/** Validate a numeric answer against min/max rules. */
 function validateNumeric(value: number, rules: Question['validationRules'], messages: ValidationMessages): string | undefined {
   if (!isValueDefined(rules)) return undefined;
 
@@ -81,7 +70,6 @@ function validateNumeric(value: number, rules: Question['validationRules'], mess
   return undefined;
 }
 
-/** Validate a multi-select answer against selection-count rules. */
 function validateSelections(values: Array<string | number>, rules: Question['validationRules'], messages: ValidationMessages): string | undefined {
   if (!isValueDefined(rules)) return undefined;
 

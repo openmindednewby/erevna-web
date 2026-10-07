@@ -45,10 +45,6 @@ const styles = StyleSheet.create({
   },
 });
 
-/**
- * Notification bell button with unread count badge.
- * Navigates to the notifications screen when pressed.
- */
 const NotificationBellButton = (): React.ReactElement => {
   const router = useRouter();
   const { theme } = useTheme();

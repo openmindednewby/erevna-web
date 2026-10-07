@@ -1,11 +1,3 @@
-/**
- * Tests for TemplateEditorPanes — the additive desktop two-pane wrapper.
- *
- * Logic under test: the width-gated branch. Below TWO_PANE_MIN_WIDTH_PX the children
- * (editor form) render alone with no preview pane; at/above it the live preview pane
- * is added. TemplateLivePreview is mocked to a light stub so this stays a logic test
- * (no heavy respondent fill stack).
- */
 import React from 'react';
 
 import { render } from '@testing-library/react-native';
@@ -14,8 +6,6 @@ import TemplateEditorPanes from './TemplateEditorPanes';
 import { TWO_PANE_MIN_WIDTH_PX } from '../../../shared/constants';
 import { TestIds } from '../../../shared/testIds';
 
-// Partial mock: override only useWindowDimensions, keep every other RN export real.
-// A Proxy avoids eagerly evaluating unrelated getters (e.g. the mocked Modal).
 const mockWindowDimensions = jest.fn();
 jest.mock('react-native', () => {
   const actual = jest.requireActual('react-native');

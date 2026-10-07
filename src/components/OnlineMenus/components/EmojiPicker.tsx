@@ -1,4 +1,3 @@
-/** EmojiPicker - Curated emoji grid for selecting category icons. */
 import React, { useCallback, useState } from 'react';
 
 import { Text, TouchableOpacity, View } from 'react-native';
@@ -9,8 +8,6 @@ import { CATEGORY_EMOJI_GROUPS } from './categoryEmojiData';
 import { emojiPickerStyles as styles } from './emojiPickerStyles';
 import { TestIds } from '../../../shared/testIds';
 import { isValueDefined } from '../../../utils/is';
-
-// ─── Inner Grid Component ─────────────────────────────────────────────
 
 interface EmojiGridProps {
   selectedEmoji: string | null | undefined;
@@ -66,8 +63,6 @@ const EmojiGrid: React.FC<EmojiGridProps> = ({
     ))}
   </View>
 );
-
-// ─── Main Component ───────────────────────────────────────────────────
 
 interface EmojiPickerProps {
   selectedEmoji: string | null | undefined;

@@ -21,8 +21,6 @@ interface QuestionSectionsProps {
   stats: AnalyticsStats;
 }
 
-/** Renders one section per question: bar chart for choice types, average+distribution for
- * numeric types, a date list for date types, and a list for text types. */
 const QuestionSections = ({ stats }: QuestionSectionsProps): React.ReactElement => (
   <>
     {stats.choiceQuestions.map((q) => (

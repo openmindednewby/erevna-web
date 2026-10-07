@@ -1,10 +1,5 @@
 
 
-/**
- * HeaderEditorPreview Component
- *
- * Preview component for the header editor showing logo and title layout.
- */
 import React, { useMemo } from 'react';
 
 import { Text, View } from 'react-native';
@@ -19,10 +14,6 @@ import { headerEditorStyles as styles } from '../utils/headerEditorStyles';
 
 import type { LogoSize } from '../../../../types/menuStyleTypes';
 
-// =============================================================================
-// Types
-// =============================================================================
-
 interface Props {
   showLogo: boolean;
   logoPosition: HorizontalPosition;
@@ -33,10 +24,6 @@ interface Props {
   textColor: string;
   textSecondary: string;
 }
-
-// =============================================================================
-// Helper Functions
-// =============================================================================
 
 function getAlignItems(position: HorizontalPosition): ViewStyle['alignItems'] {
   if (position === HorizontalPosition.Left) return 'flex-start';
@@ -49,10 +36,6 @@ function getAlignSelf(position: HorizontalPosition): ViewStyle['alignSelf'] {
   if (position === HorizontalPosition.Right) return 'flex-end';
   return 'center';
 }
-
-// =============================================================================
-// Component
-// =============================================================================
 
 const HeaderEditorPreview = ({
   showLogo,

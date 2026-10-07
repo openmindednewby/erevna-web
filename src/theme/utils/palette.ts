@@ -1,13 +1,8 @@
 
 
 
-/**
- * Theme color palette definitions.
- * Centralizes all color values for light and dark themes.
- */
 import env from '../../config/environment';
 
-// Brand override flag: prefer app config (environment.ts), fall back to process.env for web builds.
 const isTagHeuerVariant = (env.EXPO_PUBLIC_IS_TAG_HEURE_QUIZZ_FILLER === true)
   || (((process.env.EXPO_PUBLIC_IS_TAG_HEURE_QUIZZ_FILLER ?? process.env.IS_TAG_HEURE_QUIZZ_FILLER) ?? 'false') === 'true');
 
@@ -33,9 +28,6 @@ const basePalette = {
     error: '#ae2012',
     text: '#001219',
     subtext: '#555555',
-    // WCAG AA: #777777 was 4.48:1 on #ffffff and 4.18:1 on the #f7f7f7 surface, below the
-    // 4.5:1 floor for normal text. #717171 clears both (4.88:1 / 4.56:1). Both light
-    // palettes share those surfaces, so they take the same value.
     textSecondary: '#717171',
     muted: '#f0e9c9',
     textOnPrimary: '#ffffff',
@@ -67,7 +59,6 @@ const basePalette = {
   },
 } as const;
 
-// Tag Heuer variant uses green (#008d5c) and red (#ed1b2f) as primary accents
 const tagHeuerPalette = {
   light: {
     richBlack: '#001219',
@@ -90,9 +81,6 @@ const tagHeuerPalette = {
     error: '#ed1b2f',
     text: '#001219',
     subtext: '#4b4b4b',
-    // WCAG AA: #777777 was 4.48:1 on #ffffff and 4.18:1 on the #f7f7f7 surface, below the
-    // 4.5:1 floor for normal text. #717171 clears both (4.88:1 / 4.56:1). Both light
-    // palettes share those surfaces, so they take the same value.
     textSecondary: '#717171',
     muted: '#eaf7f0',
     textOnPrimary: '#ffffff',

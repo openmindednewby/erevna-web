@@ -1,14 +1,5 @@
 import RespondentContactMode from '@/shared/enums/RespondentContactMode';
 
-/**
- * Pure client-side mirror of the backend RespondentContactValidator. Returns a
- * stable error key ('name' | 'email') for the first problem, or null when the
- * contact is acceptable for the given mode. Anonymous never errors; Optional only
- * checks email shape when one is entered; Required demands both name and a valid
- * email.
- */
-
-// Deliberately permissive shape check (matches the backend's intent).
 const EMAIL_SHAPE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
 export type RespondentContactError = 'name' | 'email' | null;

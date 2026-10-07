@@ -34,10 +34,6 @@ const styles = StyleSheet.create({
   },
 });
 
-/**
- * Individual feature highlight card.
- * Displays a heading and description within a bordered card.
- */
 const FeatureItem = ({ titleKey, descriptionKey }: Props): ReactElement => {
   const { theme } = useTheme();
   const colors = theme.colors;

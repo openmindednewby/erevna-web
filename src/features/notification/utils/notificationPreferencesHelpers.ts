@@ -2,12 +2,6 @@
 
 
 
-/**
- * Get default notification preferences
- */
-/**
- * Helper functions for NotificationPreferencesScreen.
- */
 import type {
   NotificationPreferences,
   NotificationCategoryKey,
@@ -35,9 +29,6 @@ export function getDefaultPreferences(): NotificationPreferences {
   };
 }
 
-/**
- * Category label translation keys
- */
 export const CATEGORY_LABEL_KEYS: Record<NotificationCategoryKey, string> = {
   questionnaireSubmitted: 'settings.notificationPreferences.categories.questionnaireSubmitted',
   templateUpdated: 'settings.notificationPreferences.categories.templateUpdated',

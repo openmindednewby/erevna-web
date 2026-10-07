@@ -13,11 +13,6 @@ interface Props {
   onClose: () => void;
 }
 
-/**
- * Survey embed modal — a thin wrapper around the shared {@link EmbedWidgetModal} that
- * passes the survey embed kind, title key and testID. Reuses the entire menu embed UI
- * (iframe / JS tabs, width/height/theme/accent config, copy-to-clipboard).
- */
 const SurveyEmbedWidgetModal = ({ visible, surveyName, publicUrl, surveyId, onClose }: Props): React.ReactElement => (
   <EmbedWidgetModal
     kind={SURVEY_EMBED_KIND}

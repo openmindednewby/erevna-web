@@ -1,6 +1,3 @@
-/**
- * Privacy hooks barrel export.
- */
 export { useGetConsent, useUpdateConsent } from './hooks/usePrivacyConsent';
 export {
   useRequestDataExport,

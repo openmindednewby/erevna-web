@@ -29,21 +29,10 @@ const FAQ_ENTRIES = [
   { questionKey: 'landing.faq.q6Question', answerKey: 'landing.faq.q6Answer' },
 ] as const;
 
-/**
- * Erevna marketing landing — home route.
- *
- * Web visitors see the full marketing landing (hero + features + FAQ + footer).
- * Mobile platforms skip the marketing surface and route into auth or dashboard.
- *
- * Brand identity: one Erevna identity across marketing -> auth -> app — locked Outfit
- * wordmark + tagline ("From wondering to knowing.") and the single Erevna green.
- */
 const RootPage = (): React.ReactElement | null => {
   const router = useRouter();
   const { isLoggedIn, loading } = useAuth();
 
-  // Mobile apps: skip landing, go to auth or dashboard. `isLoggedIn` is the
-  // post-BFF-cutover session signal (driven by `GET /bff/me`).
   useEffect(() => {
     if (Platform.OS === 'web') return;
     if (loading) return;

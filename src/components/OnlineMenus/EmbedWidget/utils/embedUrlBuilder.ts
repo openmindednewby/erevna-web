@@ -5,14 +5,9 @@ interface EmbedUrlOptions {
   themeOverride: 'light' | 'dark' | null;
   accentColor: string | null;
   origin?: string | null;
-  /** Embed kind (menu / survey). Defaults to menu for backward compatibility. */
   kind?: EmbedKind;
 }
 
-/**
- * Builds the full embed URL for a given external ID and configuration.
- * Pure function with no side effects. The embed kind selects the public route segment.
- */
 export function buildEmbedUrl(
   publicUrl: string,
   externalId: string,

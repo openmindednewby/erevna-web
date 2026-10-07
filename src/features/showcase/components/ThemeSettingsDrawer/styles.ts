@@ -1,8 +1,3 @@
-/**
- * CSS styles for the Theme Settings Drawer.
- * Injected into the document head on web platform.
- */
-
 import { isValueDefined } from '../../../../shared/utils/validators';
 
 const DRAWER_WIDTH_PX = 320;
@@ -121,10 +116,6 @@ const themeDrawerStyles = `
   }
 `;
 
-/**
- * Injects theme drawer CSS into the document head.
- * Idempotent: only injects once.
- */
 export function injectThemeDrawerStyles(): void {
   if (typeof document === 'undefined') return;
 

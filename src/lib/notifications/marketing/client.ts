@@ -1,9 +1,3 @@
-/**
- * Marketing API client — hand-written thin wrapper over the shared notification
- * mutator (mirrors webPush.ts). Hits NotificationService's /api/v1/marketing/*
- * endpoints. The NotificationService swagger for these endpoints is not
- * regenerated this session, so these are hand-written rather than Orval-generated.
- */
 import { notificationInstance } from '../../../server/mutators/notificationMutator';
 
 import type {

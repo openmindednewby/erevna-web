@@ -1,7 +1,3 @@
-/**
- * Helper functions for quiz-active page.
- * Extracted to reduce component size and improve maintainability.
- */
 import { QuestionType } from '../../../components/DynamicForm';
 import { asFileReferences } from '../../../components/DynamicForm/questionTypes/fileUploadHelpers';
 import { getEntryByApiType, getEntryByUiType } from '../../../components/DynamicForm/questionTypes/registry';
@@ -133,12 +129,11 @@ function mapApiRulesToUi(rules: ApiValidationRules | null | undefined): Validati
 export function mapApiQuestionToUi(q: ApiQuestionModel, idx: number): UiQuestion {
   const apiTypeNum: number | undefined = typeof q.type === 'number' ? q.type : undefined;
   let uiType = apiToUiType(apiTypeNum);
-  // Heuristic: if server says Text but provides options, treat as dropdown for better UX
   if (uiType === QuestionType.Text && (q.options?.length ?? 0) > 0)
     uiType = QuestionType.Dropdown;
   
   const pageRaw = q.page ?? 1;
-  const pageUi = pageRaw <= 0 ? 1 : pageRaw; // normalize 0-based to 1-based
+  const pageUi = pageRaw <= 0 ? 1 : pageRaw;
   return {
     id: q.id ?? `q_${idx}`,
     name: q.name ?? '',

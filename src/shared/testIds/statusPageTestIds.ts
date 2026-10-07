@@ -1,6 +1,3 @@
-/**
- * Test IDs for the StatusPage component and its sub-components.
- */
 export const StatusPageTestIds = {
   STATUS_PAGE: 'status-page',
   OVERALL_STATUS_BANNER: 'status-page-overall-banner',

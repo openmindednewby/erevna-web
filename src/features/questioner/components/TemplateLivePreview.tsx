@@ -1,17 +1,3 @@
-/**
- * TemplateLivePreview — the desktop-only right pane of the template editor.
- *
- * Renders a LIVE respondent-view preview of the in-progress template by reusing the
- * exact respondent fill stack (`useQuizForm` + `QuizContent`). The preview is driven
- * by the live editor state: whenever `name`, `description`, or `questions` change,
- * a new `data` reference is built and `useQuizForm`/`useQuizFormState` rebuild the
- * form, so the preview reflects edits as they happen (add a question, edit a label
- * or options, etc.).
- *
- * Non-submitting: it is wired with a no-op submit mutation and a no-op refetch and
- * renders no ThankYouOverlay, so respondents can never submit from the preview — the
- * last-page "next" simply resolves the no-op mutation without any network call.
- */
 import React, { useMemo } from 'react';
 
 import { StyleSheet, Text, View } from 'react-native';
@@ -46,10 +32,8 @@ const previewStyles = StyleSheet.create({
   },
 });
 
-/** No-op submit mutation: resolves without any network call (submission disabled). */
 const NOOP_SUBMIT = { mutateAsync: async (): Promise<void> => { await Promise.resolve(); } };
 
-/** No-op refetch used by the preview fill stack (there is nothing to refetch). */
 async function noopRefetch(): Promise<void> {
   await Promise.resolve();
 }
@@ -57,7 +41,6 @@ async function noopRefetch(): Promise<void> {
 interface Props {
   name: string;
   description: string;
-  /** Live, in-progress editor questions (questioner API question model). */
   questions: Question[];
 }
 
@@ -66,7 +49,6 @@ const TemplateLivePreview = ({ name, description, questions }: Props): React.Rea
   const colors = theme.colors;
   const styles = useDynamicFormStyles();
 
-  // A new reference whenever the editor state changes drives the live rebuild.
   const previewData = useMemo(
     () => ({ externalId: 'template-preview', name, description, contents: { questions } }),
     [name, description, questions],

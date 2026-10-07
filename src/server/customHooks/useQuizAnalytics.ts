@@ -36,11 +36,6 @@ function filterMatching(
   return all.filter((r) => r.questionerTemplateExternalId === activeTemplate.externalId);
 }
 
-/**
- * Composes completed-questioner responses with the active template and derives
- * client-side analytics (distributions, completion/answered-rate funnel, and the inputs
- * for the interactive crosstab) for that template only.
- */
 interface DerivedAnalytics {
   stats: AnalyticsStats;
   matchingResponses: CompletedQuestionerDto[];
@@ -48,7 +43,6 @@ interface DerivedAnalytics {
   funnel: FunnelStats;
 }
 
-/** Memoise the client-side aggregations derived from the active template + responses. */
 function useDerivedAnalytics(
   activeTemplate: QuestionerTemplateDto | null,
   responses: CompletedQuestionerDto[] | undefined,

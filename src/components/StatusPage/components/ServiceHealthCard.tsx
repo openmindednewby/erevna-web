@@ -1,7 +1,3 @@
-/**
- * Individual service health card showing status, response time, and last checked time.
- */
-
 import React from 'react';
 
 import { StyleSheet, Text, View } from 'react-native';

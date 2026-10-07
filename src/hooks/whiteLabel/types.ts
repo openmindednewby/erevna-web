@@ -1,7 +1,3 @@
-/**
- * White-label configuration fields matching the backend ThemeConfigJson
- * white-label properties in IdentityService.
- */
 export interface WhiteLabelConfig {
   customLogoUrl: string | null;
   customFaviconUrl: string | null;

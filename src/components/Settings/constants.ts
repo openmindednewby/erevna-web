@@ -1,8 +1,3 @@
-/**
- * Shared style constants for all Settings sub-screens.
- * Domain-specific constants live in each sub-directory's own constants.ts.
- */
-
 /** Spacing between top-level sections. */
 export const SECTION_SPACING = 16;
 

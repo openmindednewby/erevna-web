@@ -1,11 +1,3 @@
-/**
- * Returns true when the given (unknown) error is an HTTP 404 response.
- *
- * Used by the public survey route to distinguish a "survey not available"
- * state (closed/missing -> friendly screen) from a generic load error.
- * Reads the Axios error's `response.status` without importing axios types.
- */
-
 import { isValueDefined } from './is';
 
 const HTTP_NOT_FOUND = 404;

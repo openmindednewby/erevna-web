@@ -1,6 +1,3 @@
-/**
- * Location hooks barrel export.
- */
 export { useLocationMutations } from './hooks/useLocationMutations';
 export { useLocationList } from './hooks/useLocationList';
 

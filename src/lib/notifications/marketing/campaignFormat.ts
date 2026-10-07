@@ -1,7 +1,3 @@
-/**
- * Pure formatting helpers for marketing campaigns. UI-agnostic logic only
- * (no rendering) so it can be unit-tested in isolation.
- */
 import CampaignStatus from './CampaignStatus';
 import { FM } from '../../../localization/helpers';
 
@@ -17,7 +13,6 @@ const STATUS_LABEL_KEYS: Record<string, string | undefined> = {
   [CampaignStatus.Failed]: 'marketing.campaigns.status.failed',
 };
 
-/** Maps a campaign status string to its i18n label key. Unknown -> draft key. */
 export function campaignStatusLabelKey(status: string): string {
   return STATUS_LABEL_KEYS[status] ?? DRAFT_LABEL_KEY;
 }
@@ -27,10 +22,6 @@ export function isCampaignSendable(status: string): boolean {
   return status === String(CampaignStatus.Draft);
 }
 
-/**
- * Localized "sent X/Y, Z failed" summary for a campaign that has been sent.
- * Returns empty string for campaigns that have never been sent (still Draft).
- */
 export function formatCampaignResults(campaign: Pick<CampaignDto, 'status' | 'recipientCount' | 'sentCount' | 'failedCount'>): string {
   if (campaign.status === String(CampaignStatus.Draft)) return '';
 

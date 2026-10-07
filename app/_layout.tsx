@@ -1,4 +1,3 @@
-// Bootstrap imports - must be first to configure environment before other modules load
 import '../src/bootstrap/logBoxConfig';
 
 import type { ReactElement } from 'react';
@@ -44,16 +43,10 @@ import { reduxStore, type RootState } from '../src/store/reduxStore';
 import ThemeProvider from '../src/theme/components/ThemeProvider';
 import { logger } from '../src/utils/logger';
 
-// Lazy-load CookieConsentBanner: only shown on first visit, returns null after consent
 const CookieConsentBanner = React.lazy(async () => import('../src/components/CookieConsent/CookieConsentBanner'));
 
-// Setup test notification API for E2E testing (only in non-production)
 setupTestNotificationApi();
 
-// Register HTTP client mutators for Orval-generated hooks
-// NOTE: This MUST run synchronously before any component renders.
-// Deferring via requestIdleCallback causes race conditions where API calls
-// fire before HTTP clients are configured, breaking auth and data loading.
 registerMutators({
   customInstance,
   identityInstance,
@@ -63,10 +56,8 @@ registerMutators({
   paymentInstance,
 });
 
-// Initialise Sentry error monitoring. No-op when DSN is empty (dev/test).
 initSentry();
 
-/** Headless component that runs analytics side-effects (page tracking + user identity). */
 const AnalyticsEffects = (): null => {
   usePageTracking();
   useAnalyticsIdentify();
@@ -74,7 +65,6 @@ const AnalyticsEffects = (): null => {
   return null;
 };
 
-/** Headless component that keeps the Sentry user scope in sync with auth state. */
 const SentryEffects = (): null => {
   useSentryUser();
   return null;
@@ -86,15 +76,12 @@ const InnerApp = (): ReactElement => {
   const enablePwaPrompts = (process.env.EXPO_PUBLIC_ENABLE_PWA_PROMPTS ?? 'false') === 'true';
   const shouldShowInstallPrompts = enablePwaPrompts && featureFlags.enableInstallPrompt && Platform.OS === 'web';
 
-  // Register service worker on web; the hook internally guards by platform and flag
   useServiceWorker();
 
-  // Install prompts
   const { showInstallPrompt, handleInstall, closePrompt } = usePWAInstall();
   const { showIOSPrompt, closeIOSPrompt } = useIOSAddToHome();
 
   useEffect(() => {
-    // register redirect handler for native apps so non-UI code can navigate
     setRedirectHandler((p: string) => {
       try {
         router.replace(p);
@@ -109,7 +96,6 @@ const InnerApp = (): ReactElement => {
     i18n.changeLanguage(locale).catch((e: unknown) => logger.warn('_layout', 'Failed to set language', e));
   }, [locale]);
 
-  // Ensure a manifest link exists even if +html.tsx isn't applied (dev safety net)
   useEffect(() => {
     if (Platform.OS !== 'web' || typeof document === 'undefined') return;
     const existing = document.querySelector('link[rel="manifest"]');
@@ -121,7 +107,6 @@ const InnerApp = (): ReactElement => {
       logger.debug('_layout', 'Injected manifest link /manifest.json');
     }
 
-    // Remove post-build loading spinner once React has mounted
     const FADE_DURATION_MS = 200;
     const loader = document.getElementById('initial-loader');
     if (loader) {

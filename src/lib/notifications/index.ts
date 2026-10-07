@@ -1,8 +1,3 @@
-/**
- * Notification utilities for OS notifications and service worker management
- */
-
-// Event bus (in-app notification dispatching)
 export { addListener, notify, notifyError, notifySignOut, notifySuccess } from './utils/eventBus';
 
 export {
@@ -23,7 +18,6 @@ export type {
   ServiceWorkerMessage,
 } from './utils/serviceWorkerRegistration';
 
-// Test API exports (for E2E testing)
 export {
   setupTestNotificationApi,
   cleanupTestNotificationApi,

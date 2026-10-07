@@ -56,10 +56,6 @@ const styles = StyleSheet.create({
   buttonText: { fontSize: CTA_BUTTON_FONT_SIZE, fontWeight: '700' },
 });
 
-/**
- * Call-to-action section used at the bottom of landing pages.
- * Full-width section with heading, subtitle, and CTA button.
- */
 const CTASection = ({ titleKey, subtitleKey, ctaTextKey, ctaHintKey, ctaRoute }: Props): ReactElement => {
   const { theme } = useTheme();
   const router = useRouter();

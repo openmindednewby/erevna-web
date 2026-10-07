@@ -1,7 +1,3 @@
-/**
- * Types for A/B test experiment API hooks.
- */
-
 export interface ExperimentDto {
   id: string;
   name: string;

@@ -1,7 +1,3 @@
-/**
- * Breadcrumb configuration mapping settings paths to their crumb trails.
- * Each entry defines the full hierarchy from root to the current page.
- */
 import { Routes } from './routes';
 
 export interface BreadcrumbItem {
@@ -9,10 +5,6 @@ export interface BreadcrumbItem {
   route?: Routes;
 }
 
-/**
- * Maps each settings sub-path to its breadcrumb trail.
- * The last item in each array is the current (terminal) crumb.
- */
 export const BREADCRUMB_MAP: Record<string, BreadcrumbItem[]> = {
   [Routes.PROFILE_SETTINGS]: [
     { labelKey: 'settings.hub.title', route: Routes.ACCOUNT_SETTINGS },

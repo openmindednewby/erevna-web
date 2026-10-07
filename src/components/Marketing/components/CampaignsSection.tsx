@@ -1,4 +1,3 @@
-/** Campaigns section: title, new-campaign form, and the campaign list. */
 import React from 'react';
 
 import { Text, View } from 'react-native';

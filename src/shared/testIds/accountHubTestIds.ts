@@ -1,7 +1,3 @@
-/**
- * Test IDs for the Account Settings Hub screen.
- */
-
 export const AccountHubTestIds = {
   ACCOUNT_HUB_SCREEN: 'account-hub-screen',
   ACCOUNT_HUB_PROFILE_CARD: 'account-hub-profile-card',

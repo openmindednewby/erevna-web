@@ -1,7 +1,3 @@
-/**
- * Test IDs for Team Management screens.
- */
-
 export const TeamTestIds = {
   TEAM_SCREEN: 'team-screen',
   TEAM_LOADING: 'team-loading',

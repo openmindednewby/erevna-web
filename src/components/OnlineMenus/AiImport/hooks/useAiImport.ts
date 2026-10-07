@@ -1,7 +1,3 @@
-/**
- * Hook for managing the AI menu import wizard state.
- * Orchestrates upload, processing, review, and apply steps.
- */
 import { useCallback, useState } from 'react';
 
 import { isValueDefined } from '@dloizides/utils';
@@ -14,10 +10,6 @@ import {
 } from '../utils/aiImportConstants';
 
 import type { ImportedCategory, ImportedItem, ImportedMenuData } from '../../../../types/aiImportTypes';
-
-// =============================================================================
-// Types
-// =============================================================================
 
 interface AiImportState {
   step: AiImportStep;
@@ -42,10 +34,6 @@ interface UseAiImportReturn {
 }
 
 type SetState = React.Dispatch<React.SetStateAction<AiImportState>>;
-
-// =============================================================================
-// Helpers
-// =============================================================================
 
 function createInitialState(): AiImportState {
   return {
@@ -97,10 +85,6 @@ function addItemInData(data: ImportedMenuData, catIndex: number): ImportedMenuDa
   });
   return { ...data, categories };
 }
-
-// =============================================================================
-// Sub-hooks
-// =============================================================================
 
 function useFileHandlers(setState: SetState): {
   handleFileValidation: (file: File) => string | null;
@@ -179,10 +163,6 @@ function useNavigation(setState: SetState): {
 
   return { handleSetStrategy, handleGoBack, handleGoToApply, handleReset };
 }
-
-// =============================================================================
-// Hook
-// =============================================================================
 
 export function useAiImport(): UseAiImportReturn {
   const [state, setState] = useState<AiImportState>(createInitialState);

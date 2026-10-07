@@ -55,18 +55,11 @@ interface UpdatePayloadParams {
   isActive: boolean;
   contents: QuestionerContents | null;
   itemContents: QuestionerContents | null | undefined;
-  /** Raw date-only (YYYY-MM-DD) closing-date input. */
   closingDate: string;
-  /** Raw numeric-text response-quota input. */
   maxResponses: string;
-  /** Respondent identity collection mode. */
   respondentContactMode: RespondentContactMode;
 }
 
-/**
- * Creates the update payload from current state. The raw availability inputs are
- * normalised here (date -> end-of-day UTC ISO, quota -> positive int or null).
- */
 function createUpdatePayload({ name, description, isActive, contents, itemContents, closingDate, maxResponses, respondentContactMode }: UpdatePayloadParams): UpdateQuestionerTemplateRequest {
   const trimmedDescription = description.trim();
   return {
@@ -82,11 +75,6 @@ function createUpdatePayload({ name, description, isActive, contents, itemConten
 
 const TemplateEditorModal = ({ visible, item, onCancel, onSave, enableAnswerSection = false, readOnly = false }: Props): React.ReactElement => {
 
-  // BUG-QUIZ-003 fix: Initialize state directly from the item prop.
-  // This component only mounts when isModalVisible is true, and the item prop
-  // is always set before isModalVisible becomes true (both set in handleEdit).
-  // Initializing from the prop avoids the race condition where TemplateForm
-  // captures an empty initial state before the useLayoutEffect can run.
   const initialContents = item?.contents ?? {};
   const [activeTab, setActiveTab] = useState<'form' | 'json'>('form');
   const [jsonText, setJsonText] = useState<string>(() => JSON.stringify(initialContents, null, 2));
@@ -100,14 +88,10 @@ const TemplateEditorModal = ({ visible, item, onCancel, onSave, enableAnswerSect
     () => toRespondentContactMode(item?.respondentContactMode),
   );
 
-  // BUG-QUIZ-006: Track whether we just switched to the JSON tab
   const justSwitchedToJsonRef = useRef(false);
   const prevActiveTabRef = useRef(activeTab);
   const prevItemIdRef = useRef<string | undefined>(item?.externalId);
 
-  // Sync state when the item changes while the modal stays open.
-  // On first mount, prevItemIdRef matches item.externalId so this is skipped,
-  // avoiding a redundant state update that would fight with the initial values.
   useLayoutEffect(() => {
     const currentId = item?.externalId;
     if (currentId === prevItemIdRef.current) return;
@@ -137,22 +121,18 @@ const TemplateEditorModal = ({ visible, item, onCancel, onSave, enableAnswerSect
     setActiveTab('form');
   }, [item, visible]);
 
-  // BUG-QUIZ-006 fix: Detect tab switch to JSON and set the flag
   useEffect(() => {
     const switchedToJson = prevActiveTabRef.current !== 'json' && activeTab === 'json';
     prevActiveTabRef.current = activeTab;
     if (switchedToJson) justSwitchedToJsonRef.current = true;
   }, [activeTab]);
 
-  // BUG-QUIZ-006 fix: Only sync contents -> jsonText when FIRST switching to JSON tab.
-  // While on JSON tab, jsonText is the source of truth. No back-sync from contents.
   useEffect(() => {
     if (!justSwitchedToJsonRef.current) return;
     justSwitchedToJsonRef.current = false;
     setJsonText(JSON.stringify(contents ?? item?.contents ?? {}, null, 2));
   }, [activeTab, contents, item?.contents]);
 
-  // Parse jsonText -> contents with debounce (only while on JSON tab)
   useEffect(() => {
     const isJsonTabEmpty = activeTab !== 'json' || jsonText.trim() === '';
     if (isJsonTabEmpty) return;

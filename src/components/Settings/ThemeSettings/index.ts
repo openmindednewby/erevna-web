@@ -1,6 +1,3 @@
-/**
- * Theme Settings components barrel export.
- */
 export { default as ThemeSettingsScreen } from './components/ThemeSettingsScreen';
 export { default as CurrentThemeSummary } from './components/CurrentThemeSummary';
 export { default as PresetGrid } from './components/PresetGrid';

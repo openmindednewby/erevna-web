@@ -1,8 +1,5 @@
 
 
-/**
- * Typography editor section with font family chip selector and heading scale input.
- */
 import React, { useCallback, useMemo } from 'react';
 
 import { StyleSheet, Text, TextInput, View } from 'react-native';
@@ -26,7 +23,6 @@ interface Props {
 const MIN_HEADING_SCALE = 0.5;
 const MAX_HEADING_SCALE = 2.0;
 
-// Font names are proper nouns and should not be localized
 const FONT_OPTIONS = [
   { value: 'System', label: 'System' },
   { value: 'Roboto', label: 'Roboto' },
@@ -88,11 +84,6 @@ const TypographyEditor = ({ typography, onChange, disabled }: Props): React.Reac
   return (
     <Section>
       <Heading>{FM('tenantThemes.typography')}</Heading>
-      {/*
-        `spacing="gap"` drops Field's default 16px bottom margin. The row below already supplies
-        its own spacing via `scaleRow.marginTop`, so keeping both would stack them to 28px. Same
-        pixels as the `marginBottom: 0` override it replaces, stated as intent.
-      */}
       <ChipSelector
         disabled={disabled}
         label={FM('tenantThemes.fontFamily')}

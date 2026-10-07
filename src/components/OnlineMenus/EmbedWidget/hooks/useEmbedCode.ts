@@ -54,10 +54,6 @@ function buildJsCode(config: EmbedWidgetConfig, publicUrl: string, id: string, k
   ].join('\n');
 }
 
-/**
- * Generates iframe and JS widget embed code snippets from the given configuration.
- * Pure computation, no side effects. The embed kind selects the route/widget/data-attrs.
- */
 export function generateEmbedCode(
   config: EmbedWidgetConfig,
   publicUrl: string,

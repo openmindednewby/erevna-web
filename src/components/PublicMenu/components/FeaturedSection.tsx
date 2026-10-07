@@ -1,9 +1,3 @@
-/**
- * FeaturedSection - Public display section for Staff Pick / Featured items.
- *
- * Renders a prominent section above regular categories showing
- * featured items with badges and optional staff notes.
- */
 import React from 'react';
 
 import { Text, View } from 'react-native';
@@ -18,19 +12,11 @@ import type { MenuItem } from '../../../types/menuTypes';
 import type { PublicMenuTheme } from '../utils/publicMenuThemeTypes';
 import type { ResponsiveLayout } from '../utils/responsiveStyles';
 
-// =============================================================================
-// Constants
-// =============================================================================
-
 const TITLE_MARGIN_BOTTOM = 16;
 const SECTION_MARGIN_BOTTOM = 24;
 const SECTION_PADDING_VERTICAL = 16;
 const ACCENT_BAR_WIDTH = 4;
 const ACCENT_BAR_MARGIN_RIGHT = 12;
-
-// =============================================================================
-// Props
-// =============================================================================
 
 interface FeaturedSectionProps {
   items: MenuItem[];
@@ -39,10 +25,6 @@ interface FeaturedSectionProps {
   responsive: ResponsiveLayout;
   onItemPress?: (item: MenuItem) => void;
 }
-
-// =============================================================================
-// Component
-// =============================================================================
 
 export const FeaturedSection: React.FC<FeaturedSectionProps> = ({
   items,

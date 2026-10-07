@@ -30,11 +30,8 @@ const CONTACT_MODE_OPTIONS: ContactModeOption[] = [
 ];
 
 interface Props {
-  /** Date-only (YYYY-MM-DD) raw input value for the soft-closing date. */
   closingDate: string;
-  /** Raw numeric-text input value for the response quota. */
   maxResponses: string;
-  /** Respondent identity collection mode. */
   respondentContactMode: RespondentContactMode;
   onClosingDateChange: (value: string) => void;
   onMaxResponsesChange: (value: string) => void;
@@ -42,11 +39,6 @@ interface Props {
   readOnly?: boolean;
 }
 
-/**
- * Editor fields for survey availability: an optional soft-closing date and an
- * optional response quota. Both raw string values are owned by the parent; the
- * save path normalises them via availabilityHelpers.
- */
 const TemplateAvailabilityFields = ({
   closingDate,
   maxResponses,

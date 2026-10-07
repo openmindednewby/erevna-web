@@ -1,15 +1,3 @@
-/**
- * Custom hook for submitting a PUBLIC, ANONYMOUS survey response.
- *
- * Posts directly to the questioner API (NOT via the BFF) so no cookie/token is
- * attached, mirroring {@link usePublicMenuGetById}'s direct-to-api pattern.
- *
- * It exposes the SAME mutation interface that `useQuizForm` consumes from
- * `useQuestionerWebCompletedQuestionersCreate()` — namely a `mutateAsync` that
- * accepts `{ data: CreateCompletedQuestionerRequest }` — so it drops in without
- * any change to the fill stack. The `questionerTemplateExternalId` field is
- * dropped from the request body (it lives in the route).
- */
 import { useMutation } from '@tanstack/react-query';
 
 import env from '../../config/environment';
@@ -40,12 +28,6 @@ export interface PublicResponseBody {
   respondentEmail?: string;
 }
 
-/**
- * Pure mapper: strips `questionerTemplateExternalId` from the payload that
- * `buildSubmissionPayload` produces, leaving the public response body shape.
- * When a respondent contact is supplied (Optional/Required modes) it overrides
- * the response name and carries the respondent email.
- */
 export function toPublicResponseBody(
   data: CreateCompletedQuestionerRequest,
   respondent?: RespondentContact,
@@ -60,7 +42,6 @@ export function toPublicResponseBody(
   };
 }
 
-/** Posts a public survey response without authentication. */
 async function submitPublicResponse(
   externalId: string,
   data: CreateCompletedQuestionerRequest,
@@ -81,13 +62,6 @@ export interface UsePublicSubmitResponseResult {
   mutateAsync: (variables: { data: CreateCompletedQuestionerRequest }) => Promise<unknown>;
 }
 
-/**
- * Hook for submitting a public survey response.
- * Mirrors the `useQuestionerWebCompletedQuestionersCreate()` mutation interface
- * (a `mutateAsync` taking `{ data }`) so it can be passed straight to
- * `useQuizForm`. `getRespondent` is read at submit time so the latest contact
- * inputs (name/email) are included for Optional/Required templates.
- */
 export function usePublicSubmitResponse(
   externalId: string,
   getRespondent?: () => RespondentContact | undefined,

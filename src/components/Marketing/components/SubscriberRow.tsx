@@ -1,4 +1,3 @@
-/** Single subscriber row: email/name + status + remove button. */
 import React, { useCallback, useMemo } from 'react';
 
 import { Text, TouchableOpacity, View } from 'react-native';

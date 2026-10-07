@@ -6,14 +6,6 @@ import PublicSurveyScreen from '../../../../src/features/questioner/components/P
 
 const WILDCARD_ORIGIN = '*';
 
-/**
- * Embeddable, anonymous survey route: `/public/survey/embed/{externalId}`.
- *
- * Renders {@link PublicSurveyScreen} in embed mode (drops chrome, posts
- * `survey-widget-resize` messages to the parent window). Framing is permitted by the
- * erevna-web nginx `/public/survey/` carve-out (X-Frame-Options cleared,
- * `frame-ancestors *`). Mirrors the menu embed route 1:1.
- */
 const SurveyEmbedRoute = (): React.ReactElement => {
   const params = useLocalSearchParams<{ id: string; origin?: string }>();
   const externalId = String(params.id);

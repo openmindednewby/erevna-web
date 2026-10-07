@@ -1,10 +1,6 @@
 
 
 
-// =============================================================================
-// Props Interface
-// =============================================================================
-
 import React, { useMemo } from 'react';
 
 import { Text, View } from 'react-native';
@@ -25,17 +21,9 @@ interface TypographyPreviewProps {
   bgColor: string;
 }
 
-// =============================================================================
-// Constants
-// =============================================================================
-
 const PREVIEW_TITLE_TEXT = 'Sample Title';
 const PREVIEW_BODY_TEXT = 'This is body text for your menu items.';
 const PREVIEW_PRICE_TEXT = '$12.99';
-
-// =============================================================================
-// Component
-// =============================================================================
 
 export const TypographyPreview = ({
   value,
