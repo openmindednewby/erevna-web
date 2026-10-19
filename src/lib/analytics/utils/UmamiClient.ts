@@ -39,6 +39,7 @@ export class UmamiClient implements AnalyticsClient {
       payload: { website: this.websiteId, ...payload },
     });
 
+    // eslint-disable-next-line @dloizides/no-raw-backend-fetch -- third-party Umami analytics beacon with keepalive, not our backend
     fetch(this.apiUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

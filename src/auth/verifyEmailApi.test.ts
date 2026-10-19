@@ -1,57 +1,57 @@
+
 import { resendVerificationEmail, verifyEmailToken } from './verifyEmailApi';
 import { VerifyEmailErrorCode } from './verifyEmailErrorCode';
+import { apiClient } from '../lib/api/apiClient';
 
-const ORIGINAL_FETCH = globalThis.fetch;
+jest.mock('../lib/api/apiClient', () => ({ apiClient: { post: jest.fn() } }));
 
-type FetchMock = jest.Mock<Promise<unknown>, [RequestInfo | URL, RequestInit?]>;
-
-function installFetchMock(mock: FetchMock): void {
-  (globalThis as { fetch: typeof fetch }).fetch = mock as unknown as typeof fetch;
+interface PostConfig {
+  withCredentials?: boolean;
+  headers?: Record<string, string>;
+  validateStatus?: (status: number) => boolean;
 }
 
-function restoreFetch(): void {
-  (globalThis as { fetch: typeof fetch }).fetch = ORIGINAL_FETCH;
+type PostMock = jest.Mock<Promise<unknown>, [string, unknown, PostConfig?]>;
+
+const postMock = apiClient.post as unknown as PostMock;
+
+function installPostMock(mock: PostMock): void {
+  postMock.mockImplementation(mock);
 }
 
 interface FakeResponse {
-  ok: boolean;
   status: number;
-  json: () => Promise<unknown>;
+  data: unknown;
 }
 
 function fakeResponse(body: unknown, status = 200): FakeResponse {
-  return {
-    ok: status >= 200 && status < 300,
-    status,
-    json: async (): Promise<unknown> => body,
-  };
+  return { status, data: body };
 }
 
 describe('verifyEmailApi', () => {
   afterEach(() => {
-    restoreFetch();
+    postMock.mockReset();
   });
 
   describe('verifyEmailToken', () => {
     it('POSTs to /bff/verify-email with the CSRF header and token body', async () => {
-      const mock: FetchMock = jest.fn().mockResolvedValue(fakeResponse({ success: true }));
-      installFetchMock(mock);
+      const mock: PostMock = jest.fn().mockResolvedValue(fakeResponse({ success: true }));
+      installPostMock(mock);
 
       await verifyEmailToken('abc123');
 
       expect(mock).toHaveBeenCalledTimes(1);
-      const [url, init] = mock.mock.calls[0];
+      const [url, body, config] = mock.mock.calls[0];
       expect(url).toBe('/bff/verify-email');
-      expect(init?.method).toBe('POST');
-      expect(init?.credentials).toBe('include');
-      const headers = init?.headers as Record<string, string>;
-      expect(headers['X-BFF-Csrf']).toBe('1');
-      expect(headers['Content-Type']).toBe('application/json');
-      expect(init?.body).toBe(JSON.stringify({ token: 'abc123' }));
+      expect(config?.withCredentials).toBe(true);
+      expect(config?.headers?.['X-BFF-Csrf']).toBe('1');
+      expect(config?.headers?.['Content-Type']).toBe('application/json');
+      expect(config?.validateStatus?.(400)).toBe(true);
+      expect(body).toEqual({ token: 'abc123' });
     });
 
     it('resolves to success on { success: true } body', async () => {
-      installFetchMock(jest.fn().mockResolvedValue(fakeResponse({ success: true })));
+      installPostMock(jest.fn().mockResolvedValue(fakeResponse({ success: true })));
       await expect(verifyEmailToken('t')).resolves.toEqual({ success: true });
     });
 
@@ -63,7 +63,7 @@ describe('verifyEmailApi', () => {
         ['KEYCLOAK_UPDATE_FAILED', VerifyEmailErrorCode.KeycloakUpdateFailed],
       ];
       for (const [wire, expected] of codes) {
-        installFetchMock(
+        installPostMock(
           jest.fn().mockResolvedValue(fakeResponse({ success: false, errorCode: wire }, 400)),
         );
         await expect(verifyEmailToken('t')).resolves.toEqual({
@@ -74,7 +74,7 @@ describe('verifyEmailApi', () => {
     });
 
     it('collapses unknown errorCode strings to Generic', async () => {
-      installFetchMock(
+      installPostMock(
         jest.fn().mockResolvedValue(fakeResponse({ success: false, errorCode: 'WHO_KNOWS' }, 400)),
       );
       await expect(verifyEmailToken('t')).resolves.toEqual({
@@ -84,15 +84,15 @@ describe('verifyEmailApi', () => {
     });
 
     it('collapses a non-object JSON body to Generic', async () => {
-      installFetchMock(jest.fn().mockResolvedValue(fakeResponse(null)));
+      installPostMock(jest.fn().mockResolvedValue(fakeResponse(null)));
       await expect(verifyEmailToken('t')).resolves.toEqual({
         success: false,
         errorCode: VerifyEmailErrorCode.Generic,
       });
     });
 
-    it('collapses a fetch rejection (network failure) to Generic without throwing', async () => {
-      installFetchMock(jest.fn().mockRejectedValue(new Error('offline')));
+    it('collapses a request rejection (network failure) to Generic without throwing', async () => {
+      installPostMock(jest.fn().mockRejectedValue(new Error('offline')));
       await expect(verifyEmailToken('t')).resolves.toEqual({
         success: false,
         errorCode: VerifyEmailErrorCode.Generic,
@@ -102,32 +102,31 @@ describe('verifyEmailApi', () => {
 
   describe('resendVerificationEmail', () => {
     it('POSTs to /bff/resend-verification with the email + a verifyUrlTemplate', async () => {
-      const mock: FetchMock = jest.fn().mockResolvedValue(fakeResponse({}));
-      installFetchMock(mock);
+      const mock: PostMock = jest.fn().mockResolvedValue(fakeResponse({}));
+      installPostMock(mock);
 
       await resendVerificationEmail('user@example.com');
 
       expect(mock).toHaveBeenCalledTimes(1);
-      const [url, init] = mock.mock.calls[0];
+      const [url, rawBody] = mock.mock.calls[0];
       expect(url).toBe('/bff/resend-verification');
-      expect(init?.method).toBe('POST');
-      const body = JSON.parse(String(init?.body ?? '{}')) as Record<string, string>;
+      const body = rawBody as Record<string, string>;
       expect(body.email).toBe('user@example.com');
       expect(body.verifyUrlTemplate).toContain('/verify-email?token={token}');
     });
 
     it('resolves true on a 2xx response (anti-enum semantics)', async () => {
-      installFetchMock(jest.fn().mockResolvedValue(fakeResponse({})));
+      installPostMock(jest.fn().mockResolvedValue(fakeResponse({})));
       await expect(resendVerificationEmail('a@b.c')).resolves.toBe(true);
     });
 
     it('resolves false on a non-2xx response without throwing', async () => {
-      installFetchMock(jest.fn().mockResolvedValue(fakeResponse('', 500)));
+      installPostMock(jest.fn().mockResolvedValue(fakeResponse('', 500)));
       await expect(resendVerificationEmail('a@b.c')).resolves.toBe(false);
     });
 
     it('resolves false on a network failure without throwing', async () => {
-      installFetchMock(jest.fn().mockRejectedValue(new Error('offline')));
+      installPostMock(jest.fn().mockRejectedValue(new Error('offline')));
       await expect(resendVerificationEmail('a@b.c')).resolves.toBe(false);
     });
   });

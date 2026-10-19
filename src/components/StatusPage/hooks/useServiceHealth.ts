@@ -31,6 +31,7 @@ async function checkServiceHealth(baseUrl: string, serviceKey: string): Promise<
     const controller = new AbortController();
     const timeoutId = setTimeout(() => { controller.abort(); }, REQUEST_TIMEOUT_MS);
 
+    // eslint-disable-next-line @dloizides/no-raw-backend-fetch -- cross-origin per-service health probe measuring raw status and latency; the BFF client's credentials and warm-up retry would change both
     const response = await fetch(url, {
       method: 'GET',
       signal: controller.signal,

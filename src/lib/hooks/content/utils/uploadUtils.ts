@@ -133,6 +133,7 @@ function fetchAndSendMultipart(
   args: ProxyUploadArgs,
   reject: (error: Error) => void,
 ): void {
+  // eslint-disable-next-line @dloizides/no-raw-backend-fetch -- reads a locally picked file URI into a Blob before the XHR upload, not a backend call
   fetch(args.file.uri)
     .then(async (response) => {
       if (!response.ok) throw new Error(`Failed to fetch file: ${response.status} ${response.statusText}`);
