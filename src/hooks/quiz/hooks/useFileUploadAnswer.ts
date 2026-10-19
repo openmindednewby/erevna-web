@@ -98,6 +98,7 @@ async function pickSingleFile(allowed: string[]): Promise<PickedAsset | null> {
 }
 
 async function resolveBlob(asset: PickedAsset): Promise<Blob> {
+  // eslint-disable-next-line @dloizides/no-raw-backend-fetch -- reads a locally picked file URI into a Blob, not a backend call
   const response = await fetch(asset.uri);
   return response.blob();
 }

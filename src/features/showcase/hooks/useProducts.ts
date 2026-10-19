@@ -23,6 +23,7 @@ interface UseProductsResult {
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return */
 async function fetchProductsFromApi(): Promise<Product[]> {
+  // eslint-disable-next-line @dloizides/no-raw-backend-fetch -- third-party demo catalogue (dummyjson.com), not our backend
   const response = await fetch(PRODUCTS_URL);
   if (!response.ok) throw new Error(`HTTP ${String(response.status)}`);
   const json = await response.json();
