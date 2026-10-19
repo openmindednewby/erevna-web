@@ -92,7 +92,7 @@ async function pickSingleFile(allowed: string[]): Promise<PickedAsset | null> {
   return {
     uri: asset.uri,
     name: asset.name,
-    contentType: asset.mimeType ?? 'application/octet-stream',
+    contentType: isValueDefined(asset.mimeType) && asset.mimeType !== '' ? asset.mimeType : 'application/octet-stream',
     sizeBytes: asset.size ?? 0,
   };
 }
