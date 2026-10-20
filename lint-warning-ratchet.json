@@ -1,0 +1,6 @@
+{
+  "note": "PATTERN-1.9 warning ratchet: eslint warning count may only fall. Lower the number when warnings are fixed.",
+  "maxWarnings": 281,
+  "seeded": "2026-10-20",
+  "byPack": { "sonarjs": 171, "react-you-might-not-need-an-effect": 67, "@tanstack/query": 19, "@dloizides": 24 }
+}

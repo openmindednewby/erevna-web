@@ -14,7 +14,7 @@ import reactCompilerPlugin from 'eslint-plugin-react-compiler';
 // Shared custom ESLint rules — published as @dloizides/frontend-devtools (Platform P1).
 // `legacyPlugins` is a Record<ruleName, oneRulePlugin> that preserves the exact
 // `'<name>/<name>'` config keys + inline `eslint-disable-next-line <name>` comments.
-import { legacyPlugins, commentsConfig, apiConfig } from '@dloizides/frontend-devtools/eslint';
+import { legacyPlugins, commentsConfig, apiConfig, patternPacksConfig } from '@dloizides/frontend-devtools/eslint';
 
 export default [
   // Ignore patterns
@@ -825,6 +825,19 @@ export default [
   commentsConfig,
 
   { files: ['**/*.ts', '**/*.tsx'], ...apiConfig },
+
+  { files: ['src/**/*.ts', 'src/**/*.tsx'], ...patternPacksConfig },
+  {
+    files: ['src/**/*.ts', 'src/**/*.tsx'],
+    settings: {
+      'boundaries/elements': [
+        { type: 'feature', pattern: 'src/features/*', mode: 'folder', capture: ['name'] },
+        { type: 'module', pattern: 'src/modules/*', mode: 'folder', capture: ['name'] },
+        { type: 'shared', pattern: ['src/shared/*', 'src/components/*', 'src/hooks/*', 'src/utils/*', 'src/lib/*', 'src/theme/*', 'src/types/*'], mode: 'folder', capture: ['name'] },
+        { type: 'platform', pattern: ['src/auth/*', 'src/bootstrap/*', 'src/config/*', 'src/localization/*', 'src/navigation/*', 'src/pwa/*', 'src/server/*', 'src/store/*'], mode: 'folder', capture: ['name'] },
+      ],
+    },
+  },
 
   // Prettier config (overrides formatting rules)
   prettierConfig,
