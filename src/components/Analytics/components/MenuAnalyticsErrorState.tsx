@@ -2,6 +2,8 @@ import React from 'react';
 
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+import { ErrorReferenceRow, readTraceId } from '@dloizides/ui-feedback';
+
 import { FM } from '@/localization/helpers';
 import { TestIds } from '@/shared/testIds';
 import { useTheme } from '@/theme/hooks/useTheme';
@@ -41,11 +43,13 @@ const styles = StyleSheet.create({
 interface MenuAnalyticsErrorStateProps {
   backButton: React.ReactElement;
   onRetry: () => void;
+  error?: unknown;
 }
 
 const MenuAnalyticsErrorState = ({
   backButton,
   onRetry,
+  error,
 }: MenuAnalyticsErrorStateProps): React.ReactElement => {
   const { theme } = useTheme();
   const { colors } = theme;
@@ -74,6 +78,12 @@ const MenuAnalyticsErrorState = ({
             {FM('analytics.detail.retry')}
           </Text>
         </TouchableOpacity>
+        <ErrorReferenceRow
+          actionColor={primary}
+          color={errorColor}
+          testID={TestIds.MENU_ANALYTICS_ERROR_REFERENCE}
+          traceId={readTraceId(error)}
+        />
       </View>
     </View>
   );

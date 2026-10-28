@@ -15,6 +15,7 @@ export const AnalyticsTestIds = {
   MENU_ANALYTICS_SCREEN: 'menu-analytics-screen',
   MENU_ANALYTICS_LOADING: 'menu-analytics-loading',
   MENU_ANALYTICS_ERROR: 'menu-analytics-error',
+  MENU_ANALYTICS_ERROR_REFERENCE: 'menu-analytics-error-reference',
   MENU_ANALYTICS_RETRY_BUTTON: 'menu-analytics-retry-button',
   MENU_ANALYTICS_TIME_RANGE: 'menu-analytics-time-range',
   MENU_ANALYTICS_STAT_TOTAL_VIEWS: 'menu-analytics-stat-total-views',

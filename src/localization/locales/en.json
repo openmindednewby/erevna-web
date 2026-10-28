@@ -850,6 +850,7 @@
     }
   },
   "common": {
+    "errorReference": "Error reference:",
     "warming": {
       "title": "Warming up…",
       "subtitle": "This only takes a moment.",

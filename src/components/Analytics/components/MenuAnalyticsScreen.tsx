@@ -116,7 +116,7 @@ const MenuAnalyticsScreen = ({ menuId }: MenuAnalyticsScreenProps): React.ReactE
   const [timeRange, setTimeRange] = useState<AnalyticsTimeRange>(AnalyticsTimeRange.SevenDays);
 
   const { from, to } = useMemo(() => getDateRange(timeRange), [timeRange]);
-  const { data, isLoading, isError, refetch } = useMenuAnalytics(menuId, from, to);
+  const { data, error, isLoading, isError, refetch } = useMenuAnalytics(menuId, from, to);
 
   const handleRetry = useCallback((): void => {
     refetch().catch(() => {});
@@ -132,7 +132,7 @@ const MenuAnalyticsScreen = ({ menuId }: MenuAnalyticsScreenProps): React.ReactE
     return <MenuAnalyticsLoadingState backButton={backButton} />;
 
   if (isError)
-    return <MenuAnalyticsErrorState backButton={backButton} onRetry={handleRetry} />;
+    return <MenuAnalyticsErrorState backButton={backButton} error={error} onRetry={handleRetry} />;
 
   return (
     <ScrollView
