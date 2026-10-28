@@ -3579,8 +3579,6 @@
       "backHint": "Navigate back to the analytics dashboard",
       "loading": "Loading menu analytics...",
       "error": "Failed to load menu analytics",
-      "retry": "Retry",
-      "retryHint": "Retries loading the menu analytics data",
       "totalViews": "Total Views",
       "uniqueVisitors": "Unique Visitors",
       "avgDuration": "Avg. Duration",
