@@ -8,6 +8,7 @@ import {
   LANDING_SECTION_PADDING_HORIZONTAL,
   LANDING_SECTION_PADDING_VERTICAL,
 } from '../src/components/Landing/constants';
+import { PRICING_CANONICAL_URL } from '../src/components/Landing/utils/canonicalUrls';
 import { SEOHead } from '../src/components/Shared/SEOHead';
 import { useAnalytics } from '../src/lib/analytics';
 import { FM } from '../src/localization/helpers';
@@ -88,6 +89,7 @@ const PricingPage = (): React.ReactElement => {
       <SEOHead
         description={FM('landing.pricing.seoDescription')}
         title={FM('landing.pricing.seoTitle')}
+        url={PRICING_CANONICAL_URL}
       />
       <View style={styles.section} testID={TestIds.LANDING_PRICING_GRID}>
         <Text

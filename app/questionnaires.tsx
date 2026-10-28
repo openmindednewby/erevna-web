@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { LandingLayout, HeroSection, FeatureGrid, CTASection } from '../src/components/Landing';
+import { QUESTIONNAIRES_CANONICAL_URL } from '../src/components/Landing/utils/canonicalUrls';
 import { SEOHead } from '../src/components/Shared/SEOHead';
 import { FM } from '../src/localization/helpers';
 
@@ -21,7 +22,7 @@ const QuestionnairesLandingPage = (): React.ReactElement => {
       <SEOHead
         description={FM('landing.questionnaires.seoDescription')}
         title={FM('landing.questionnaires.seoTitle')}
-        url="https://erevna.dloizides.com/questionnaires"
+        url={QUESTIONNAIRES_CANONICAL_URL}
       />
       <HeroSection
         ctaHintKey="landing.questionnaires.heroCtaHint"
