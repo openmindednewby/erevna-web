@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
 interface Props {
   state: PublicSurveyState;
   onRetry: () => void;
+  error?: unknown;
 }
 
 const STATE_COPY: Partial<Record<PublicSurveyState, { title: string; message: string; testID: string }>> = {
@@ -37,7 +38,7 @@ const STATE_COPY: Partial<Record<PublicSurveyState, { title: string; message: st
   },
 };
 
-const SurveyStateMessage = ({ state, onRetry }: Props): React.ReactElement | null => {
+const SurveyStateMessage = ({ state, onRetry, error }: Props): React.ReactElement | null => {
   const { theme } = useTheme();
   const colors = theme.colors;
   const titleStyle = useMemo(() => [styles.title, { color: String(colors.text) }], [colors.text]);
@@ -52,7 +53,7 @@ const SurveyStateMessage = ({ state, onRetry }: Props): React.ReactElement | nul
     );
 
   if (state === PublicSurveyState.Error)
-    return <ErrorState message={FM('publicSurvey.errorMessage')} testID={TestIds.PUBLIC_SURVEY_ERROR} onRetry={onRetry} />;
+    return <ErrorState error={error} message={FM('publicSurvey.errorMessage')} testID={TestIds.PUBLIC_SURVEY_ERROR} onRetry={onRetry} />;
 
   const copy = STATE_COPY[state];
   if (!isValueDefined(copy)) return null;

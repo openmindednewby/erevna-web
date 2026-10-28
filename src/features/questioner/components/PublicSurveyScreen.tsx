@@ -41,7 +41,7 @@ const PublicSurveyScreen = ({ externalId, embedMode = false, targetOrigin = WILD
   const { theme } = useTheme();
   const colors = theme.colors;
   const styles = useDynamicFormStyles();
-  const { state, quizForm, contact, draftSave } = usePublicSurvey(externalId, draftToken);
+  const { state, error, quizForm, contact, draftSave } = usePublicSurvey(externalId, draftToken);
 
   const handleSaveDraft = useCallback(() => {
     const form = quizForm.form;
@@ -73,7 +73,7 @@ const PublicSurveyScreen = ({ externalId, embedMode = false, targetOrigin = WILD
       testID={embedMode ? TestIds.SURVEY_EMBED_PAGE : TestIds.PUBLIC_SURVEY_PAGE}
       onLayout={handleLayout}
     >
-      <SurveyStateMessage state={state} onRetry={quizForm.resetQuiz} />
+      <SurveyStateMessage error={error} state={state} onRetry={quizForm.resetQuiz} />
 
       {shouldShowForm && contact.collects ? (
         <RespondentContactFields

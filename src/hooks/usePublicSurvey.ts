@@ -33,6 +33,7 @@ interface RespondentContactState {
 
 interface UsePublicSurveyResult {
   state: PublicSurveyState;
+  error: unknown;
   quizForm: ReturnType<typeof useQuizForm>;
   refetch: () => Promise<unknown>;
   contact: RespondentContactState;
@@ -109,5 +110,5 @@ export function usePublicSurvey(externalId: string, draftToken = ''): UsePublicS
     [isLoading, isError, error, data, isClosed],
   );
 
-  return { state, quizForm, refetch, contact, draftSave };
+  return { state, error, quizForm, refetch, contact, draftSave };
 }
