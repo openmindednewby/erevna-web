@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Topbar as SharedTopbar } from '@dloizides/ui-nav';
+import { BrandHomeLink, Topbar as SharedTopbar } from '@dloizides/ui-nav';
 import { useDispatch, useSelector } from 'react-redux';
 
 
@@ -15,12 +15,14 @@ import SafeNotificationBell from '../Notifications/SafeNotificationBell';
 import type { RootState } from '../../store/reduxStore';
 
 const FALLBACK_NAME = '---';
+const SIGNED_IN_HOME_ROUTE = '/(protected)';
 
 interface Props {
+  onNavigate: (route: string) => void;
   showAccountButton?: boolean;
 }
 
-const Topbar = ({ showAccountButton = false }: Props): React.ReactElement => {
+const Topbar = ({ onNavigate, showAccountButton = false }: Props): React.ReactElement => {
   const { user, userInfo, logout } = useAuth();
   const dispatch = useDispatch();
   const locale = useSelector((s: RootState) => s.ui.locale);
@@ -50,7 +52,7 @@ const Topbar = ({ showAccountButton = false }: Props): React.ReactElement => {
         hint: FM('topbar.langHint'),
         onPress: () => dispatch(setLocale(locale)),
       }}
-      left={<TenantLogo />}
+      left={<BrandHomeLink label={FM('topbar.homeLabel')} route={SIGNED_IN_HOME_ROUTE} onNavigate={onNavigate}><TenantLogo /></BrandHomeLink>}
       logout={{
         label: FM('topbar.logout'),
         hint: FM('topbar.logoutHint'),

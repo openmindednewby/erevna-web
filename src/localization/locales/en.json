@@ -2047,6 +2047,7 @@
     "dark": "Dark",
     "menu": "Menu",
     "menuHint": "Open navigation menu",
+    "homeLabel": "Erevna, home",
     "account": "Account",
     "accountHint": "Manage account",
     "logout": "Logout",
