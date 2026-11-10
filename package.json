@@ -65,7 +65,7 @@
     "@dloizides/ui-forms": "^1.18.1",
     "@dloizides/ui-icons": "^1.0.1",
     "@dloizides/ui-layout": "^1.31.0",
-    "@dloizides/ui-nav": "1.29.0",
+    "@dloizides/ui-nav": "^1.29.0",
     "@dloizides/ui-primitives": "^1.3.0",
     "@dloizides/ui-tables": "^1.20.0",
     "@dloizides/utils": "^1.8.0",
@@ -111,7 +111,7 @@
   "devDependencies": {
     "@dloizides/frontend-devtools": "^2.0.0",
     "@dloizides/pwa-sw": "^1.3.0",
-    "@eslint/js": "^10.0.1",
+    "@eslint/js": "^9.39.2",
     "@lhci/cli": "^0.15.1",
     "@size-limit/file": "12.0.0",
     "@testing-library/react-native": "^13.2.0",
@@ -149,6 +149,12 @@
   },
   "private": true,
   "overrides": {
+    "@hookform/resolvers": {
+      "ajv-formats": "$ajv-formats"
+    },
+    "eslint-plugin-react-native-a11y": {
+      "eslint": "$eslint"
+    },
     "minimatch": ">=10.2.1",
     "test-exclude": {
       "minimatch": "^3.1.2"
