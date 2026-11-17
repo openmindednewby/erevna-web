@@ -128,10 +128,9 @@ const DATE_ENTRY: QuestionTypeEntry = {
   labelKey: 'Date',
   supportsOptions: false,
   validate: defaultValidate,
-  render: ({ value, errorMsg, updateAnswer, styles }) => (
+  render: ({ value, errorMsg, updateAnswer }) => (
     <DateQuestion
       errorMsg={errorMsg}
-      styles={styles}
       updateAnswer={(v: string) => updateAnswer(v)}
       value={asString(value)}
     />

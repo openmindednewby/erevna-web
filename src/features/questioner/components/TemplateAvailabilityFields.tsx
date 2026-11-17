@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { DateField } from '@dloizides/ui-forms';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 import { FM } from '@/localization/helpers';
@@ -61,18 +62,15 @@ const TemplateAvailabilityFields = ({
 
   return (
     <View style={layoutStyles.sectionSpacing}>
-      <Text style={labelStyle}>{FM('quizTemplates.label.closingDate')}</Text>
-      <TextInput
+      <DateField
         accessibilityHint={FM('quizTemplates.closingDateHint')}
-        accessibilityLabel={FM('quizTemplates.label.closingDate')}
-        editable={!readOnly}
-        placeholder={FM('quizTemplates.closingDatePlaceholder')}
-        style={inputStyle}
+        disabled={readOnly}
+        hint={FM('quizTemplates.closingDateHelp')}
+        label={FM('quizTemplates.label.closingDate')}
         testID={TestIds.TEMPLATE_CLOSING_DATE_INPUT}
         value={closingDate}
-        onChangeText={onClosingDateChange}
+        onChange={onClosingDateChange}
       />
-      <Text style={helpStyle}>{FM('quizTemplates.closingDateHelp')}</Text>
 
       <Text style={[labelStyle, layoutStyles.inputSpacing]}>{FM('quizTemplates.label.maxResponses')}</Text>
       <TextInput

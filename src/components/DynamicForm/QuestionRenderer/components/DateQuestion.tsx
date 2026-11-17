@@ -1,43 +1,25 @@
 import React from 'react';
 
-import { Platform, TextInput, Text } from 'react-native';
+import { DateField } from '@dloizides/ui-forms';
 
 import { FM } from '@/localization/helpers';
-
-import { useTheme } from '../../../../theme/hooks/useTheme';
-
-import type { FormStyles } from '../../../../theme/utils/styles';
 
 interface Props {
   value: string;
   errorMsg?: string;
   updateAnswer: (v: string) => void;
-  styles: FormStyles;
 }
 
-const ISO_DATE_LENGTH = 'yyyy-MM-dd'.length;
-
-const WEB_DATE_PROPS: Record<string, string> = Platform.OS === 'web' ? { type: 'date' } : {};
-
-export const DateQuestion: React.FC<Props> = ({ value, errorMsg, updateAnswer, styles }) => {
-  const { theme } = useTheme();
+export const DateQuestion: React.FC<Props> = ({ value, errorMsg, updateAnswer }) => {
   const hasError = typeof errorMsg === 'string' && errorMsg !== '';
   return (
-    <>
-      <TextInput
-        accessibilityHint={FM('quizActive.dateHint')}
-        accessibilityLabel={FM('quizActive.dateInputLabel')}
-        inputMode="text"
-        maxLength={ISO_DATE_LENGTH}
-        placeholder={FM('quizActive.datePlaceholder')}
-        placeholderTextColor={theme.colors.textSecondary}
-        style={[styles.input, hasError ? styles.errorBorder : null]}
-        testID="date-input"
-        value={value}
-        onChangeText={updateAnswer}
-        {...WEB_DATE_PROPS}
-      />
-      {hasError ? <Text style={styles.errorText}>{errorMsg}</Text> : null}
-    </>
+    <DateField
+      accessibilityHint={FM('quizActive.dateHint')}
+      error={hasError ? errorMsg : undefined}
+      label={FM('quizActive.dateInputLabel')}
+      testID="date-input"
+      value={value}
+      onChange={updateAnswer}
+    />
   );
 };
