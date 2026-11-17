@@ -22,11 +22,11 @@ interface DateForm {
   due: string;
 }
 
-function Harness({ onValues }: { onValues: (read: () => DateForm) => void }): React.ReactElement {
+const Harness = ({ onValues }: { onValues: (read: () => DateForm) => void }): React.ReactElement => {
   const { control, getValues } = useForm<DateForm>({ defaultValues: { due: '' } });
   onValues(getValues);
   return <FormNativeDatePicker accessibilityHint="hint" control={control} label="Due" name="due" testID="due-date" />;
-}
+};
 
 describe('FormNativeDatePicker', () => {
   it('with a date picked in the shared DateField, writes the ISO value into the form field', () => {

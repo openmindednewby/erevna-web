@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { DateField } from '@dloizides/ui-forms';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+
+import { DateField } from '@dloizides/ui-forms';
 
 import { FM } from '@/localization/helpers';
 import RespondentContactMode from '@/shared/enums/RespondentContactMode';
