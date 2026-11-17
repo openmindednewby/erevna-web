@@ -232,7 +232,7 @@ describe('FormSwitch accessibility', () => {
       <FormSwitch label="Enable Notifications" value={false} onValueChange={jest.fn()} />,
     );
 
-    const switchElement = screen.getByTestId('form-switch');
+    const switchElement = screen.getByTestId('form-switch-switch');
     expect(switchElement.props.accessibilityLabel).toBe('Enable Notifications');
   });
 
@@ -241,7 +241,7 @@ describe('FormSwitch accessibility', () => {
       <FormSwitch label="Dark Mode" value={false} onValueChange={jest.fn()} />,
     );
 
-    const switchElement = screen.getByTestId('form-switch');
+    const switchElement = screen.getByTestId('form-switch-switch');
     expect(switchElement.props.accessibilityHint).toBe('Dark Mode');
   });
 
@@ -250,7 +250,7 @@ describe('FormSwitch accessibility', () => {
       <FormSwitch accessibilityHint="Toggles dark mode" label="Dark Mode" value={false} onValueChange={jest.fn()} />,
     );
 
-    const switchElement = screen.getByTestId('form-switch');
+    const switchElement = screen.getByTestId('form-switch-switch');
     expect(switchElement.props.accessibilityHint).toBe('Toggles dark mode');
   });
 });
